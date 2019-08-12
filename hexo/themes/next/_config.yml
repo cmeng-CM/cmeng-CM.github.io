@@ -40,8 +40,8 @@ custom_file_path:
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
+  small: /images/favicon-16x16.ico
+  medium: /images/favicon-32x32.ico
   apple_touch_icon: /images/apple-touch-icon-next.png
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
@@ -150,13 +150,13 @@ baidu_push: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash from link value (/archives -> archives).
 # External url should start with http:// or https://
 menu:
-  home: / || home
-  #about: /about/ || user
-  #tags: /tags/ || tags
-  #categories: /categories/ || th
-  archives: /archives/ || archive
+  home: / || home 
+  categories: /categories/ || th 
+  archives: /archives/ || archive 
+  tags: /tags/ || tags 
+  about: /about/ || user
   #schedule: /schedule/ || calendar
-  #sitemap: /sitemap.xml || sitemap
+  ##sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
 
 # Enable / Disable menu icons / item badges.
@@ -220,11 +220,11 @@ avatar:
   # In theme directory (source/images): /images/avatar.gif
   # In site directory (source/uploads): /uploads/avatar.gif
   # You can also use other linking images.
-  url: #/images/avatar.gif
+  url: /images/avatar.jpg
   # If true, the avatar would be dispalyed in circle.
-  rounded: false
+  rounded: true
   # If true, the avatar would be rotated with the cursor.
-  rotated: false
+  rotated: true
 
 # Table Of Contents in the Sidebar
 toc:
@@ -240,8 +240,8 @@ toc:
 
 sidebar:
   # Sidebar Position.
-  position: left
-  #position: right
+  #position: left
+  position: right
 
   # Manual define the sidebar width. If commented, will be default for:
   # Muse | Mist: 320
@@ -988,7 +988,7 @@ pace:
 three:
   enable: false
   delay: false # Set true to further delay loading
-  three_waves: false
+  three_waves: true
   canvas_lines: false
   canvas_sphere: false
 

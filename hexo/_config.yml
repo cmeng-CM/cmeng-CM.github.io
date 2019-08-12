@@ -4,16 +4,16 @@
 
 # Site
 title: c萌怪谈
-subtitle:
+subtitle: 奇葩事迹、奇趣怪谈、记录一切新奇怪异。
 description:
 keywords:
 author: cmeng
-language:
-timezone: zh-Hans
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://cmeng.xyz
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -41,7 +41,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace:
   
 # Home page setting
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-next
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -82,3 +82,5 @@ deploy:
   repo: https://github.com/cmeng001/cmeng001.github.io.git
   branch: master
   message: 'web updata: {{now("YYYY-MM-DD HH/mm/ss")}}'
+
+swiftype_key: your-swiftype-key  
