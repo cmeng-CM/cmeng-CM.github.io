@@ -15,7 +15,7 @@ categories: JVM
 ### 二 运行时数据区域/内存布局
 1.8之前和之后略有区别，主要体现在为1.8之前存在方法区(Method Area)，1.8之后去掉方法区，增加元空间(MetaSpace)
 
-![Java内存布局](Java虚拟机运行时数据区_水印.jpg)
+![Java内存布局](/image/JVM/Java虚拟机运行时数据区_水印.jpg)
 
 #### 2.1 虚拟机栈
 1. Java 虚拟机栈（Java Virtual Machine Stacks）也就是我们平时所说的 **栈内存**，或者指的就是虚拟机栈中的 **局部变量表** 部分。  
@@ -53,7 +53,7 @@ Java多线程是处理器的时间片转轮的策略的实现的，任一确定�
 
 2. 该区域的主要作用: **为对象实例及数组分配内存**，几乎存储了所有对象实例。同时也是垃圾回收器管理的主要区域，因此也被称作GC 堆（Garbage Collected Heap）。 <Br><Br>
 Java堆还可以细分为：新生代和老年代。再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。具体如下图：
-![堆Heap详细分布](Heap.jpg)1.8后去除永生代，用元空间替代。<Br><Br>
+![堆Heap详细分布](/image/JVM/Heap.jpg)1.8后去除永生代，用元空间替代。<Br><Br>
 查看虚拟机默认配置命令：
 ~~~
 java -XX:+PrintFlagsFinal -version
