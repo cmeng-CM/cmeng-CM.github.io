@@ -150,10 +150,10 @@ baidu_push: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash from link value (/archives -> archives).
 # External url should start with http:// or https://
 menu:
-  home: / || home 
-  categories: /categories/ || th 
-  archives: /archives/ || archive 
-  tags: /tags/ || tags 
+  home: / || home
+  categories: /categories/ || th
+  archives: /archives/ || archive
+  tags: /tags/ || tags
   about: /about/ || user
   #schedule: /schedule/ || calendar
   ##sitemap: /sitemap.xml || sitemap
@@ -508,7 +508,7 @@ font:
 
 # Math Equations Render Support
 math:
-  enable: false
+  enable: true
 
   # Default (true) will load mathjax / katex script on demand.
   # That is it only render those page which has `mathjax: true` in Front-matter.
