@@ -55,9 +55,9 @@ Java多线程是处理器的时间片转轮的策略的实现的，任一确定�
 Java堆还可以细分为：新生代和老年代。再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。具体如下图：
 ![堆Heap详细分布](/image/JVM/Heap.jpg)1.8后去除永生代，用元空间替代。<Br><Br>
 查看虚拟机默认配置命令：
-~~~
+```xshell
 java -XX:+PrintFlagsFinal -version
-~~~
+```
 
 #### 2.5 方法区(Method Area)
 1. 方法区（Method Area）用于存储已被虚拟机加载的 类信息、常量、静态变量、即时编译器编译后的代码等数据。虽然 **Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆）**，目的应该是与 Java 堆区分开来。
@@ -92,4 +92,3 @@ java -XX:+PrintFlagsFinal -version
 ---
 ##### 参考：
 * https://dyfloveslife.github.io/2019/11/18/java-memory-areas
-
