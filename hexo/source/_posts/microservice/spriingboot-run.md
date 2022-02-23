@@ -1,3 +1,10 @@
+---
+title: SpringBoot 启动 —— 源码解析
+date: 2020-08-17 16:13:12
+tags: springboot
+categories: springboot
+---
+
 <font size=7>SpringBoot 启动 —— 源码解析</font>
 
 ## 一、概述
@@ -56,7 +63,7 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
   //设置 spring.factories中ApplicationContextInitializer对应的实例
   setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
 
-  //设置 spring.factories中ApplicationContextInitializer对应的实例
+  //设置 spring.factories中ApplicationListener对应的实例
   setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
   //获取当前启动类class
   this.mainApplicationClass = deduceMainApplicationClass();
@@ -89,8 +96,8 @@ private <T> Collection<T> getSpringFactoriesInstances(Class<T> type, Class<?>[] 
 通过解析getSpringFactoriesInstances可以看到，通过SpringFactoriesLoader.loadFactoryNames()方法获取指定名称的所有类名称列表。即通过扫描资源文件META-INF/spring.factories来获取相关的键值对匹配关系并进行代码化解析。
 
 ```Java
-
 public static final String FACTORIES_RESOURCE_LOCATION = "META-INF/spring.factories";
+
 public static List<String> loadFactoryNames(Class<?> factoryType, @Nullable ClassLoader classLoader) {
 		ClassLoader classLoaderToUse = classLoader;
 		if (classLoaderToUse == null) {
@@ -138,6 +145,21 @@ private static Map<String, List<String>> loadSpringFactories(ClassLoader classLo
 	return result;
 }
 ```
+
+##### 3、setListeners()
+初始化所有监听器，并将监听器数组赋值到SpringApplication.listeners属性中，纯净的springboot初始化的监听器分别如下：  
+org.springframework.boot.ClearCachesApplicationListener
+org.springframework.boot.builder.ParentContextCloserApplicationListener
+org.springframework.boot.context.FileEncodingApplicationListener
+org.springframework.boot.context.config.AnsiOutputApplicationListener
+org.springframework.boot.context.config.DelegatingApplicationListener
+org.springframework.boot.context.logging.LoggingApplicationListener
+org.springframework.boot.env.EnvironmentPostProcessorApplicationListener
+org.springframework.boot.liquibase.LiquibaseServiceLocatorApplicationListener
+org.springframework.boot.autoconfigure.BackgroundPreinitializer
+ 
+  
+
 自此SpringApplication初始化完成。主要是初始化了一些基础属性和定义了服务类型。
 
 
@@ -259,7 +281,7 @@ private DefaultBootstrapContext createBootstrapContext() {
 进入源码，可知创建启动上下文时，会进行初始化，主要对bootstrapContext内的实例进行注册。注册成功后返回bootstrapContext对象。  
 **注**：通过loadFactoryNames()方法可知当不应用Cloud体系时，bootstrapContext为空list。  
 
-### 3.3、获取所有监听器——getRunListeners()  
+### 3.3、获取SpringApplicationRunListeners实例——getRunListeners()  
 ```java
 private SpringApplicationRunListeners getRunListeners(String[] args) {
   Class<?>[] types = new Class<?>[] { SpringApplication.class, String[].class };
@@ -268,8 +290,32 @@ private SpringApplicationRunListeners getRunListeners(String[] args) {
       this.applicationStartup);
 }
 ```
-这段代码就比较熟悉了，还是getSpringFactoriesInstances()这个方法获取所有SpringApplicationRunListener接口的实现类的实例化对象。并初始SpringApplicationRunListeners对象。  
+1. 这段代码就比较熟悉了，还是getSpringFactoriesInstances()这个方法获取所有SpringApplicationRunListener接口的实现类的实例化对象。并初始SpringApplicationRunListeners对象。  
 
+2. SpringApplicationRunListener：spring所有事件的触发都是通过该接口的唯一实现类EventPublishingRunListener来实现的，EventPublishingRunListener也是该接口的官方唯一实现类。
+EventPublishingRunListener构造函数：
+```java
+public EventPublishingRunListener(SpringApplication application, String[] args) {
+		this.application = application;
+		this.args = args;
+		this.initialMulticaster = new SimpleApplicationEventMulticaster();
+		for (ApplicationListener<?> listener : application.getListeners()) {
+			this.initialMulticaster.addApplicationListener(listener);
+		}
+	}
+```
+EventPublishingRunListener的属性共有三个：
+  * application：当前运行的SpringApplication实例
+  * args：启动命令行参数
+  * initialMulticaster：事件广播器
+根据构造函数可知，会将application关联的所有ApplicationListener实例关联到initialMulticaster中，以方便initialMulticaster将事件传递给所有的监听器。
+
+3. 事件触发过程：
+  * 当对应的时间处理方法被调用时，EventPublishingRunListener会将application和args封装到对应的SpringApplicationEvent子类实例中；
+  * initialMulticaster会根据事件类型和触发源对事件进行分类，并与对应的ApplicationListener建立关联关系，之后将事件传递给对应的ApplicationListener；
+  * ApplicationListener实例收到事件后，会根据时间类型不同，执行不同的处理逻辑。
+
+至此可知，getRunListeners()方法是为了获取一个装有EventPublishingRunListener对象实例的数组对象-SpringApplicationRunListeners。用于后续事件触发通知功能。
 
 ### 3.4、启动监听器——listeners.starting()
 
@@ -346,7 +392,7 @@ starting()启动的时候实际上是又创建了一个ApplicationStartingEvent�
  * LiquibaseServiceLocatorApplicationListener：未执行任何操作.
 
 
-### 3.5、环境准备
+### 3.5、环境准备-prepareEnvironment()
 
 设置好监听器后进行环境准备。主要是初始化应用参数和启动环境准备，源码对应如下：
 ```Java
@@ -376,11 +422,17 @@ configureIgnoreBeanInfo(environment);
     //固定ConfigurationPropertySourcesPropertySource到environment
 		ConfigurationPropertySources.attach(environment);
 
-
+    //启动监听器
 		listeners.environmentPrepared(bootstrapContext, environment);
+    //判断是否存在defaultProperties的属性源，存在则移动最后一位
 		DefaultPropertiesPropertySource.moveToEnd(environment);
+    
 		configureAdditionalProfiles(environment);
+
+    //将环境绑定到SpringApplication类上
 		bindToSpringApplication(environment);
+
+    //判断是否存在定制的环境
 		if (!this.isCustomEnvironment) {
 			environment = new EnvironmentConverter(getClassLoader()).convertEnvironmentIfNecessary(environment,
 					deduceEnvironmentClass());
@@ -489,9 +541,89 @@ void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, Configur
 				(listener) -> listener.environmentPrepared(bootstrapContext, environment));
 	}
 ```
-向监听器发送环境准备事件。此处的代码就比较熟悉了，和starting()方法逻辑基本一致。
+向监听器发送环境准备事件。此处的代码就比较熟悉了，和启动监听事件[starting()]方法逻辑基本一致。此处主要用来解析配置文件的监听器为：EnvironmentPostProcessorApplicationListener。
+![springboot配置读取调用层次关系](/image/springboot/springboot-yml读取过程.png)  
+
+##### 5、DefaultPropertiesPropertySource.moveToEnd(environment)
+判断是否存在defaultProperties的属性源，存在则移动最后一位
+
+##### 6、configureAdditionalProfiles(environment);
+```Java
+private void configureAdditionalProfiles(ConfigurableEnvironment environment) {
+		if (!CollectionUtils.isEmpty(this.additionalProfiles)) {
+			Set<String> profiles = new LinkedHashSet<>(Arrays.asList(environment.getActiveProfiles()));
+			if (!profiles.containsAll(this.additionalProfiles)) {
+				profiles.addAll(this.additionalProfiles);
+				environment.setActiveProfiles(StringUtils.toStringArray(profiles));
+			}
+		}
+	}
+```
+此处获取additionalProfiles属性是通过SpringApplicationBuilder实例设置的，一般不是使用SpringApplicationBuilder对象的应用此处没有额外的配置进入。
+
+##### 7、bindToSpringApplication(environment)
+将环境绑定到SpringApplication类上
+
+##### 8、if (!this.isCustomEnvironment)
+判断是否存在定制的环境，一般springboot方式启动的服务该**isCustomEnvironment**均为false，只有当通过SpringApplicationBuilder以war包的形式启动才会对该参数进行true赋值。
+
+##### 9、ConfigurationPropertySources.attach(environment)
+通过lister的一系列操作后再次将ConfigurationPropertySource支持固定到environment中。
+
+自此Springboot启动流程中环境准备、配置等操作已完成。
+	
+
+#### 3.6、准备容器，容器的前置处理——prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);
+参数属性对应的实际class类型：
+  * contex:AnnotationConfigServletWebServerApplicationContext
+  * listeners: SpringApplicationRunListeners
+
+```java
+	private void prepareContext(DefaultBootstrapContext bootstrapContext, ConfigurableApplicationContext context,
+			ConfigurableEnvironment environment, SpringApplicationRunListeners listeners,
+			ApplicationArguments applicationArguments, Banner printedBanner) {
+		
+    //将给定的环境委托给底层的AnnotatedBeanDefinitionReader和ClassPathBeanDefinitionScanner。
+    context.setEnvironment(environment);
+		postProcessApplicationContext(context);
+		applyInitializers(context);
+		listeners.contextPrepared(context);
+		bootstrapContext.close(context);
+		if (this.logStartupInfo) {
+			logStartupInfo(context.getParent() == null);
+			logStartupProfileInfo(context);
+		}
+		// Add boot specific singleton beans
+		ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+		beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
+		if (printedBanner != null) {
+			beanFactory.registerSingleton("springBootBanner", printedBanner);
+		}
+		if (beanFactory instanceof DefaultListableBeanFactory) {
+			((DefaultListableBeanFactory) beanFactory)
+					.setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
+		}
+		if (this.lazyInitialization) {
+			context.addBeanFactoryPostProcessor(new LazyInitializationBeanFactoryPostProcessor());
+		}
+		// Load the sources
+		Set<Object> sources = getAllSources();
+		Assert.notEmpty(sources, "Sources must not be empty");
+		load(context, sources.toArray(new Object[0]));
+		listeners.contextLoaded(context);
+	}
+```
 
 
+
+
+
+
+
+
+
+
+未完待续！
 
 
 

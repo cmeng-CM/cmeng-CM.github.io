@@ -1,3 +1,10 @@
+ ---
+title: 分布式——CAP
+date: 2020-08-17 16:13:12
+tags: CAP
+categories: CAP
+---
+ 
  <font size=7>分布式-CAP</font>
 
 ## 前言  

@@ -1,3 +1,9 @@
+---
+title: vscode快捷键
+date: 2020-08-17 16:13:12
+tags: vscode
+categories: vscode
+---
 ### 全局
 Command + Shift + P / F1 显示命令面板
 Command + P 快速打开
