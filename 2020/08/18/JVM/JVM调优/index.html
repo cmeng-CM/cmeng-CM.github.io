@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="JVM调优概述虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。 调优原则多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM调优之jps jinfo jstat jmap jhat">
+<meta property="og:url" content="cmeng001.github.io/2020/08/18/JVM/JVM调优/index.html">
+<meta property="og:site_name" content="c萌怪谈">
+<meta property="og:description" content="JVM调优概述虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。 调优原则多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-14T09:00:09.447Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM调优之jps jinfo jstat jmap jhat">
+<meta name="twitter:description" content="JVM调优概述虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。 调优原则多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更">
+  <link rel="canonical" href="cmeng001.github.io/2020/08/18/JVM/JVM调优/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>JVM调优之jps jinfo jstat jmap jhat | c萌怪谈</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-right">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">c萌怪谈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">奇葩事迹、奇趣怪谈、记录一切新奇怪异。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/18/JVM/JVM调优/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">JVM调优之jps jinfo jstat jmap jhat
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-18 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-18T16:13:12+08:00">2020-08-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-14 17:00:09" itemprop="dateModified" datetime="2021-05-14T17:00:09+08:00">2021-05-14</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。</p>
+<h4 id="调优原则"><a href="#调优原则" class="headerlink" title="调优原则"></a>调优原则</h4><p>多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更多的在代码上面。如：全局变量对象创建过多等。GC是最后不得已下的手段而已。所以通过GC情况分析并优化代码比GC调优要更多。</p>
+<p>本文基于JDK8，相关监控和处理故障的命令有：jps、jinfo、jstat、jmap、jhat。</p>
+<h2 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h2><p>jps（JVM Process Status Tool）：显示指定系统内所有Hotspot虚拟机进程</p>
+<p>命令格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [options] [hostid]</span><br></pre></td></tr></table></figure></p>
+<p>options参数：  </p>
+<ul>
+<li>-l：输入主类的全名或路径  </li>
+<li>-q：输出LVMID  </li>
+<li>-m：输出JVM启动时传递给main()的参数  </li>
+<li>-v：输出JVM启动时显示指定的参数    </li>
+</ul>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">λ jps -l</span><br><span class="line">39392 org.jetbrains.jps.cmdline.Launcher</span><br><span class="line">77060 sun.tools.jps.Jps</span><br><span class="line">115404 org.jetbrains.idea.maven.server.RemoteMavenServer</span><br></pre></td></tr></table></figure></p>
+<h2 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h2><p>jinfo(JVM Configuration info)：生成指定进程的JVM配置信息。</p>
+<p>命令格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -&lt;options&gt; vmid</span><br></pre></td></tr></table></figure></p>
+<h3 id="options参数"><a href="#options参数" class="headerlink" title="options参数"></a>options参数</h3><ul>
+<li>-flag <name>：打印指定参数的名称和值。</name></li>
+<li>-flag [+|-]name：启用或禁用指定的布尔命令标志。</li>
+<li>-flag <name>=<value>：设定指定参数的值。</value></name></li>
+<li>-flags：输出所有JVM参数。</li>
+<li>-sysprops：以key-value形式，输出Java系统属性。</li>
+</ul>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">λ jinfo -flag MaxNewSize 75052</span><br><span class="line">  -XX:MaxNewSize=1418723328</span><br></pre></td></tr></table></figure></p>
+<h2 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h2><p>jstat（JVM Statistics Monitoring）：监视虚拟机运行时状态信息的命令，它可显示JVM的类加载、内存、垃圾收集、JIT编译等运行数据等。</p>
+<p>命令格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -&lt;option&gt; [-t] [-h&lt;lines&gt;] &lt;vmid&gt; [&lt;interval&gt; [&lt;count&gt;]]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>option：操作参数</li>
+<li>-t ：将时间戳列显示为输出的第一列。时间戳是自目标JVM启动时间以来的时间。</li>
+<li>-h<lines>：即-h跟数字，代表隔几行显示标题，默认为0</lines></li>
+<li>vmid ：代表vm进程id</li>
+<li>interval：代表监控间隔时间段，默认毫秒做单位</li>
+<li>count：代表取数次数</li>
+</ul>
+<h3 id="options参数-1"><a href="#options参数-1" class="headerlink" title="options参数"></a>options参数</h3><h4 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">class</td>
+<td style="text-align:left">class loader的行为统计<br>Statistics about the behavior of the class loader.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">compiler</td>
+<td style="text-align:left">HotSpt JIT编译器行为统计。<br>Statistics about the behavior of the Java HotSpot VM Just-in-Time compiler.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gc</td>
+<td style="text-align:left">垃圾收集堆行为统计.<br>Statistics about the behavior of the garbage collected heap.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gccapacity</td>
+<td style="text-align:left">代的容量及其相应空间的统计信息。<br>Statistics about the capacities of the generations and their corresponding spaces.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gccause</td>
+<td style="text-align:left">垃圾收集器统计概述(同gcutil)，及最近两次垃圾回收原因。<br>A summary about garbage collection statistics (same as -gcutil), with the cause of the last and current (when applicable) garbage collection events.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcnew</td>
+<td style="text-align:left">新生代代行为统计<br>Statistics about the behavior of the new generation.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcnewcapacity</td>
+<td style="text-align:left">新生代与其相应的内存空间统计。<br>Statistics about the sizes of the new generations and their corresponding spaces.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcold</td>
+<td style="text-align:left">老年代和元空间的行为统计。<br>Statistics about the behavior of the old generation and metaspace statistics.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcoldcapacity</td>
+<td style="text-align:left">老年代大小统计。<br>Statistics about the sizes of the old generation.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcmetacapacity</td>
+<td style="text-align:left">元空间大小统计。<br>Statistics about the sizes of the metaspace.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcutil</td>
+<td style="text-align:left">垃圾收集器统计概述。<br>A summary about garbage collection statistics.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">printcompilation</td>
+<td style="text-align:left">HotSpot编译方法统计。<br>Java HotSpot VM compilation method statistics.</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="options参数详解"><a href="#options参数详解" class="headerlink" title="options参数详解"></a>options参数详解</h4><h5 id="class"><a href="#class" class="headerlink" title="-class"></a>-class</h5><p>Class loader statistics.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -class 62044</span><br><span class="line">  Loaded  Bytes    Unloaded  Bytes     Time</span><br><span class="line">  6152    12149.8     0       0.0       8.72</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Loaded：加载class数量。  </li>
+<li>Bytes：加载的class字节大小（KB）。</li>
+<li>Unloaded：未加载的class数量。</li>
+<li>Bytes：未加载calss字节大小（KB）。</li>
+<li>Time：执行类加载和卸载的总时间。</li>
+</ul>
+<h5 id="compiler"><a href="#compiler" class="headerlink" title="-compiler"></a>-compiler</h5><p>Java HotSpot VM Just-in-Time compiler statistics.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -compiler 62044</span><br><span class="line">  Compiled Failed Invalid   Time   FailedType FailedMethod</span><br><span class="line">      8306      2       0    34.24          1 com/alibaba/druid/pool/DruidDataSource shrink</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Compilerd：编译数量</li>
+<li>Failed：编译失败的数量</li>
+<li>Invalid：无效的数量</li>
+<li>Time：执行编译时长</li>
+<li>FailedType : 失败类型</li>
+<li>FailedMethod : 失败方法的全限定名</li>
+</ul>
+<h5 id="gc"><a href="#gc" class="headerlink" title="-gc"></a>-gc</h5><p>Garbage collected heap statistics.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gc 62044</span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">512.0  512.0   0.0    96.0  27648.0   6616.5   67584.0    55474.4   42112.0 41055.1 4736.0 4522.8  50299   94.002  12      0.677   94.679</span><br></pre></td></tr></table></figure></p>
+<p>C：Capacity，即总容量，容量单位为KB；U：Used，即已使用容量。  </p>
+<ul>
+<li>S0C：survivor0总容量  </li>
+<li>S1C：survivor1总容量  </li>
+<li>S0U：survivor0已使用容量</li>
+<li>S1U：survivor1已使用容量</li>
+<li>EC：Eden区总容量</li>
+<li>EU：Eden区已使用容量</li>
+<li>OC：老年代总容量</li>
+<li>OU：老年代已使用容量</li>
+<li>MC：元空间承诺大小</li>
+<li>MU：元空间已使用容量</li>
+<li>CCSC：压缩类容量大小</li>
+<li>CCSU：压缩类已使用容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>YGCT：新生代垃圾回收时间</li>
+<li>FGC：老年代垃圾回收次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gccapacity"><a href="#gccapacity" class="headerlink" title="-gccapacity"></a>-gccapacity</h5><p>Memory pool generation and space capacities.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jstat -gccapacity 62044</span><br><span class="line"> NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC</span><br><span class="line"> 86528.0 1385472.0  32256.0  512.0  512.0  30720.0   173568.0  2771968.0    83968.0    83968.0      0.0 1085440.0  39936.0      0.0 1048576.0   4608.0   1306     2</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>NGCMN：新生代最小容量</li>
+<li>NGCMX：新生代最大容量</li>
+<li>NGC：当前新生代容量</li>
+<li>S0C：survivor0总容量  </li>
+<li>S1C：survivor1总容量  </li>
+<li>EC：Eden区总容量  </li>
+<li>OGCMN：老年代最小容量</li>
+<li>OGCMX：老年代最大容量</li>
+<li>OGC：当前老年代容量</li>
+<li>OC：老年代总容量</li>
+<li>MCMN：元空间最小容量</li>
+<li>MCMX：元空间最大容量</li>
+<li>MC：元空间当前容量</li>
+<li>CCSMN：压缩类空间最小容量</li>
+<li>CCSMX：压缩类空间最大容量</li>
+<li>CCSC：当前压缩类空间容量</li>
+<li>YGC：年轻的GC次数</li>
+<li>FGC：老年代GC次数</li>
+</ul>
+<h5 id="gccause"><a href="#gccause" class="headerlink" title="-gccause"></a>-gccause</h5><p>垃圾收集器统计概述(同gcutil)，及最近两次垃圾回收原因。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gccause 62044</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC</span><br><span class="line"> 25.00   0.00  49.19  37.97  97.21  96.06   2360    4.765     2    0.099    4.865 Allocation Failure   No GC</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>LGCC：上次垃圾回收原因</li>
+<li>GCC：当前垃圾回收原因</li>
+</ul>
+<h5 id="gcnew"><a href="#gcnew" class="headerlink" title="-gcnew"></a>-gcnew</h5><p>新生代代行为统计<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcnew 62044</span><br><span class="line"> S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT</span><br><span class="line"> 512.0  512.0    0.0   96.0 15  15  512.0  30720.0   6082.8   2557    5.169</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>S0C：survivor0总容量  </li>
+<li>S1C：survivor1总容量  </li>
+<li>S0U：survivor0已使用容量</li>
+<li>S1U：survivor1已使用容量</li>
+<li>TT：Tenuring threshold.(任期阈值)</li>
+<li>DTT： Maximum tenuring threshold.</li>
+<li>DSS：DSS: Desired survivor size (KB).survivor的容量</li>
+<li>EC：Eden区总容量</li>
+<li>EU：Eden区已使用容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>YGCT：新生代垃圾回收时间</li>
+</ul>
+<h4 id="gcnewcapacity"><a href="#gcnewcapacity" class="headerlink" title="-gcnewcapacity"></a>-gcnewcapacity</h4><p>新生代与其相应的内存空间统计。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcnewcapacity 105308</span><br><span class="line">  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC</span><br><span class="line">   86528.0  1385472.0    64512.0 461824.0   9728.0 461824.0    512.0  1384448.0    45056.0    25     2</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>NGCMN：新生代最小容量</li>
+<li>NGCMX：新生代最大容量</li>
+<li>NGC：当前新生代容量</li>
+<li>S0CMX：survivor0最大容量</li>
+<li>S0C：当前survivor0容量</li>
+<li>ECMX：Eden最大容量</li>
+<li>EC：当前Eden容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>FGC：老年代GC次数</li>
+</ul>
+<h5 id="gcold"><a href="#gcold" class="headerlink" title="-gcold"></a>-gcold</h5><p>老年代和元空间的行为统计。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcold 105308</span><br><span class="line">   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT</span><br><span class="line"> 39680.0  38773.6   4608.0   4422.3     80896.0     22094.7    313     2    0.098    0.805</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>MC：元空间承诺大小</li>
+<li>MU：元空间已使用容量</li>
+<li>CCSC：压缩类容量大小</li>
+<li>CCSU：压缩类已使用容量</li>
+<li>OC：老年代总容量</li>
+<li>OU：老年代已使用容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>FGC：老年代垃圾回收次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gcoldcapacity"><a href="#gcoldcapacity" class="headerlink" title="-gcoldcapacity"></a>-gcoldcapacity</h5><p>老年代大小统计。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcoldcapacity 105308</span><br><span class="line">   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT</span><br><span class="line">   173568.0   2771968.0     80896.0     80896.0   740     2    0.098    1.668</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>OGCMN：老年代最小容量</li>
+<li>OGCMX：老年代最大容量</li>
+<li>OGC：当前老年代容量</li>
+<li>OC：老年代总容量</li>
+<li>YGC：年轻的GC次数</li>
+<li>FGC：老年代GC次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gcmetacapacity"><a href="#gcmetacapacity" class="headerlink" title="-gcmetacapacity"></a>-gcmetacapacity</h5><p>元空间大小统计。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcmetacapacity 105308</span><br><span class="line">   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT</span><br><span class="line">       0.0  1085440.0    40448.0        0.0  1048576.0     4608.0   848     2    0.098    1.885</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>MCMN：元空间最小容量</li>
+<li>MCMX：元空间最大容量</li>
+<li>MC：元空间当前容量</li>
+<li>CCSMN：压缩类空间最小容量</li>
+<li>CCSMX：压缩类空间最大容量</li>
+<li>CCSC：当前压缩类空间容量</li>
+<li>YGC：年轻的GC次数</li>
+<li>FGC：老年代GC次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gcutil"><a href="#gcutil" class="headerlink" title="-gcutil"></a>-gcutil</h5><p>垃圾收集器统计概述。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcutil 105308</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">  0.00  31.25  57.06  30.97  97.41  96.00    959    2.047     2    0.098    2.145</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>S0、S1、E、O、M、CCS分别为对应内存空间已使用容量占总容量的百分比。</li>
+</ul>
+<h4 id="printcompilation"><a href="#printcompilation" class="headerlink" title="-printcompilation"></a>-printcompilation</h4><p>HotSpot编译方法统计。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -printcompilation 105308</span><br><span class="line">Compiled  Size  Type Method</span><br><span class="line">    7351     30    1 org/apache/http/message/TokenParser isWhitespace</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Compiled：被执行的编译任务的数量</li>
+<li>Size：方法字节码的字节数</li>
+<li>Type：编译类型</li>
+<li>Method：编译方法的类名和方法名。类名使用”/“ 代替 “.” 作为空间分隔符. 方法名是给出类的方法名. 格式是一致于HotSpot - XX:+PrintComplation 选项</li>
+</ul>
+<h3 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcutil 105308 200 10</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line"> 31.25   0.00  69.70  41.31  97.43  96.12   3050    6.466     2    0.098    6.564</span><br><span class="line">  0.00  25.00  25.65  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  38.43  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  50.31  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  63.75  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  73.27  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  84.72  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  99.04  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line"> 31.25   0.00  11.40  41.31  97.43  96.12   3052    6.469     2    0.098    6.567</span><br><span class="line"> 31.25   0.00  20.88  41.31  97.43  96.12   3052    6.469     2    0.098    6.567</span><br></pre></td></tr></table></figure>
+<p>示例中vmid为105308，指令含义为输出垃圾收集统计概述，输出策略为每200毫秒一次共输出10次<br>根据结果可得出以下结果：</p>
+<ol>
+<li>10次内进行两次新生代GC</li>
+<li>第一次新生代GC耗时0.002秒，第二次耗时0.001秒。</li>
+<li>没有进行老年代收集，老年代没有空间上的变化，说明Eden区没有对象年龄晋升到老年代</li>
+<li>第一次YGC将S0内对象提升到S1，S1部分对象提升到Eden区</li>
+<li>元空间没有变化，但元空间使用程度已经极高，到了96.12%，这个时候就可以考虑下元空间调优的问题了。</li>
+</ol>
+<h2 id="jmap-print-details-of-a-specified-process"><a href="#jmap-print-details-of-a-specified-process" class="headerlink" title="jmap - print details of a specified process"></a>jmap - print details of a specified process</h2><p>jmap(JVM Memory Map)：用于生成heap dump文件，还可以查询finalize执行队列、Java堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。<br>可以使用XX:+HeapDumpOnOutOfMemoryError参数来让虚拟机出现OOM的时候·自动生成dump文件。</p>
+<p>命令格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -&lt;options&gt; &lt;vmid&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="options参数-2"><a href="#options参数-2" class="headerlink" title="options参数"></a>options参数</h3><h4 id="总览-1"><a href="#总览-1" class="headerlink" title="总览"></a>总览</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-clstats</td>
+<td style="text-align:left">打印java堆类加载统计信息<br>Prints class loader wise statistics of Java heap.</td>
+</tr>
+<tr>
+<td style="text-align:left">-finalizerinfo</td>
+<td style="text-align:left">打印等待结束的对象信息<br>Prints information about objects that are awaiting finalization.</td>
+</tr>
+<tr>
+<td style="text-align:left">-histo[:live]</td>
+<td style="text-align:left">打印堆的对象统计，包括对象数量，大小等。也可以单独指定子项：live，只打印存活对象。<br>Prints a histogram of the heap. For each Java class, the number of objects, memory size in bytes, and the fully qualified class names are printed. The JVM internal class names are printed with an asterisk (*) prefix. If the live suboption is specified, then only active objects are counted.</td>
+</tr>
+<tr>
+<td style="text-align:left">-dump:[live,] format=b, file=filename</td>
+<td style="text-align:left">将Java堆以hprof二进制格式转储为文件名filename。live子选项选定时，只转储存活对象。<br>Dumps the Java heap in hprof binary format to filename. The live suboption is optional, but when specified, only the active objects in the heap are dumped. To browse the heap dump, you can use the jhat(1) command to read the generated file.</td>
+</tr>
+<tr>
+<td style="text-align:left">-heap</td>
+<td style="text-align:left">输出java堆概览.<br>Prints a heap summary of the garbage collection used, the head configuration, and generation-wise heap usage. In addition, the number and size of interned Strings are printed.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><h5 id="clstats"><a href="#clstats" class="headerlink" title="-clstats"></a>-clstats</h5><p>连接正在运行的进程，打印类加载器的统计信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -clstats 75052</span><br><span class="line">Attaching to process ID 75052, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.131-b11</span><br><span class="line">finding class loader instances ..done.</span><br><span class="line">computing per loader stat ..done.</span><br><span class="line">please wait.. computing liveness.liveness analysis may be inaccurate ...</span><br><span class="line">class_loader    classes bytes   parent_loader   alive?  type</span><br><span class="line"></span><br><span class="line">&lt;bootstrap&gt;     3735    6715263   null          live    &lt;internal&gt;</span><br><span class="line">0x00000006c24851c8      1       889     0x00000006c24853f0      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3220ba0      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3820380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c383c380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea748      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8178      1       1472      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337c6f0      1       1483    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2485100      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2418f08      2749    5382011 0x00000006c2418f68      dead    sun/misc/Launcher$AppClassLoader@0x00000007c000f6a0</span><br><span class="line">0x00000006c3220c68      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea680      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337c838      1       1473    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3908b40      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2ceab58      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3908c08      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c28bafd0      0       0       0x00000006c2418f08      dead    java/util/ResourceBundle$RBClassLoader@0x00000007c0089950</span><br><span class="line">0x00000006c2ceaa90      1       1472    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf87a0      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf89a0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2485328      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c39089b0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3222ec0      1       880     0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c37cced8      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bd2298      40      93710   0x00000006c2418f08      dead    com/alibaba/fastjson/util/ASMClassLoader@0x00000007c02af098</span><br><span class="line">0x00000006c2cea428      1       1474      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf86d8      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337d290      1       1485    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3908a78      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2418f68      124     266033    null          dead    sun/misc/Launcher$ExtClassLoader@0x00000007c000fa48</span><br><span class="line">0x00000006c3222f88      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c37cce10      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea360      1       1485      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8610      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2485038      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea5b8      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8308      1       1471    0x00000006c2418f68      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8548      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337cf80      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2484ef0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c24853f0      12      37276   0x00000006c2418f08      dead    sun/reflect/misc/MethodUtil@0x00000007c0116af8</span><br><span class="line">0x00000006c2cea4f0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8240      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337d048      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c37fe380      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line"></span><br><span class="line">total = 45      6699    12545217            N/A         alive=1, dead=44            N/A</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>class_loader：类加载器</li>
+<li>classes：加载的class数</li>
+<li>bytes：加载字节码大小</li>
+<li>parent_loader：父类加载器</li>
+<li>live：存活状态</li>
+<li>type：加载器类型</li>
+</ul>
+<h5 id="finalizerinfo"><a href="#finalizerinfo" class="headerlink" title="-finalizerinfo"></a>-finalizerinfo</h5><p>打印等待结束的对象信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -finalizerinfo 75052</span><br><span class="line">  Attaching to process ID 75052, please wait...</span><br><span class="line">  Debugger attached successfully.</span><br><span class="line">  Server compiler detected.</span><br><span class="line">  JVM version is 25.131-b11</span><br><span class="line">  Number of objects pending for finalization: 0</span><br></pre></td></tr></table></figure></p>
+<p>可以看出来，目前没有等待结束的对象</p>
+<h5 id="histo"><a href="#histo" class="headerlink" title="-histo"></a>-histo</h5><p>打印堆的对象统计，包括对象数量，大小等。也可以单独指定子项：live，只打印存活对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -histo:live 75052|more</span><br><span class="line"></span><br><span class="line"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span><br><span class="line">   1:          4071        5668128  [I</span><br><span class="line">   2:         52491        4982384  [C</span><br><span class="line">   3:          3629        1511648  [B</span><br><span class="line">   4:         51380        1233120  java.lang.String</span><br><span class="line">   5:          6620         751480  java.lang.Class</span><br><span class="line">   6:         16354         523328  java.util.concurrent.ConcurrentHashMap$Node</span><br><span class="line">   7:         15464         494848  java.util.HashMap$Node</span><br><span class="line">   8:          6599         409624  [Ljava.lang.Object;</span><br><span class="line">   9:          2787         245256  java.lang.reflect.Method</span><br><span class="line">  10:          1363         200728  [Ljava.util.HashMap$Node;</span><br><span class="line">  11:          8237         197688  sun.font.TrueTypeFont$DirectoryEntry</span><br><span class="line">  12:          6121         195872  java.util.Hashtable$Entry</span><br><span class="line">  13:           209         143976  [J</span><br><span class="line">-- More  --</span><br></pre></td></tr></table></figure></p>
+<p>因histo统计对象的类型很多，带上more后，可根据命令窗口大小进行部分展示，可回车后继续展示。<br>其中class name为对象类型的，部分为简写，含义如下：</p>
+<ul>
+<li>B  byte</li>
+<li>C  char</li>
+<li>D  double</li>
+<li>F  float</li>
+<li>I  int</li>
+<li>J  long</li>
+<li>Z  boolean</li>
+<li>[  数组，如[I表示int[]</li>
+<li>[L+类名 其他对象</li>
+</ul>
+<h5 id="dump"><a href="#dump" class="headerlink" title="-dump"></a>-dump</h5><p>转储java堆信息，包含子项如下：</p>
+<ul>
+<li>live：当指定后，只转储存活对象</li>
+<li>format=b：转储格式，以hprof二进制格式转储Java堆</li>
+<li>file=filename：转储文件名  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -dump:live,format=b,file=heap 75052</span><br><span class="line">  Dumping heap to C:\Users\Y\heap1 ...</span><br><span class="line">  Heap dump file created</span><br></pre></td></tr></table></figure>
+<p>示例中转储文件会生成在C:\Users\Y\目录下，后续dump文件分析可以根据文件大小进行选择。<br>分析工具：</p>
+<ul>
+<li>JDK自带程序jvisiualvm.exe</li>
+<li>jhat命令</li>
+<li>Eclipse Memory Analyzer(MAT)</li>
+</ul>
+<h5 id="heap"><a href="#heap" class="headerlink" title="-heap"></a>-heap</h5><p>输出java堆概览<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -heap 75052</span><br><span class="line">Attaching to process ID 75052, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.131-b11</span><br><span class="line"></span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Parallel GC with 4 thread(s)  //GC方式，并行</span><br><span class="line"></span><br><span class="line">Heap Configuration:			//堆初始配置，可以通过 -XX:*(eg:NewSize) 进行对应参数设置</span><br><span class="line">   MinHeapFreeRatio         = 0		//最小空闲比率</span><br><span class="line">   MaxHeapFreeRatio         = 100		//最大空闲比率</span><br><span class="line">   MaxHeapSize              = 4257218560 (4060.0MB)		//最大堆内存</span><br><span class="line">   NewSize                  = 88604672 (84.5MB)		//新生代内存容量</span><br><span class="line">   MaxNewSize               = 1418723328 (1353.0MB)		//最大新生代内存容量</span><br><span class="line">   OldSize                  = 177733632 (169.5MB)		//老年代内存容量</span><br><span class="line">   NewRatio                 = 2		//新生代和老年代大小比例</span><br><span class="line">   SurvivorRatio            = 8		//Eden区与Survivor区的大小比值</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)		//元空内存容量</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)		//压缩类空间内存容量</span><br><span class="line">   MaxMetaspaceSize         = 17592186044415 MB		//最大元空间内存</span><br><span class="line">   G1HeapRegionSize         = 0 (0.0MB)		//G1垃圾回收器中指定分区大小(1MB~32MB，且必须是2的幂)，默认将整堆划分为2048个分区</span><br><span class="line"></span><br><span class="line">Heap Usage:</span><br><span class="line">PS Young Generation</span><br><span class="line">Eden Space:		//Eden区使用情况：总容量、已使用、空闲、使用比例</span><br><span class="line">   capacity = 31981568 (30.5MB)</span><br><span class="line">   used     = 5003392 (4.7716064453125MB)</span><br><span class="line">   free     = 26978176 (25.7283935546875MB)</span><br><span class="line">   15.644611296106557% used</span><br><span class="line">From Space:		//survivor0使用情况</span><br><span class="line">   capacity = 524288 (0.5MB)</span><br><span class="line">   used     = 131072 (0.125MB)</span><br><span class="line">   free     = 393216 (0.375MB)</span><br><span class="line">   25.0% used</span><br><span class="line">To Space:		//survivor1使用情况</span><br><span class="line">   capacity = 524288 (0.5MB)</span><br><span class="line">   used     = 0 (0.0MB)</span><br><span class="line">   free     = 524288 (0.5MB)</span><br><span class="line">   0.0% used</span><br><span class="line">PS Old Generation		//老年代使用情况</span><br><span class="line">   capacity = 88604672 (84.5MB)</span><br><span class="line">   used     = 22120552 (21.095802307128906MB)</span><br><span class="line">   free     = 66484120 (63.404197692871094MB)</span><br><span class="line">   24.965446517312316% used</span><br><span class="line"></span><br><span class="line">21409 interned Strings occupying 2142768 bytes.</span><br></pre></td></tr></table></figure></p>
+<h2 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h2><p>jhat(JVM Heap Analysis Tool)与jmap结合使用，用来分析dump文件。jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看.<br>本文基于JDK8来分析使用相关命令，所以依旧存在jhat命令。从JDK9的时候已经删除了（JEP 241: Remove the jhat Tool）。现在Oracle官方推荐的分析工具是Eclipse Memory Analyzer Tool (MAT) 和 VisualVM(jvisualvm.exe)。</p>
+<p>相关操作参数,有兴趣的可以深入了解一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Usage:  jhat [-stack &lt;bool&gt;] [-refs &lt;bool&gt;] [-port &lt;port&gt;] [-baseline &lt;file&gt;] [-debug &lt;int&gt;] [-version] [-h|-help] &lt;file&gt;</span><br><span class="line"></span><br><span class="line">        -J&lt;flag&gt;          Pass &lt;flag&gt; directly to the runtime system. For</span><br><span class="line">                          example, -J-mx512m to use a maximum heap size of 512MB</span><br><span class="line">        -stack false:     Turn off tracking object allocation call stack.</span><br><span class="line">        -refs false:      Turn off tracking of references to objects</span><br><span class="line">        -port &lt;port&gt;:     Set the port for the HTTP server.  Defaults to 7000</span><br><span class="line">        -exclude &lt;file&gt;:  Specify a file that lists data members that should</span><br><span class="line">                          be excluded from the reachableFrom query.</span><br><span class="line">        -baseline &lt;file&gt;: Specify a baseline object dump.  Objects in</span><br><span class="line">                          both heap dumps with the same ID and same class will</span><br><span class="line">                          be marked as not being &quot;new&quot;.</span><br><span class="line">        -debug &lt;int&gt;:     Set debug level.</span><br><span class="line">                            0:  No debug output</span><br><span class="line">                            1:  Debug hprof file parsing</span><br><span class="line">                            2:  Debug hprof file parsing, no server</span><br><span class="line">        -version          Report version number</span><br><span class="line">        -h|-help          Print this help and exit</span><br><span class="line">        &lt;file&gt;            The file to read</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/08/17/JVM/jvm-memory-model/" rel="next" title="JVM内存模型">
+                  <i class="fa fa-chevron-left"></i> JVM内存模型
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/04/15/mysql/执行计划/" rel="prev" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.jpg"
+      alt="cmeng">
+  <p class="site-author-name" itemprop="name">cmeng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM调优"><span class="nav-number">1.</span> <span class="nav-text">JVM调优</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概述"><span class="nav-number">1.0.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调优原则"><span class="nav-number">1.0.2.</span> <span class="nav-text">调优原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jps"><span class="nav-number">2.</span> <span class="nav-text">jps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jinfo"><span class="nav-number">3.</span> <span class="nav-text">jinfo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options参数"><span class="nav-number">3.1.</span> <span class="nav-text">options参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jstat"><span class="nav-number">4.</span> <span class="nav-text">jstat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options参数-1"><span class="nav-number">4.1.</span> <span class="nav-text">options参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总览"><span class="nav-number">4.1.1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#options参数详解"><span class="nav-number">4.1.2.</span> <span class="nav-text">options参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#class"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">-class</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#compiler"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">-compiler</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gc"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">-gc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gccapacity"><span class="nav-number">4.1.2.4.</span> <span class="nav-text">-gccapacity</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gccause"><span class="nav-number">4.1.2.5.</span> <span class="nav-text">-gccause</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gcnew"><span class="nav-number">4.1.2.6.</span> <span class="nav-text">-gcnew</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gcnewcapacity"><span class="nav-number">4.1.3.</span> <span class="nav-text">-gcnewcapacity</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#gcold"><span class="nav-number">4.1.3.1.</span> <span class="nav-text">-gcold</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gcoldcapacity"><span class="nav-number">4.1.3.2.</span> <span class="nav-text">-gcoldcapacity</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gcmetacapacity"><span class="nav-number">4.1.3.3.</span> <span class="nav-text">-gcmetacapacity</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gcutil"><span class="nav-number">4.1.3.4.</span> <span class="nav-text">-gcutil</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#printcompilation"><span class="nav-number">4.1.4.</span> <span class="nav-text">-printcompilation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例分析"><span class="nav-number">4.2.</span> <span class="nav-text">示例分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jmap-print-details-of-a-specified-process"><span class="nav-number">5.</span> <span class="nav-text">jmap - print details of a specified process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options参数-2"><span class="nav-number">5.1.</span> <span class="nav-text">options参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总览-1"><span class="nav-number">5.1.1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#详解"><span class="nav-number">5.1.2.</span> <span class="nav-text">详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#clstats"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">-clstats</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finalizerinfo"><span class="nav-number">5.1.2.2.</span> <span class="nav-text">-finalizerinfo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#histo"><span class="nav-number">5.1.2.3.</span> <span class="nav-text">-histo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dump"><span class="nav-number">5.1.2.4.</span> <span class="nav-text">-dump</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#heap"><span class="nav-number">5.1.2.5.</span> <span class="nav-text">-heap</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jhat"><span class="nav-number">6.</span> <span class="nav-text">jhat</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cmeng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>
