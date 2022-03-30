@@ -1032,164 +1032,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/时间复杂度/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cmeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c萌怪谈">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/08/17/algorithm/时间复杂度/" class="post-title-link" itemprop="url">算法-时间复杂度</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-18 17:00:25" itemprop="dateModified" datetime="2020-08-18T17:00:25+08:00">2020-08-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h2 id="算法-时间复杂度"><a href="#算法-时间复杂度" class="headerlink" title="算法-时间复杂度"></a>算法-时间复杂度</h2><h3 id="1、数据结构-算法"><a href="#1、数据结构-算法" class="headerlink" title="1、数据结构-算法"></a>1、数据结构-算法</h3><p>数据结构和算法是相辅相成的，<strong>数据结构是为算法服务的，算法要作用在特定的数据结构之上</strong>。所以二者的学习不能互相孤立。</p>
-<h3 id="2、算法复杂度分析"><a href="#2、算法复杂度分析" class="headerlink" title="2、算法复杂度分析"></a>2、算法复杂度分析</h3><ol>
-<li>时间复杂度： 指算法需要消耗的时间资源。计算机算法是问题规模n 的函数f(n)，算法的时间复杂度也因此记做。<br>T(n)=Ο(f(n))</li>
-<li>空间复杂度：算法需要消耗的空间资源。其计算和表示方法与时间复杂度类似，一般都用复杂度的渐近性来表示。同时间复杂度相比，空间复杂度的分析要简单得多。</li>
-</ol>
-<h4 id="2-1、事后统计法"><a href="#2-1、事后统计法" class="headerlink" title="2.1、事后统计法"></a>2.1、事后统计法</h4><p>事后统计法：通过统计、分析等，计算出算法的实际执行时间和实际内存占用，从而得到算法的时间复杂度。</p>
-<ul>
-<li>测试结果非常依赖测试环境。（服务器资源配置）</li>
-<li>测试结果受限于数据规模</li>
-</ul>
-<h4 id="2-2、大O复杂度表示法"><a href="#2-2、大O复杂度表示法" class="headerlink" title="2.2、大O复杂度表示法"></a>2.2、大O复杂度表示法</h4><p>时间复杂度通俗来讲，就是代码运行的时间。大O表示法就是在不运算代码的情况下来分析一段代码的时间复杂度。<br>看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从CPU的角度来看，代码的每一行都执行着类似的操作：<strong>读操作-运算-写操作</strong>。这里我们假设每行代码的执行时间一样，为unit_time，那么2，3行执行了1个unit_time，3，4行n个unit_time，总的执行时间就是（2n+2）*unit_time。<br>按照这个思路再来看下面一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>依旧假设单位时间为unit_time，2、3、4行执行时间分别为1unti_time，5、6加起来就是2n。7、8加起来就是2n²unit_time;总的时间就为(2n²+2n+3)unit_time.<br>这两段代码分析我们可得到一个重要的规律，那就是<strong>代码的执行时间T(n)和每段代码的执次数成正比</strong>，所以就得到了以下公式：</p>
-<blockquote>
-<font color="orange">T(n)=O(f(n))</font>
-
-</blockquote>
-<p>其中T(n)代表了代码的执行时间，n代表数据规模，f(n)代表每行代码执行的次数总和。因为是公式，所以用f(n)表达。公式中的O则表示代码执行时间T(n)和表达式f(n)成正比。   </p>
-<p>两个例子中的T(n)=O(2n+2)和T(n)=O(2n²+2n+3)就是大O时间复杂度表示法，它并不代表具体的执行时间，而是代表<strong>代码的执行时间随着数据规模增加的变化趋势</strong>，所以也叫渐进时间复杂度（asymptotic time complexity），简称时间复杂度。  </p>
-<p>当n很大时，表达式中的低阶、常量、系数等部分并不左右增长趋势，所以大O表示法可记为：T(n)=O(n)、T(n)=O(n²)。</p>
-<h4 id="2-3-常见复杂度分析方法"><a href="#2-3-常见复杂度分析方法" class="headerlink" title="2.3 常见复杂度分析方法"></a>2.3 常见复杂度分析方法</h4><ol>
-<li><p>单段代码看高频：如循环</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多段代码取最高：如一段代码中存在单重循环和多重循环，则取多重循环。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>嵌套循环取乘积：比如多重循环，递归等。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多数据规模取和：O(n+m)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;i&lt;m;i++)&#123;</span><br><span class="line">    sum += sum + i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="2-4-常见的时间复杂度"><a href="#2-4-常见的时间复杂度" class="headerlink" title="2.4 常见的时间复杂度"></a>2.4 常见的时间复杂度</h4><p><img src="/image/algorithm/常见时间复杂度.jpg" alt="常见时间复杂度"></p>
-<ol>
-<li>多项式阶，随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。  </li>
-</ol>
-<ul>
-<li>O(1)（常数阶）<br>常数阶的概念并不是只执行一行代码，一般情况下算法中不存在循环、递归等语句，即使有成千上万行代码，复杂度也是O(1)</li>
-<li><p>O(logn)（对数阶）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当2^x&gt;=n时，循环结束，所以这段代码的执行次数就是x= $log_2n$;大O法记作：$O(log_2n)$。那么再看下面这段代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>按照上面的逻辑，这段的复杂度为$O(log_3n)$。二者之间是可以转换的$log_3n=log_32 * log_2n$；基于大O法的理论：在采用大O计数法时可以忽略系数等。则此类复杂度可统一记为O(logn)。   </p>
-</li>
-<li>O(n)（线性阶）</li>
-<li>O(nlogn)（线性对数阶）<br>基于O(logn)，那么O(nlogn)就容易理解了，就相当于上面的嵌套取乘积规则一样，就是O(logn)执行的n遍。</li>
-<li>O(n^2)（平方阶）、O(n^3)（立方阶）….、O(n^k)(K次方阶)</li>
-</ul>
-<ol>
-<li>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。</li>
-</ol>
-<ul>
-<li>O(2^n)（指数阶）</li>
-<li>O(n!)（阶乘阶）</li>
-</ul>
-<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>虽然上面说的事后统计法有一定的缺点，但时间复杂度的分析与其并不是对立冲突的。时间复杂度是一个理论上的模型，可以比较直观的给我们一个算法的效率上的感性认知，只能提供粗略的分析。它是与宿主平台无关的，并不是说O(n)的效率一定就优于O(n²)。针对不同的宿主平台环境，不同的数据集，不同的数据规模，在实际应用上性能可能会各有不同，所以实际应用中进行一定的性能基准测试是有必要的。<br>综上所述，时间复杂度分析和性能测试是相辅相成的。但一个低阶的时间复杂度确实有极大的可能优于高阶的时间复杂度，所以在编程中时刻关心复杂度的趋势走向是很有必要的，而且能很大幅度的提升输出质量。因此在编程中具有这种复杂度分析的思维还是十分有必要的。</p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/back_tracking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1532,6 +1374,164 @@
 </blockquote>
 <p>双指针形式，当快慢两个指针之差为n时，二者保持同时移动，当快到达最后节点，慢指针正好符合删除的节点要求。</p>
 <p><strong>代码</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    ListNode zero = <span class="keyword">new</span> ListNode(<span class="number">0</span>, head);</span><br><span class="line">    ListNode slow = zero;</span><br><span class="line">    ListNode fast= head;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        fast = fast.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(fast!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        slow = slow.next;</span><br><span class="line">        fast =fast.next;</span><br><span class="line">    &#125;</span><br><span class="line">    slow.next = slow.next.next;</span><br><span class="line">    <span class="keyword">return</span> zero.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/时间复杂度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/08/17/algorithm/时间复杂度/" class="post-title-link" itemprop="url">算法-时间复杂度</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-18 17:00:25" itemprop="dateModified" datetime="2020-08-18T17:00:25+08:00">2020-08-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="算法-时间复杂度"><a href="#算法-时间复杂度" class="headerlink" title="算法-时间复杂度"></a>算法-时间复杂度</h2><h3 id="1、数据结构-算法"><a href="#1、数据结构-算法" class="headerlink" title="1、数据结构-算法"></a>1、数据结构-算法</h3><p>数据结构和算法是相辅相成的，<strong>数据结构是为算法服务的，算法要作用在特定的数据结构之上</strong>。所以二者的学习不能互相孤立。</p>
+<h3 id="2、算法复杂度分析"><a href="#2、算法复杂度分析" class="headerlink" title="2、算法复杂度分析"></a>2、算法复杂度分析</h3><ol>
+<li>时间复杂度： 指算法需要消耗的时间资源。计算机算法是问题规模n 的函数f(n)，算法的时间复杂度也因此记做。<br>T(n)=Ο(f(n))</li>
+<li>空间复杂度：算法需要消耗的空间资源。其计算和表示方法与时间复杂度类似，一般都用复杂度的渐近性来表示。同时间复杂度相比，空间复杂度的分析要简单得多。</li>
+</ol>
+<h4 id="2-1、事后统计法"><a href="#2-1、事后统计法" class="headerlink" title="2.1、事后统计法"></a>2.1、事后统计法</h4><p>事后统计法：通过统计、分析等，计算出算法的实际执行时间和实际内存占用，从而得到算法的时间复杂度。</p>
+<ul>
+<li>测试结果非常依赖测试环境。（服务器资源配置）</li>
+<li>测试结果受限于数据规模</li>
+</ul>
+<h4 id="2-2、大O复杂度表示法"><a href="#2-2、大O复杂度表示法" class="headerlink" title="2.2、大O复杂度表示法"></a>2.2、大O复杂度表示法</h4><p>时间复杂度通俗来讲，就是代码运行的时间。大O表示法就是在不运算代码的情况下来分析一段代码的时间复杂度。<br>看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从CPU的角度来看，代码的每一行都执行着类似的操作：<strong>读操作-运算-写操作</strong>。这里我们假设每行代码的执行时间一样，为unit_time，那么2，3行执行了1个unit_time，3，4行n个unit_time，总的执行时间就是（2n+2）*unit_time。<br>按照这个思路再来看下面一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>依旧假设单位时间为unit_time，2、3、4行执行时间分别为1unti_time，5、6加起来就是2n。7、8加起来就是2n²unit_time;总的时间就为(2n²+2n+3)unit_time.<br>这两段代码分析我们可得到一个重要的规律，那就是<strong>代码的执行时间T(n)和每段代码的执次数成正比</strong>，所以就得到了以下公式：</p>
+<blockquote>
+<font color="orange">T(n)=O(f(n))</font>
+
+</blockquote>
+<p>其中T(n)代表了代码的执行时间，n代表数据规模，f(n)代表每行代码执行的次数总和。因为是公式，所以用f(n)表达。公式中的O则表示代码执行时间T(n)和表达式f(n)成正比。   </p>
+<p>两个例子中的T(n)=O(2n+2)和T(n)=O(2n²+2n+3)就是大O时间复杂度表示法，它并不代表具体的执行时间，而是代表<strong>代码的执行时间随着数据规模增加的变化趋势</strong>，所以也叫渐进时间复杂度（asymptotic time complexity），简称时间复杂度。  </p>
+<p>当n很大时，表达式中的低阶、常量、系数等部分并不左右增长趋势，所以大O表示法可记为：T(n)=O(n)、T(n)=O(n²)。</p>
+<h4 id="2-3-常见复杂度分析方法"><a href="#2-3-常见复杂度分析方法" class="headerlink" title="2.3 常见复杂度分析方法"></a>2.3 常见复杂度分析方法</h4><ol>
+<li><p>单段代码看高频：如循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多段代码取最高：如一段代码中存在单重循环和多重循环，则取多重循环。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套循环取乘积：比如多重循环，递归等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多数据规模取和：O(n+m)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;i&lt;m;i++)&#123;</span><br><span class="line">    sum += sum + i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="2-4-常见的时间复杂度"><a href="#2-4-常见的时间复杂度" class="headerlink" title="2.4 常见的时间复杂度"></a>2.4 常见的时间复杂度</h4><p><img src="/image/algorithm/常见时间复杂度.jpg" alt="常见时间复杂度"></p>
+<ol>
+<li>多项式阶，随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。  </li>
+</ol>
+<ul>
+<li>O(1)（常数阶）<br>常数阶的概念并不是只执行一行代码，一般情况下算法中不存在循环、递归等语句，即使有成千上万行代码，复杂度也是O(1)</li>
+<li><p>O(logn)（对数阶）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当2^x&gt;=n时，循环结束，所以这段代码的执行次数就是x= $log_2n$;大O法记作：$O(log_2n)$。那么再看下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按照上面的逻辑，这段的复杂度为$O(log_3n)$。二者之间是可以转换的$log_3n=log_32 * log_2n$；基于大O法的理论：在采用大O计数法时可以忽略系数等。则此类复杂度可统一记为O(logn)。   </p>
+</li>
+<li>O(n)（线性阶）</li>
+<li>O(nlogn)（线性对数阶）<br>基于O(logn)，那么O(nlogn)就容易理解了，就相当于上面的嵌套取乘积规则一样，就是O(logn)执行的n遍。</li>
+<li>O(n^2)（平方阶）、O(n^3)（立方阶）….、O(n^k)(K次方阶)</li>
+</ul>
+<ol>
+<li>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。</li>
+</ol>
+<ul>
+<li>O(2^n)（指数阶）</li>
+<li>O(n!)（阶乘阶）</li>
+</ul>
+<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>虽然上面说的事后统计法有一定的缺点，但时间复杂度的分析与其并不是对立冲突的。时间复杂度是一个理论上的模型，可以比较直观的给我们一个算法的效率上的感性认知，只能提供粗略的分析。它是与宿主平台无关的，并不是说O(n)的效率一定就优于O(n²)。针对不同的宿主平台环境，不同的数据集，不同的数据规模，在实际应用上性能可能会各有不同，所以实际应用中进行一定的性能基准测试是有必要的。<br>综上所述，时间复杂度分析和性能测试是相辅相成的。但一个低阶的时间复杂度确实有极大的可能优于高阶的时间复杂度，所以在编程中时刻关心复杂度的趋势走向是很有必要的，而且能很大幅度的提升输出质量。因此在编程中具有这种复杂度分析的思维还是十分有必要的。</p>
 
           
         
