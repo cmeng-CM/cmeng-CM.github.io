@@ -1253,7 +1253,7 @@ fn main() {
 <font size=5%>总结其特性：</font>
 * 使用 **Rc\<T>** 共享数据
 * 克隆 **Rc\<T>** 会增加引用计数
-* **Rc\<T>** 只能用于单线程场景
+* **Rc\<T>** 只能用于单线程场景。多线程场景需要使用Arc\<T>（原子引用计数（atomically reference counted）类型）。
 * 通过 **Rc\<T>** 获取的引用为不可变引用
 
 ```rust
