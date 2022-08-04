@@ -225,6 +225,230 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2022/07/17/theoretical_knowledge/concurrency_model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2022/07/17/theoretical_knowledge/concurrency_model/" class="post-title-link" itemprop="url">并发模型比较</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2022-07-17 16:13:12" itemprop="dateCreated datePublished" datetime="2022-07-17T16:13:12+08:00">2022-07-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-03 22:23:06" itemprop="dateModified" datetime="2022-08-03T22:23:06+08:00">2022-08-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理论知识/" itemprop="url" rel="index"><span itemprop="name">理论知识</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理论知识/并发相关/" itemprop="url" rel="index"><span itemprop="name">并发相关</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="一、进程、线程、协程"><a href="#一、进程、线程、协程" class="headerlink" title="一、进程、线程、协程"></a>一、进程、线程、协程</h2><h3 id="1-1、进程"><a href="#1-1、进程" class="headerlink" title="1.1、进程"></a>1.1、进程</h3><p><strong>进程：</strong> 是系统进行资源分配的一个独立单位，内核通过进程控制块（PCB，process control block）来感知进程。</p>
+<blockquote>
+<p>一个计算机系统进程包括（或者说“拥有”）下列资料：</p>
+<blockquote>
+<ul>
+<li>那个程序的可执行机器代码的一个在存储器的映像。</li>
+<li>分配到的存储器（通常是虚拟的一个存储器区域）。存储器的内容包括可执行代码、特定于进程的资料（输入、输出）、调用堆栈、堆栈（用于保存运行时运输中途产生的资料）。</li>
+<li>分配给该进程的资源的操作系统描述符，诸如文件描述符（Unix术语）或文件句柄（Windows）、资料源和资料终端。</li>
+<li>安全特性，诸如进程拥有者和进程的权限集（可以容许的操作）。</li>
+<li>处理器状态（内文），诸如寄存器内容、物理存储器寻址等。当进程正在执行时，状态通常存储在寄存器，其他情况在存储器。</li>
+</ul>
+</blockquote>
+</blockquote>
+<h3 id="1-2、线程"><a href="#1-2、线程" class="headerlink" title="1.2、线程"></a>1.2、线程</h3><ol>
+<li><p>是独立调度和分派的基本单位。内核通过<a href="https://en.wikipedia.org/wiki/Thread_control_block" target="_blank" rel="noopener">线程控制块（TCB，thread control block）</a>来感知线程。  </p>
+</li>
+<li><p>同一进程中的多条线程将共享该进程中的全部系统资源，如虚拟地址空间，文件描述符和信号处理等等。但同一进程中的多个线程有各自的调用栈（call stack），自己的寄存器环境（register context），自己的线程本地存储（thread-local storage）。</p>
+</li>
+</ol>
+<h3 id="1-3、线程的实现和调度方式"><a href="#1-3、线程的实现和调度方式" class="headerlink" title="1.3、线程的实现和调度方式"></a>1.3、线程的实现和调度方式</h3><h4 id="1-3-1、线程的实现"><a href="#1-3-1、线程的实现" class="headerlink" title="1.3.1、线程的实现"></a>1.3.1、线程的实现</h4><ol>
+<li><p><strong>内核支持线程（KST，Kernel Supported Threads）</strong></p>
+<ul>
+<li>内核级线程的 TCB 保存在内核空间，其创建、阻塞、撤销、切换等活动也都是在内核空间实现的。</li>
+<li>内核线程的调度是由内核完成的，一般是抢占式调度。     </li>
+</ul>
+</li>
+<li><p>用户级线程(UST, User Supported Threads)</p>
+<ul>
+<li>用户级线程则是内核无关的，用户级线程的实现在用户空间，内核感知不到用户线程的存在。</li>
+<li>用户线程的调度算法可以是进程专用的，不会被内核调度，但同时，用户线程也无法利用多处理机的并行执行。调度也发生在用户态，一般是由线程库或编程语言运行时自行实现的。</li>
+<li>一个拥有多个用户线程的进程，一旦有一个线程阻塞，该进程所有的线程都会被阻塞。</li>
+<li>内核的切换需要转换到内核空间，而用户线程不需要，所以前者开销会更大。</li>
+<li>用户线程需要内核的支持，一般是通过运行时系统或内核控制线程来连接一个内核线程，有 1:1、1:n、n:m 的不同实现。</li>
+</ul>
+</li>
+</ol>
+<h4 id="1-3-2、调度方式"><a href="#1-3-2、调度方式" class="headerlink" title="1.3.2、调度方式"></a>1.3.2、调度方式</h4><p>在分时操作系统中，处理机的调度一般基于时间片的轮转（RR, round robin)，多个就绪线程排成队列，轮流执行时间片。所以进程调度主要有抢占式调度和协作式调度两种：<strong>抢占式(Preemptive)</strong> 与 <strong>协作式(Cooperative)</strong>。</p>
+<ol>
+<li><p><strong>抢占式(Preemptive)</strong><br>抢占式调度往往在一些重要位置（Sleep Call，Timer Tick）放置了中断信号，通过这个信号通知操作系统调度器(Scheduler)进行进程切换。在抢占式模型中，正在运行的进程可能会被强行挂起，这是由于这些中断信号引发的。</p>
+</li>
+<li><p><strong>协作式(Cooperative)</strong>。<br>协作式调度也叫非抢占式调度，是指当前运行的进程通过自身代码逻辑出让CPU控制权。与抢占式调度的区别在于进程运行不会被中断信号打断，除非其主动出让控制权给其他进程。  </p>
+</li>
+<li><p>结构示意图<br><img src="/image/theoretical_knowledge/线程调度方式.png" alt="调度方式"></p>
+</li>
+</ol>
+<h3 id="1-4、协程-Coroutines-Cooperative-User-Level-Threads"><a href="#1-4、协程-Coroutines-Cooperative-User-Level-Threads" class="headerlink" title="1.4、协程(Coroutines - Cooperative User-Level Threads)"></a>1.4、协程(Coroutines - Cooperative User-Level Threads)</h3><p><strong>协程：</strong> 又称微线程，纤程。英文名Coroutine。是应用程序通过线程库自行实现的 <strong>协作式调度</strong> 的运行在用户空间的用户线程，是编译器级别的。<strong>系统的并发是时间片的轮转</strong> ，单处理器交互执行不同的执行流，营造不同线程同时执行的感觉；而 <strong>协程的并发，是单线程内控制权的轮转</strong> 。相比抢占式调度，协程是主动让权，实现协作。</p>
+<h2 id="二、并发模型"><a href="#二、并发模型" class="headerlink" title="二、并发模型"></a>二、并发模型</h2><h3 id="2-1、、模型：单进（线）程·循环处理请求"><a href="#2-1、、模型：单进（线）程·循环处理请求" class="headerlink" title="2.1、、模型：单进（线）程·循环处理请求"></a>2.1、、模型：单进（线）程·循环处理请求</h3><p>单进程和单线程其实没有区别，因为一个进程至少有一个线程。循环处理请求应该是最初级的做法。当大量请求进来时，单线程一个一个处理请求，请求很容易就积压起来，得不到响应。这是无并发的做法。</p>
+<h3 id="2-2、模型：多进程（Multiprocessing）"><a href="#2-2、模型：多进程（Multiprocessing）" class="headerlink" title="2.2、模型：多进程（Multiprocessing）"></a>2.2、模型：多进程（Multiprocessing）</h3><p>主进程监听和管理连接，当有客户请求的时候，<strong>fork</strong> 一个子进程来处理连接，父进程继续等待其他客户的请求。</p>
+<p><strong>优点</strong>：<strong>好处是隔离性</strong>，子进程万一 crash 并不会影响到父进程。<br><strong>缺点</strong>：<strong>缺点就是对系统的负担过重</strong>。  </p>
+<p>典型的是 <strong>Apache Web Server</strong>，每个用户请求接入的时候都会创建一个进程，这样应用就可以同时支持多个用户。</p>
+<p><img src="/image/theoretical_knowledge/Apache-Web-Server-Thread.jpeg" alt="Apache-Web-Server-Thread"></p>
+<p>在图中M1、M2与M3都代表内存资源，在多进程中如果不同进程想共享内存中的数据必须通过 <strong>进程间通信</strong>的方式来实现。</p>
+<h3 id="2-3、模型：多线程（Multithreaded）"><a href="#2-3、模型：多线程（Multithreaded）" class="headerlink" title="2.3、模型：多线程（Multithreaded）"></a>2.3、模型：多线程（Multithreaded）</h3><p>在操作系统的视角看，比如Linux中，在进程中创建线程是通过 <strong>clone()</strong> 系统调用来实现，这和创建子进程的区别不大。线程与进程的区别在于同一个进程内的线程共享着进程分配的资源，线程不被分配资源，只是操作系统调度执行任务的抽象的最小单元。</p>
+<p>比如下图中，PID为10的进程P0通过clone()系统调用创建了3个线程，这些线程都可以访问进程分配的内存资源M0。<br><img src="/image/theoretical_knowledge/多线程模型.jpeg" alt="多线程模型"></p>
+<h4 id="2-3-1、多线程：通信方式——共享内存通信-Shared-memory-communication"><a href="#2-3-1、多线程：通信方式——共享内存通信-Shared-memory-communication" class="headerlink" title="2.3.1、多线程：通信方式——共享内存通信(Shared memory communication)"></a>2.3.1、多线程：通信方式——共享内存通信(Shared memory communication)</h4><p><strong>共享内存通信(Shared memory communication)</strong> ：不同线程间可以访问同一内存地址空间，并可修改此地址空间的数据。</p>
+<h5 id="同步-Synchronize-访问"><a href="#同步-Synchronize-访问" class="headerlink" title="同步(Synchronize)访问"></a>同步(Synchronize)访问</h5><p>因为线程间共享内存资源，所以在访问临界区域时会出现数据竞争。解决竞态条件的方式是对数据进行 <strong>同步(Synchronize)访问</strong> 。要实现同步访问常见的方式有：</p>
+<pre><code>* **锁(Lock)** ：通过锁定临界区域来实现同步访问。
+* **信号量(Semaphores)** ：可以通过信号量的增减控制对一个或多个线程对临界区域的访问。
+* **同步屏障(Barriers)** ：通过设置屏障控制不同线程执行周期实现同步访问。  
+</code></pre><p><strong>此模型的优点：</strong>  </p>
+<ul>
+<li>大多编程语言都支持此模型；</li>
+<li>贴近硬件架构，使用得当性能很高；</li>
+<li>是其他并发模型的基础；</li>
+</ul>
+<p><strong>此模型的缺点：</strong></p>
+<ul>
+<li>不支持分布式内存模型，只解决了进程内的并发同步；</li>
+<li>不好调试与测试，想用好不容易；    </li>
+</ul>
+<h5 id="STM-Software-transactional-memory"><a href="#STM-Software-transactional-memory" class="headerlink" title="STM(Software transactional memory)"></a>STM(Software transactional memory)</h5><p>STM是用软件的方式去实现事务内存(Transactional memory)，而事务内存中的事务(Transactional)正是关系型数据库中的概念，一个事务必须满足ACID性质，在STM的事务中尽可能避免副作用，比如在事务中去修改原子变量这种操作，可能会导致事务回滚失败。</p>
+<p><strong>此模型的优点：</strong></p>
+<ul>
+<li>相比锁模型更简单；</li>
+<li>大部分情况下更高效；</li>
+</ul>
+<p><strong>此模型的缺点：</strong></p>
+<ul>
+<li>在事务内需要避免产生副作用；</li>
+<li>不支持分布式内存模型，只解决了进程内的并发同步；</li>
+</ul>
+<h4 id="2-3-2、多线程：通信方式——消息传递通信-Message-passing-communication"><a href="#2-3-2、多线程：通信方式——消息传递通信-Message-passing-communication" class="headerlink" title="2.3.2、多线程：通信方式——消息传递通信(Message passing communication)"></a>2.3.2、多线程：通信方式——消息传递通信(Message passing communication)</h4><p><strong>消息传递通信(Message passing communication)</strong> ：不同线程间只能通过收发消息的形式去通信，数据只能被拥有它的线程修改。</p>
+<h5 id="通信顺序进程-CSP-Communicating-sequential-processes"><a href="#通信顺序进程-CSP-Communicating-sequential-processes" class="headerlink" title="通信顺序进程(CSP(Communicating sequential processes))"></a>通信顺序进程(CSP(Communicating sequential processes))</h5><p><strong>CSP</strong>：是一种形式语言，用来描述基于消息传递通信的安全并发模型。各任务模块之间的通信是基于 <strong>通道(Channel)</strong> 来完成的。<strong>通道可以被不同的任务块共享</strong> 。通道两端任务块的通信可以是<strong>同步的，也可以是异步的</strong>。</p>
+<p><strong>此模型的优点：</strong></p>
+<ul>
+<li>相比锁模型更简单；</li>
+<li>很容易实现高并发；</li>
+</ul>
+<p><strong>此模型的缺点：</strong></p>
+<ul>
+<li>不支持分布式内存模型，只解决了进程内的并发同步；</li>
+</ul>
+<h5 id="Actor"><a href="#Actor" class="headerlink" title="Actor"></a>Actor</h5><p><strong>演员模型(Actor)</strong> 是一种类似面向对象编程思想的安全并发模型。Actor模型=数据+行为+消息。Actor模型内部的状态由自己的行为维护，外部线程不能直接调用对象的行为，必须通过消息才能激发行为，这样就保证Actor内部数据只有被自己修改。</p>
+<p>相比CSP模型，Actor模型可以跨节点在 <strong>分布式集群中运行</strong>。实际上Actor模型的代表Erlang正是天然分布式容错的编程语言。</p>
+<p>二者的区别：Actor之间直接通讯，而CSP是通过Channel通讯，在耦合度上两者是有区别的，后者更加松耦合。</p>
+<p><strong>此模型的优点：</strong></p>
+<ul>
+<li>相比锁模型更简单；</li>
+<li>很容易实现高并发；</li>
+<li>支持分布式内存模型，能实现跨节点的并发同步；</li>
+</ul>
+<p><strong>此模型的缺点：</strong></p>
+<ul>
+<li>存在信箱满后消息丢失的问题;</li>
+</ul>
+<h3 id="2-4、事件驱动模型"><a href="#2-4、事件驱动模型" class="headerlink" title="2.4、事件驱动模型"></a>2.4、事件驱动模型</h3><p><strong>事件驱动编程</strong> 是一种编程范式，这里程序的执行流由外部事件来决定。它的特点是包含一个事件循环，当外部事件发生时使用回调机制来触发相应的处理。<br><strong>Event Loop with Multiplexing</strong>：此模型巧妙的利用了系统内核提供的I/O多路复用系统调用，将多个socket连接转换成一个事件队列(event queue)，只需要单个线程即可循环处理这个事件队列。当然这个线程是有可能被阻塞或长期占用的，针对这种类型的任务处理可以单独使用一个线程池去做，这样就不会阻塞Event Loop的线程了。</p>
+<p><strong>此模型的优点：</strong></p>
+<ul>
+<li>单线程对系统资源的占用很小；</li>
+<li>很容易实现高并发；</li>
+</ul>
+<p>此模型的缺点：</p>
+<ul>
+<li>不支持分布式内存模型，只解决了进程内的并发同步；</li>
+</ul>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>高并发的关键在于实现异步非阻塞，更加高效地利用 CPU，涉及的两大安全难题则是<strong>线程安全</strong>与<strong>内存安全</strong>。多线程可以达到非阻塞，但占用资源多，切换开销大。协程用栈的动态增长、用户态的调度来避免多线程的两个问题。事件驱动用单线程的方式，避免了占用太多系统资源，不需要关心线程安全，但无法利用多核。具体要采用哪种模型，还是要看需求。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://gobomb.github.io/post/high-concurrency-model/" target="_blank" rel="noopener">https://gobomb.github.io/post/high-concurrency-model/</a><br><a href="https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/" target="_blank" rel="noopener">https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/</a>  </p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2021/08/01/医学信息/血分析(血常规)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,7 +685,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-14 17:00:09" itemprop="dateModified" datetime="2021-05-14T17:00:09+08:00">2021-05-14</time>
+                <time title="修改时间：2022-05-31 22:02:31" itemprop="dateModified" datetime="2022-05-31T22:02:31+08:00">2022-05-31</time>
               </span>
             
           
@@ -1032,7 +1256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/back_tracking/">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/时间复杂度/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cmeng">
@@ -1048,7 +1272,7 @@
         
           <h1 class="post-title" itemprop="name headline">
               
-              <a href="/2020/08/17/algorithm/back_tracking/" class="post-title-link" itemprop="url">回溯找法</a>
+              <a href="/2020/08/17/algorithm/时间复杂度/" class="post-title-link" itemprop="url">算法-时间复杂度</a>
             
           </h1>
         
@@ -1075,7 +1299,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-30 17:14:52" itemprop="dateModified" datetime="2022-03-30T17:14:52+08:00">2022-03-30</time>
+                <time title="修改时间：2020-08-18 17:00:25" itemprop="dateModified" datetime="2020-08-18T17:00:25+08:00">2020-08-18</time>
               </span>
             
           
@@ -1105,13 +1329,284 @@
 
       
           
-            <h2 id="二分查找法"><a href="#二分查找法" class="headerlink" title="二分查找法"></a>二分查找法</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p>二分搜索是一种在有序数组中查找某一特定元素的搜索算法。  </p>
+            <h2 id="算法-时间复杂度"><a href="#算法-时间复杂度" class="headerlink" title="算法-时间复杂度"></a>算法-时间复杂度</h2><h3 id="1、数据结构-算法"><a href="#1、数据结构-算法" class="headerlink" title="1、数据结构-算法"></a>1、数据结构-算法</h3><p>数据结构和算法是相辅相成的，<strong>数据结构是为算法服务的，算法要作用在特定的数据结构之上</strong>。所以二者的学习不能互相孤立。</p>
+<h3 id="2、算法复杂度分析"><a href="#2、算法复杂度分析" class="headerlink" title="2、算法复杂度分析"></a>2、算法复杂度分析</h3><ol>
+<li>时间复杂度： 指算法需要消耗的时间资源。计算机算法是问题规模n 的函数f(n)，算法的时间复杂度也因此记做。<br>T(n)=Ο(f(n))</li>
+<li>空间复杂度：算法需要消耗的空间资源。其计算和表示方法与时间复杂度类似，一般都用复杂度的渐近性来表示。同时间复杂度相比，空间复杂度的分析要简单得多。</li>
+</ol>
+<h4 id="2-1、事后统计法"><a href="#2-1、事后统计法" class="headerlink" title="2.1、事后统计法"></a>2.1、事后统计法</h4><p>事后统计法：通过统计、分析等，计算出算法的实际执行时间和实际内存占用，从而得到算法的时间复杂度。</p>
 <ul>
-<li>搜索过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜索过程结束；</li>
-<li>如果某一特定元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半中查找，而且跟开始一样从中间元素开始比较。</li>
-<li>如果在某一步骤数组为空，则代表找不到。这种搜索算法每一次比较都使搜索范围缩小一半。</li>
+<li>测试结果非常依赖测试环境。（服务器资源配置）</li>
+<li>测试结果受限于数据规模</li>
 </ul>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a><strong>实例</strong></h3>
+<h4 id="2-2、大O复杂度表示法"><a href="#2-2、大O复杂度表示法" class="headerlink" title="2.2、大O复杂度表示法"></a>2.2、大O复杂度表示法</h4><p>时间复杂度通俗来讲，就是代码运行的时间。大O表示法就是在不运算代码的情况下来分析一段代码的时间复杂度。<br>看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从CPU的角度来看，代码的每一行都执行着类似的操作：<strong>读操作-运算-写操作</strong>。这里我们假设每行代码的执行时间一样，为unit_time，那么2，3行执行了1个unit_time，3，4行n个unit_time，总的执行时间就是（2n+2）*unit_time。<br>按照这个思路再来看下面一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>依旧假设单位时间为unit_time，2、3、4行执行时间分别为1unti_time，5、6加起来就是2n。7、8加起来就是2n²unit_time;总的时间就为(2n²+2n+3)unit_time.<br>这两段代码分析我们可得到一个重要的规律，那就是<strong>代码的执行时间T(n)和每段代码的执次数成正比</strong>，所以就得到了以下公式：</p>
+<blockquote>
+<font color="orange">T(n)=O(f(n))</font>
+
+</blockquote>
+<p>其中T(n)代表了代码的执行时间，n代表数据规模，f(n)代表每行代码执行的次数总和。因为是公式，所以用f(n)表达。公式中的O则表示代码执行时间T(n)和表达式f(n)成正比。   </p>
+<p>两个例子中的T(n)=O(2n+2)和T(n)=O(2n²+2n+3)就是大O时间复杂度表示法，它并不代表具体的执行时间，而是代表<strong>代码的执行时间随着数据规模增加的变化趋势</strong>，所以也叫渐进时间复杂度（asymptotic time complexity），简称时间复杂度。  </p>
+<p>当n很大时，表达式中的低阶、常量、系数等部分并不左右增长趋势，所以大O表示法可记为：T(n)=O(n)、T(n)=O(n²)。</p>
+<h4 id="2-3-常见复杂度分析方法"><a href="#2-3-常见复杂度分析方法" class="headerlink" title="2.3 常见复杂度分析方法"></a>2.3 常见复杂度分析方法</h4><ol>
+<li><p>单段代码看高频：如循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多段代码取最高：如一段代码中存在单重循环和多重循环，则取多重循环。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套循环取乘积：比如多重循环，递归等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多数据规模取和：O(n+m)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;i&lt;m;i++)&#123;</span><br><span class="line">    sum += sum + i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="2-4-常见的时间复杂度"><a href="#2-4-常见的时间复杂度" class="headerlink" title="2.4 常见的时间复杂度"></a>2.4 常见的时间复杂度</h4><p><img src="/image/algorithm/常见时间复杂度.jpg" alt="常见时间复杂度"></p>
+<ol>
+<li>多项式阶，随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。  </li>
+</ol>
+<ul>
+<li>O(1)（常数阶）<br>常数阶的概念并不是只执行一行代码，一般情况下算法中不存在循环、递归等语句，即使有成千上万行代码，复杂度也是O(1)</li>
+<li><p>O(logn)（对数阶）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当2^x&gt;=n时，循环结束，所以这段代码的执行次数就是x= $log_2n$;大O法记作：$O(log_2n)$。那么再看下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按照上面的逻辑，这段的复杂度为$O(log_3n)$。二者之间是可以转换的$log_3n=log_32 * log_2n$；基于大O法的理论：在采用大O计数法时可以忽略系数等。则此类复杂度可统一记为O(logn)。   </p>
+</li>
+<li>O(n)（线性阶）</li>
+<li>O(nlogn)（线性对数阶）<br>基于O(logn)，那么O(nlogn)就容易理解了，就相当于上面的嵌套取乘积规则一样，就是O(logn)执行的n遍。</li>
+<li>O(n^2)（平方阶）、O(n^3)（立方阶）….、O(n^k)(K次方阶)</li>
+</ul>
+<ol>
+<li>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。</li>
+</ol>
+<ul>
+<li>O(2^n)（指数阶）</li>
+<li>O(n!)（阶乘阶）</li>
+</ul>
+<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>虽然上面说的事后统计法有一定的缺点，但时间复杂度的分析与其并不是对立冲突的。时间复杂度是一个理论上的模型，可以比较直观的给我们一个算法的效率上的感性认知，只能提供粗略的分析。它是与宿主平台无关的，并不是说O(n)的效率一定就优于O(n²)。针对不同的宿主平台环境，不同的数据集，不同的数据规模，在实际应用上性能可能会各有不同，所以实际应用中进行一定的性能基准测试是有必要的。<br>综上所述，时间复杂度分析和性能测试是相辅相成的。但一个低阶的时间复杂度确实有极大的可能优于高阶的时间复杂度，所以在编程中时刻关心复杂度的趋势走向是很有必要的，而且能很大幅度的提升输出质量。因此在编程中具有这种复杂度分析的思维还是十分有必要的。</p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/back_tracking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/08/17/algorithm/back_tracking/" class="post-title-link" itemprop="url">回溯</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-18 09:21:09" itemprop="dateModified" datetime="2022-04-18T09:21:09+08:00">2022-04-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p><strong>回溯法</strong>（英语：backtracking）是暴力搜索法中的一种。<br>对于某些计算问题而言，回溯法是一种可以找出所有（或一部分）解的一般性算法，尤其适用于约束满足问题（在解决约束满足问题时，我们逐步构造更多的候选解，并且在确定某一部分候选解不可能补全成正确解之后放弃继续搜索这个部分候选解本身及其可以拓展出的子候选解，转而测试其他的部分候选解）。  </p>
+<p>回溯算法又称 <font color="#0099ff">试探法</font>，采用试错的思想。在分步解决问题的过程中，当它通过尝试发现，现有的分步答案不能得到有效的正确的解答的时候，它将取消上一步甚至是上几步的计算，再通过其它的可能的分步解答再次尝试寻找问题的答案。回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况：</p>
+<ul>
+<li>找到一个可能存在的正确的答案</li>
+<li>在尝试了所有可能的分步方法后宣告该问题没有答案  </li>
+</ul>
+<p>在最坏的情况下，回溯法会导致一次复杂度为指数时间的计算。</p>
+<p><strong>例如:</strong><br>在统计1~N中整数的所有子集问题时，就可以使用 <font color="#0099ff">回溯法</font> 进行处理。从1开始每个数字都有两种可能，存在子集或不存在子集，每种可能都会有一种结果，那么问题的结果就是所有可能的子集的集合。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a><strong>实例</strong></h3><p><strong>1. 实例1</strong><br><a href="https://leetcode-cn.com/problems/subsets/" target="_blank" rel="noopener"></a></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/microservice/cap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/08/17/microservice/cap/" class="post-title-link" itemprop="url">分布式CAP</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-03 22:34:23" itemprop="dateModified" datetime="2022-08-03T22:34:23+08:00">2022-08-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CAP/" itemprop="url" rel="index"><span itemprop="name">CAP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以下引用至维基百科：  </p>
+<blockquote>
+<p>在理论计算机科学中，CAP定理（CAP theorem），又被称作布鲁尔定理（Brewer’s theorem），它指出对于一个分布式计算系统来说，不可能同时满足以下三点：</p>
+<ul>
+<li>一致性（Consistency）：等同于所有节点访问同一份最新的数据副本</li>
+<li>可用性（Availability）：每次请求都能获取到非错的响应——但是不保证获取的数据为最新数据</li>
+<li>分区容错性（Partition tolerance）：以实际效果而言，分区相当于对通信的时限要求。系统如果不能在<br>限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li>
+</ul>
+<p>根据定理，分布式系统只能满足三项中的两项而不可能满足全部三项。理解CAP理论的最简单方式：<br><strong>想象两个节点分处分区两侧。允许至少一个节点更新状态会导致数据不一致，即丧失了C性质。如果为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了A性质。除非两个节点可以互相通信，才能既保证C又保证A，这又会导致丧失P性质。</strong></p>
+</blockquote>
+
           
         
       
@@ -1283,282 +1778,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/dual_pointers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cmeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c萌怪谈">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/08/17/algorithm/dual_pointers/" class="post-title-link" itemprop="url">双指针</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-30 17:15:00" itemprop="dateModified" datetime="2022-03-30T17:15:00+08:00">2022-03-30</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p>双指针是一种简单而又灵活的技巧和思想，单独使用可以轻松解决一些特定问题，和其他算法结合也能发挥多样的用处。<br>双指针顾名思义，就是同时使用两个指针，在数组、序列、链表结构上指向的是位置，在树、图结构中指向的是节点，通过或同向移动，或相向移动来维护、统计信息。  </p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a><strong>实例</strong></h3><p><strong>1. 实例1</strong><br><a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/" target="_blank" rel="noopener">leetcode-167. 两数之和 II - 输入有序数组</a><br>给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列  ，请你从数组中找出满足相加之和等于目标数 target 的两个数。如果设这两个数分别是 numbers[index1] 和 numbers[index2] ，则 1 &lt;= index1 &lt; index2 &lt;= numbers.length 。</p>
-<p>以长度为 2 的整数数组 [index1, index2] 的形式返回这两个整数的下标 index1 和 index2。</p>
-<p>你可以假设每个输入 只对应唯一的答案 ，而且你 不可以 重复使用相同的元素。</p>
-<p>你所设计的解决方案必须只使用常量级的额外空间。</p>
-<p>示例1  </p>
-<blockquote>
-<p>输入：numbers = [2,7,11,15], target = 9<br>输出：[1,2]<br>解释：2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。</p>
-</blockquote>
-<p>给出数组为升序排序，所以双指针一头一尾，根据二者之和与目标值的大小比较来判断指针移动方向。</p>
-<p><strong>代码</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) &#123;</span><br><span class="line">    <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> n= numbers.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>,j=n-<span class="number">1</span>;i&lt;j;)&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = numbers[i]+numbers[j];</span><br><span class="line">        <span class="keyword">if</span>(sum==target)&#123;</span><br><span class="line">            ans[<span class="number">0</span>] = i+<span class="number">1</span>;</span><br><span class="line">            ans[<span class="number">1</span>] = j+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> ans;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sum&gt;target)&#123;</span><br><span class="line">            --j;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (sum&lt;target)&#123;</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 实例2</strong><br><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/" target="_blank" rel="noopener">leetcode-19. 删除链表的倒数第 N 个结点</a><br>给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。  </p>
-<p>示例 1:<br><img src="/image/algorithm/双指针1.jpg" alt>  </p>
-<blockquote>
-<p>输入：head = [1,2,3,4,5], n = 2<br>输出：[1,2,3,5]</p>
-</blockquote>
-<p>双指针形式，当快慢两个指针之差为n时，二者保持同时移动，当快到达最后节点，慢指针正好符合删除的节点要求。</p>
-<p><strong>代码</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    ListNode zero = <span class="keyword">new</span> ListNode(<span class="number">0</span>, head);</span><br><span class="line">    ListNode slow = zero;</span><br><span class="line">    ListNode fast= head;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        fast = fast.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(fast!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        slow = slow.next;</span><br><span class="line">        fast =fast.next;</span><br><span class="line">    &#125;</span><br><span class="line">    slow.next = slow.next.next;</span><br><span class="line">    <span class="keyword">return</span> zero.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/时间复杂度/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cmeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c萌怪谈">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/08/17/algorithm/时间复杂度/" class="post-title-link" itemprop="url">算法-时间复杂度</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-18 17:00:25" itemprop="dateModified" datetime="2020-08-18T17:00:25+08:00">2020-08-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h2 id="算法-时间复杂度"><a href="#算法-时间复杂度" class="headerlink" title="算法-时间复杂度"></a>算法-时间复杂度</h2><h3 id="1、数据结构-算法"><a href="#1、数据结构-算法" class="headerlink" title="1、数据结构-算法"></a>1、数据结构-算法</h3><p>数据结构和算法是相辅相成的，<strong>数据结构是为算法服务的，算法要作用在特定的数据结构之上</strong>。所以二者的学习不能互相孤立。</p>
-<h3 id="2、算法复杂度分析"><a href="#2、算法复杂度分析" class="headerlink" title="2、算法复杂度分析"></a>2、算法复杂度分析</h3><ol>
-<li>时间复杂度： 指算法需要消耗的时间资源。计算机算法是问题规模n 的函数f(n)，算法的时间复杂度也因此记做。<br>T(n)=Ο(f(n))</li>
-<li>空间复杂度：算法需要消耗的空间资源。其计算和表示方法与时间复杂度类似，一般都用复杂度的渐近性来表示。同时间复杂度相比，空间复杂度的分析要简单得多。</li>
-</ol>
-<h4 id="2-1、事后统计法"><a href="#2-1、事后统计法" class="headerlink" title="2.1、事后统计法"></a>2.1、事后统计法</h4><p>事后统计法：通过统计、分析等，计算出算法的实际执行时间和实际内存占用，从而得到算法的时间复杂度。</p>
-<ul>
-<li>测试结果非常依赖测试环境。（服务器资源配置）</li>
-<li>测试结果受限于数据规模</li>
-</ul>
-<h4 id="2-2、大O复杂度表示法"><a href="#2-2、大O复杂度表示法" class="headerlink" title="2.2、大O复杂度表示法"></a>2.2、大O复杂度表示法</h4><p>时间复杂度通俗来讲，就是代码运行的时间。大O表示法就是在不运算代码的情况下来分析一段代码的时间复杂度。<br>看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从CPU的角度来看，代码的每一行都执行着类似的操作：<strong>读操作-运算-写操作</strong>。这里我们假设每行代码的执行时间一样，为unit_time，那么2，3行执行了1个unit_time，3，4行n个unit_time，总的执行时间就是（2n+2）*unit_time。<br>按照这个思路再来看下面一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>依旧假设单位时间为unit_time，2、3、4行执行时间分别为1unti_time，5、6加起来就是2n。7、8加起来就是2n²unit_time;总的时间就为(2n²+2n+3)unit_time.<br>这两段代码分析我们可得到一个重要的规律，那就是<strong>代码的执行时间T(n)和每段代码的执次数成正比</strong>，所以就得到了以下公式：</p>
-<blockquote>
-<font color="orange">T(n)=O(f(n))</font>
-
-</blockquote>
-<p>其中T(n)代表了代码的执行时间，n代表数据规模，f(n)代表每行代码执行的次数总和。因为是公式，所以用f(n)表达。公式中的O则表示代码执行时间T(n)和表达式f(n)成正比。   </p>
-<p>两个例子中的T(n)=O(2n+2)和T(n)=O(2n²+2n+3)就是大O时间复杂度表示法，它并不代表具体的执行时间，而是代表<strong>代码的执行时间随着数据规模增加的变化趋势</strong>，所以也叫渐进时间复杂度（asymptotic time complexity），简称时间复杂度。  </p>
-<p>当n很大时，表达式中的低阶、常量、系数等部分并不左右增长趋势，所以大O表示法可记为：T(n)=O(n)、T(n)=O(n²)。</p>
-<h4 id="2-3-常见复杂度分析方法"><a href="#2-3-常见复杂度分析方法" class="headerlink" title="2.3 常见复杂度分析方法"></a>2.3 常见复杂度分析方法</h4><ol>
-<li><p>单段代码看高频：如循环</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多段代码取最高：如一段代码中存在单重循环和多重循环，则取多重循环。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>嵌套循环取乘积：比如多重循环，递归等。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多数据规模取和：O(n+m)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;i&lt;m;i++)&#123;</span><br><span class="line">    sum += sum + i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="2-4-常见的时间复杂度"><a href="#2-4-常见的时间复杂度" class="headerlink" title="2.4 常见的时间复杂度"></a>2.4 常见的时间复杂度</h4><p><img src="/image/algorithm/常见时间复杂度.jpg" alt="常见时间复杂度"></p>
-<ol>
-<li>多项式阶，随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。  </li>
-</ol>
-<ul>
-<li>O(1)（常数阶）<br>常数阶的概念并不是只执行一行代码，一般情况下算法中不存在循环、递归等语句，即使有成千上万行代码，复杂度也是O(1)</li>
-<li><p>O(logn)（对数阶）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当2^x&gt;=n时，循环结束，所以这段代码的执行次数就是x= $log_2n$;大O法记作：$O(log_2n)$。那么再看下面这段代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>按照上面的逻辑，这段的复杂度为$O(log_3n)$。二者之间是可以转换的$log_3n=log_32 * log_2n$；基于大O法的理论：在采用大O计数法时可以忽略系数等。则此类复杂度可统一记为O(logn)。   </p>
-</li>
-<li>O(n)（线性阶）</li>
-<li>O(nlogn)（线性对数阶）<br>基于O(logn)，那么O(nlogn)就容易理解了，就相当于上面的嵌套取乘积规则一样，就是O(logn)执行的n遍。</li>
-<li>O(n^2)（平方阶）、O(n^3)（立方阶）….、O(n^k)(K次方阶)</li>
-</ul>
-<ol>
-<li>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。</li>
-</ol>
-<ul>
-<li>O(2^n)（指数阶）</li>
-<li>O(n!)（阶乘阶）</li>
-</ul>
-<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>虽然上面说的事后统计法有一定的缺点，但时间复杂度的分析与其并不是对立冲突的。时间复杂度是一个理论上的模型，可以比较直观的给我们一个算法的效率上的感性认知，只能提供粗略的分析。它是与宿主平台无关的，并不是说O(n)的效率一定就优于O(n²)。针对不同的宿主平台环境，不同的数据集，不同的数据规模，在实际应用上性能可能会各有不同，所以实际应用中进行一定的性能基准测试是有必要的。<br>综上所述，时间复杂度分析和性能测试是相辅相成的。但一个低阶的时间复杂度确实有极大的可能优于高阶的时间复杂度，所以在编程中时刻关心复杂度的趋势走向是很有必要的，而且能很大幅度的提升输出质量。因此在编程中具有这种复杂度分析的思维还是十分有必要的。</p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/浅析最好、最坏、平均、均摊时间复杂度/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1674,218 +1893,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/microservice/spriingboot-run/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cmeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c萌怪谈">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/08/17/microservice/spriingboot-run/" class="post-title-link" itemprop="url">SpringBoot 启动 —— 源码解析</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 13:14:20" itemprop="dateModified" datetime="2021-06-10T13:14:20+08:00">2021-06-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <font size="7">SpringBoot 启动 —— 源码解析</font>
-
-<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>本文从main方法的SpringApplication.run(SpringbootTestLockApplication.class, args)开始追踪源码的实现，通过分析源码的调用情况分析整个springboot启动过程的原理和相关的设计理念。<br><strong>SPringboot版本：2.4.4</strong></p>
-<h2 id="二、创建SpringApplication实例"><a href="#二、创建SpringApplication实例" class="headerlink" title="二、创建SpringApplication实例"></a>二、创建SpringApplication实例</h2><h3 id="2-1、启动类"><a href="#2-1、启动类" class="headerlink" title="2.1、启动类"></a>2.1、启动类</h3><p>程序入口是启动类的main方法。通过运行SpringApplication.run()来实际启动服务。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">启动类main：</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ConfigurableApplicationContext run = SpringApplication.run(SpringbootTestLockApplication.class, args);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-2、SpringApplication实例"><a href="#2-2、SpringApplication实例" class="headerlink" title="2.2、SpringApplication实例"></a>2.2、SpringApplication实例</h3><h4 id="2-2-1、启动步骤"><a href="#2-2-1、启动步骤" class="headerlink" title="2.2.1、启动步骤"></a>2.2.1、启动步骤</h4><p>通过源码可以看到，启动分为两步：1、实例化SpringApplication，2、再执行实例的run()方法.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//run方法两层调用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ConfigurableApplicationContext <span class="title">run</span><span class="params">(Class&lt;?&gt; primarySource, String... args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> run(<span class="keyword">new</span> Class&lt;?&gt;[] &#123; primarySource &#125;, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ConfigurableApplicationContext <span class="title">run</span><span class="params">(Class&lt;?&gt;[] primarySources, String[] args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> SpringApplication(primarySources).run(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="2-2-2、SpringApplication构造函数"><a href="#2-2-2、SpringApplication构造函数" class="headerlink" title="2.2.2、SpringApplication构造函数"></a>2.2.2、SpringApplication构造函数</h4><p>SpringApplication的构造方法主要是为了初始化SpringApplication的一些基础属性，例如主启动类、web应用类型、启动载入器、初始化器列表、监听器列表等。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造函数两层调用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SpringApplication</span><span class="params">(Class&lt;?&gt;... primarySources)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(<span class="keyword">null</span>, primarySources);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(&#123; <span class="string">"unchecked"</span>, <span class="string">"rawtypes"</span> &#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SpringApplication</span><span class="params">(ResourceLoader resourceLoader, Class&lt;?&gt;... primarySources)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//根据调用逻辑可知resourceLoader为Null。</span></span><br><span class="line">  <span class="keyword">this</span>.resourceLoader = resourceLoader;</span><br><span class="line">  Assert.notNull(primarySources, <span class="string">"PrimarySources must not be null"</span>);</span><br><span class="line">  <span class="comment">//将Class数组参数赋值到SpringApplication.primarySources属性</span></span><br><span class="line">  <span class="keyword">this</span>.primarySources = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(Arrays.asList(primarySources));</span><br><span class="line"></span><br><span class="line">  <span class="comment">//获取固定应用类型：WebApplicationType.SERVLET（The application should run as a servlet-based web application and should start an embedded servlet web server.）  </span></span><br><span class="line">  <span class="keyword">this</span>.webApplicationType = WebApplicationType.deduceFromClasspath();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//获取spring.factories中Bootstrapper对应的实例</span></span><br><span class="line">  <span class="keyword">this</span>.bootstrappers = <span class="keyword">new</span> ArrayList&lt;&gt;(getSpringFactoriesInstances(Bootstrapper.class));</span><br><span class="line"></span><br><span class="line">  <span class="comment">//设置 spring.factories中ApplicationContextInitializer对应的实例</span></span><br><span class="line">  setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));</span><br><span class="line"></span><br><span class="line">  <span class="comment">//设置 spring.factories中ApplicationListener对应的实例</span></span><br><span class="line">  setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));</span><br><span class="line">  <span class="comment">//获取当前启动类class</span></span><br><span class="line">  <span class="keyword">this</span>.mainApplicationClass = deduceMainApplicationClass();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="1、getSpringFactoriesInstances"><a href="#1、getSpringFactoriesInstances" class="headerlink" title="1、getSpringFactoriesInstances"></a>1、getSpringFactoriesInstances</h5><p>获取所以META-INF/spring.factories下的接口及其实现类的对应关系。即在初始化启动载入器、初始化器、监听器时，均是调用getSpringFactoriesInstances方法，通过传入不同的Class类型获取到不同的实例。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function">Collection&lt;T&gt; <span class="title">getSpringFactoriesInstances</span><span class="params">(Class&lt;T&gt; type)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> getSpringFactoriesInstances(type, <span class="keyword">new</span> Class&lt;?&gt;[] &#123;&#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function">Collection&lt;T&gt; <span class="title">getSpringFactoriesInstances</span><span class="params">(Class&lt;T&gt; type, Class&lt;?&gt;[] parameterTypes, Object... args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取ClassLoader——sun.misc.Launcher$AppClassLoader</span></span><br><span class="line">		ClassLoader classLoader = getClassLoader();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取指定type的接口实现类列表</span></span><br><span class="line">    Set&lt;String&gt; names = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(SpringFactoriesLoader.loadFactoryNames(type, classLoader));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//初始化type对应的接口实现类</span></span><br><span class="line">    List&lt;T&gt; instances = createSpringFactoriesInstances(type, parameterTypes, classLoader, args, names);</span><br><span class="line">		AnnotationAwareOrderComparator.sort(instances);</span><br><span class="line">		<span class="keyword">return</span> instances;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>getClassLoader：获取SpringApplication.resourceLoader，当resourceLoader为Null时获取当前线程的ClassLoader。由构造函数可知，此处获取的是当前线程的ClassLoader。</li>
-</ul>
-<h5 id="2、loadFactoryNames"><a href="#2、loadFactoryNames" class="headerlink" title="2、loadFactoryNames()"></a>2、loadFactoryNames()</h5><p>通过解析getSpringFactoriesInstances可以看到，通过SpringFactoriesLoader.loadFactoryNames()方法获取指定名称的所有类名称列表。即通过扫描资源文件META-INF/spring.factories来获取相关的键值对匹配关系并进行代码化解析。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FACTORIES_RESOURCE_LOCATION = <span class="string">"META-INF/spring.factories"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">loadFactoryNames</span><span class="params">(Class&lt;?&gt; factoryType, @Nullable ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">		ClassLoader classLoaderToUse = classLoader;</span><br><span class="line">		<span class="keyword">if</span> (classLoaderToUse == <span class="keyword">null</span>) &#123;</span><br><span class="line">			classLoaderToUse = SpringFactoriesLoader.class.getClassLoader();</span><br><span class="line">		&#125;</span><br><span class="line">		String factoryTypeName = factoryType.getName();</span><br><span class="line">		<span class="keyword">return</span> loadSpringFactories(classLoaderToUse).getOrDefault(factoryTypeName, Collections.emptyList());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, List&lt;String&gt;&gt; loadSpringFactories(ClassLoader classLoader) &#123;</span><br><span class="line">  <span class="comment">//如果缓存存在，则获取缓存中的数据</span></span><br><span class="line">  Map&lt;String, List&lt;String&gt;&gt; result = cache.get(classLoader);</span><br><span class="line">	<span class="keyword">if</span> (result != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	result = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//缓存不存在，则通过解析 FACTORIES_RESOURCE_LOCATION 资源文件，解析里面不同接口类型及对应的类名称。并将数据存储入缓存中。</span></span><br><span class="line">		Enumeration&lt;URL&gt; urls = classLoader.getResources(FACTORIES_RESOURCE_LOCATION);</span><br><span class="line">		<span class="keyword">while</span> (urls.hasMoreElements()) &#123;</span><br><span class="line">			URL url = urls.nextElement();</span><br><span class="line">			UrlResource resource = <span class="keyword">new</span> UrlResource(url);</span><br><span class="line">			Properties properties = PropertiesLoaderUtils.loadProperties(resource);</span><br><span class="line">			<span class="keyword">for</span> (Map.Entry&lt;?, ?&gt; entry : properties.entrySet()) &#123;</span><br><span class="line">				String factoryTypeName = ((String) entry.getKey()).trim();</span><br><span class="line">				String[] factoryImplementationNames =</span><br><span class="line">						StringUtils.commaDelimitedListToStringArray((String) entry.getValue());</span><br><span class="line">				<span class="keyword">for</span> (String factoryImplementationName : factoryImplementationNames) &#123;</span><br><span class="line">					result.computeIfAbsent(factoryTypeName, key -&gt; <span class="keyword">new</span> ArrayList&lt;&gt;())</span><br><span class="line">							.add(factoryImplementationName.trim());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Replace all lists with unmodifiable lists containing unique elements</span></span><br><span class="line">		result.replaceAll((factoryType, implementations) -&gt; implementations.stream().distinct()</span><br><span class="line">				.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList)));</span><br><span class="line">		cache.put(classLoader, result);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Unable to load factories from location ["</span> +</span><br><span class="line">				FACTORIES_RESOURCE_LOCATION + <span class="string">"]"</span>, ex);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="3、setListeners"><a href="#3、setListeners" class="headerlink" title="3、setListeners()"></a>3、setListeners()</h5><p>初始化所有监听器，并将监听器数组赋值到SpringApplication.listeners属性中，纯净的springboot初始化的监听器分别如下：<br>org.springframework.boot.ClearCachesApplicationListener<br>org.springframework.boot.builder.ParentContextCloserApplicationListener<br>org.springframework.boot.context.FileEncodingApplicationListener<br>org.springframework.boot.context.config.AnsiOutputApplicationListener<br>org.springframework.boot.context.config.DelegatingApplicationListener<br>org.springframework.boot.context.logging.LoggingApplicationListener<br>org.springframework.boot.env.EnvironmentPostProcessorApplicationListener<br>org.springframework.boot.liquibase.LiquibaseServiceLocatorApplicationListener<br>org.springframework.boot.autoconfigure.BackgroundPreinitializer</p>
-<p>自此SpringApplication初始化完成。主要是初始化了一些基础属性和定义了服务类型。</p>
-<h2 id="三、运行SpringApplication-run-方法"><a href="#三、运行SpringApplication-run-方法" class="headerlink" title="三、运行SpringApplication.run()方法"></a>三、运行SpringApplication.run()方法</h2><p>创建成功后调用该实例的run方法：运行spring应用程序，创建并刷新一个APplicationContext对象。<br>ApplicationContext：中央接口，为应用程序提供配置。在应用程序运行时这是只读的，但如果实现支持，则可以重新加载。  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Run the Spring application, creating and refreshing a new</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> ApplicationContext&#125;.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args the application arguments (usually passed from a Java main method)</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> a running &#123;<span class="doctag">@link</span> ApplicationContext&#125;</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ConfigurableApplicationContext <span class="title">run</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//创建秒表</span></span><br><span class="line">  StopWatch stopWatch = <span class="keyword">new</span> StopWatch();</span><br><span class="line">  <span class="comment">//秒表启动</span></span><br><span class="line">  stopWatch.start();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//创建启动上下文</span></span><br><span class="line">  DefaultBootstrapContext bootstrapContext = createBootstrapContext();</span><br><span class="line">	ConfigurableApplicationContext context = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置系统参数：java.awt.headless（在系统可能缺少显示设备、键盘或鼠标这些外设的情况下可以使用该模式，例如Linux服务器）</span></span><br><span class="line">  configureHeadlessProperty();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//初始化监听器列表</span></span><br><span class="line">  SpringApplicationRunListeners listeners = getRunListeners(args);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//启动监听器</span></span><br><span class="line">  listeners.starting(bootstrapContext, <span class="keyword">this</span>.mainApplicationClass);</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//创建程序参数对象，args：命令行执行时，命令行参数对象。</span></span><br><span class="line">    ApplicationArguments applicationArguments = <span class="keyword">new</span> DefaultApplicationArguments(args);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//准备环境</span></span><br><span class="line">    ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置忽略的bean信息</span></span><br><span class="line">    configureIgnoreBeanInfo(environment);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//打印banner，即启动时控制台的图案</span></span><br><span class="line">    Banner printedBanner = printBanner(environment);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据webApplicationType来创建容器/spring上下文对象  下面统一称呼为容器</span></span><br><span class="line">    context = createApplicationContext();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置应用程序启动指标对象，使应用程序上下文在启动期间能够记录一些指标</span></span><br><span class="line">		context.setApplicationStartup(<span class="keyword">this</span>.applicationStartup);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//准备容器，容器的前置处理</span></span><br><span class="line">		prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//刷新容器</span></span><br><span class="line">    refreshContext(context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//刷新容器的后续处理</span></span><br><span class="line">    afterRefresh(context, applicationArguments);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//秒表停止</span></span><br><span class="line">    stopWatch.stop();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输出记录，记录启动类class信息，时间信息</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.logStartupInfo) &#123;</span><br><span class="line">      <span class="keyword">new</span> StartupInfoLogger(<span class="keyword">this</span>.mainApplicationClass).logStarted(getApplicationLog(), stopWatch);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发布监听应用上下文启动完成（发出启动结束事件）</span></span><br><span class="line">    listeners.started(context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//运行runner</span></span><br><span class="line">    callRunners(context, applicationArguments);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">    handleRunFailure(context, ex, listeners);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(ex);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//监听容器运行中</span></span><br><span class="line">    listeners.running(context);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">    handleRunFailure(context, ex, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(ex);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> context;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>下面就是对整个run方法进行逐行理解分析。</p>
-<h3 id="3-1、秒表"><a href="#3-1、秒表" class="headerlink" title="3.1、秒表"></a>3.1、秒表</h3><p>创建一个秒表并在正式运行逻辑之前启动。纳秒级精确度。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StopWatch stopWatch = <span class="keyword">new</span> StopWatch();</span><br><span class="line">stopWatch.start();</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-2、创建启动上下文——Bootstrap"><a href="#3-2、创建启动上下文——Bootstrap" class="headerlink" title="3.2、创建启动上下文——Bootstrap"></a>3.2、创建启动上下文——Bootstrap</h3><p>Spring Cloud官方文档有一部分相关Bootstrap的描述：<br><a href="https://cloud.spring.io/spring-cloud-commons/multi/multi__spring_cloud_context_application_context_services.html" target="_blank" rel="noopener">Spring Cloud 官方文档</a>    </p>
-<p>大致译文为：<br>Spring Cloud应用程序通过创建<strong>bootstrap</strong>上下文进行操作，该上下文是主应用程序的父上下文。它负责从外部源加载配置属性，并负责解密本地外部配置文件中的属性。这两个上下文共享一个<strong>Environment</strong>，这是任何Spring应用程序的外部属性的来源。默认情况下，引导程序属性（不是bootstrap.properties引导程序阶段加载的属性）具有较高的优先级，因此它们不能被本地配置覆盖。  </p>
-<p>如果从SpringApplication或构建应用程序上下文SpringApplicationBuilder，那么Bootstrap上下文将作为父级添加到该上下文。  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> DefaultBootstrapContext <span class="title">createBootstrapContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		DefaultBootstrapContext bootstrapContext = <span class="keyword">new</span> DefaultBootstrapContext();</span><br><span class="line">		<span class="keyword">this</span>.bootstrappers.forEach((initializer) -&gt; initializer.intitialize(bootstrapContext));</span><br><span class="line">		<span class="keyword">return</span> bootstrapContext;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>进入源码，可知创建启动上下文时，会进行初始化，主要对bootstrapContext内的实例进行注册。注册成功后返回bootstrapContext对象。<br><strong>注</strong>：通过loadFactoryNames()方法可知当不应用Cloud体系时，bootstrapContext为空list。  </p>
-<h3 id="3-3、获取SpringApplicationRunListeners实例——getRunListeners"><a href="#3-3、获取SpringApplicationRunListeners实例——getRunListeners" class="headerlink" title="3.3、获取SpringApplicationRunListeners实例——getRunListeners()"></a>3.3、获取SpringApplicationRunListeners实例——getRunListeners()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> SpringApplicationRunListeners <span class="title">getRunListeners</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  Class&lt;?&gt;[] types = <span class="keyword">new</span> Class&lt;?&gt;[] &#123; SpringApplication.class, String[].class &#125;;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> SpringApplicationRunListeners(logger,</span><br><span class="line">      getSpringFactoriesInstances(SpringApplicationRunListener.class, types, <span class="keyword">this</span>, args),</span><br><span class="line">      <span class="keyword">this</span>.applicationStartup);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>这段代码就比较熟悉了，还是getSpringFactoriesInstances()这个方法获取所有SpringApplicationRunListener接口的实现类的实例化对象。并初始SpringApplicationRunListeners对象。  </p>
-</li>
-<li><p>SpringApplicationRunListener：spring所有事件的触发都是通过该接口的唯一实现类EventPublishingRunListener来实现的，EventPublishingRunListener也是该接口的官方唯一实现类。<br>EventPublishingRunListener构造函数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EventPublishingRunListener</span><span class="params">(SpringApplication application, String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.application = application;</span><br><span class="line">		<span class="keyword">this</span>.args = args;</span><br><span class="line">		<span class="keyword">this</span>.initialMulticaster = <span class="keyword">new</span> SimpleApplicationEventMulticaster();</span><br><span class="line">		<span class="keyword">for</span> (ApplicationListener&lt;?&gt; listener : application.getListeners()) &#123;</span><br><span class="line">			<span class="keyword">this</span>.initialMulticaster.addApplicationListener(listener);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>EventPublishingRunListener的属性共有三个：</p>
-<ul>
-<li>application：当前运行的SpringApplication实例</li>
-<li>args：启动命令行参数</li>
-<li>initialMulticaster：事件广播器<br>根据构造函数可知，会将application关联的所有ApplicationListener实例关联到initialMulticaster中，以方便initialMulticaster将事件传递给所有的监听器。</li>
-</ul>
-<ol>
-<li>事件触发过程：<ul>
-<li>当对应的时间处理方法被调用时，EventPublishingRunListener会将application和args封装到对应的SpringApplicationEvent子类实例中；</li>
-<li>initialMulticaster会根据事件类型和触发源对事件进行分类，并与对应的ApplicationListener建立关联关系，之后将事件传递给对应的ApplicationListener；</li>
-<li>ApplicationListener实例收到事件后，会根据时间类型不同，执行不同的处理逻辑。</li>
-</ul>
-</li>
-</ol>
-<p>至此可知，getRunListeners()方法是为了获取一个装有EventPublishingRunListener对象实例的数组对象-SpringApplicationRunListeners。用于后续事件触发通知功能。</p>
-<h3 id="3-4、启动监听器——listeners-starting"><a href="#3-4、启动监听器——listeners-starting" class="headerlink" title="3.4、启动监听器——listeners.starting()"></a>3.4、启动监听器——listeners.starting()</h3><p>初始化所有监听器后，进行启动。启动时传入启动上下文和启动类的class对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">starting</span><span class="params">(ConfigurableBootstrapContext bootstrapContext, Class&lt;?&gt; mainApplicationClass)</span> </span>&#123;</span><br><span class="line">		doWithListeners(<span class="string">"spring.boot.application.starting"</span>, (listener) -&gt; listener.starting(bootstrapContext),</span><br><span class="line">				(step) -&gt; &#123;</span><br><span class="line">					<span class="keyword">if</span> (mainApplicationClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">						step.tag(<span class="string">"mainApplicationClass"</span>, mainApplicationClass.getName());</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<p>启动监听器主要是starting()方案，此处调用则使用SpringApplicationRunListener接口的实现类EventPublishingRunListener对应的starting()方法进行监听器启动。<br>此处实现类的创建的可参看 spring-boot 包的 spring.factories 文件：<a href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot/src/main/resources/META-INF/spring.factories" target="_blank" rel="noopener">官方spring.factories</a>  </p>
-<p>EventPublishingRunListener具体实现启动的代码逻辑<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">starting</span><span class="params">(ConfigurableBootstrapContext bootstrapContext)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.initialMulticaster</span><br><span class="line">				.multicastEvent(<span class="keyword">new</span> ApplicationStartingEvent(bootstrapContext, <span class="keyword">this</span>.application, <span class="keyword">this</span>.args));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">multicastEvent</span><span class="params">(<span class="keyword">final</span> ApplicationEvent event, @Nullable ResolvableType eventType)</span> </span>&#123;</span><br><span class="line">  ResolvableType type = (eventType != <span class="keyword">null</span> ? eventType : resolveDefaultEventType(event));</span><br><span class="line">  Executor executor = getTaskExecutor();</span><br><span class="line">  <span class="keyword">for</span> (ApplicationListener&lt;?&gt; listener : getApplicationListeners(event, type)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (executor != <span class="keyword">null</span>) &#123;</span><br><span class="line">      executor.execute(() -&gt; invokeListener(listener, event));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      invokeListener(listener, event);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">invokeListener</span><span class="params">(ApplicationListener&lt;?&gt; listener, ApplicationEvent event)</span> </span>&#123;</span><br><span class="line">  ErrorHandler errorHandler = getErrorHandler();</span><br><span class="line">  <span class="keyword">if</span> (errorHandler != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      doInvokeListener(listener, event);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Throwable err) &#123;</span><br><span class="line">      errorHandler.handleError(err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    doInvokeListener(listener, event);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doInvokeListener</span><span class="params">(ApplicationListener listener, ApplicationEvent event)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    listener.onApplicationEvent(event);</span><br><span class="line">  &#125;</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>starting()启动的时候实际上是又创建了一个ApplicationStartingEvent对象，其实就是监听应用启动事件。其中 initialMulticaster是一个SimpleApplicationEventMuticaster对象的实例化。<br>具体：</p>
-<ul>
-<li>获取initialMulticaster的线程池，但该实例初始化时并未创建线程池对象，所以此处为null</li>
-<li>通过getApplicationListeners方法获取匹配事件的监听器。</li>
-<li>对符合要求的监听器执行invokeListener方法.</li>
-<li>对符合条件的监听器执行onApplicationEvent方法进行相关初始化操作。</li>
-</ul>
-<p>此处纯净的springboot项目共有四个监听器。</p>
-<ul>
-<li>LoggingApplicationListener初始化了loggingSystem</li>
-<li>BackgroundPreinitializer：未执行任何操作</li>
-<li>DelegatingApplicationListener：未执行任何操作</li>
-<li>LiquibaseServiceLocatorApplicationListener：未执行任何操作.</li>
-</ul>
-<h3 id="3-5、环境准备-prepareEnvironment"><a href="#3-5、环境准备-prepareEnvironment" class="headerlink" title="3.5、环境准备-prepareEnvironment()"></a>3.5、环境准备-prepareEnvironment()</h3><p>设置好监听器后进行环境准备。主要是初始化应用参数和启动环境准备，源码对应如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建程序参数对象，args：命令行执行时，命令行参数对象。</span></span><br><span class="line">ApplicationArguments applicationArguments = <span class="keyword">new</span> DefaultApplicationArguments(args);</span><br><span class="line"></span><br><span class="line">ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置忽略的bean信息</span></span><br><span class="line">configureIgnoreBeanInfo(environment);</span><br></pre></td></tr></table></figure></p>
-<h4 id="3-5-1、初始化应用参数"><a href="#3-5-1、初始化应用参数" class="headerlink" title="3.5.1、初始化应用参数"></a>3.5.1、初始化应用参数</h4><p>对启动时的参数进行解析，例如：java -jar —spring.profiles.active=test等。最终将解析的键值对存储到CommandLineArgs对象中。</p>
-<h4 id="3-5-2、准备环境"><a href="#3-5-2、准备环境" class="headerlink" title="3.5.2、准备环境"></a>3.5.2、准备环境</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ConfigurableEnvironment <span class="title">prepareEnvironment</span><span class="params">(SpringApplicationRunListeners listeners,</span></span></span><br><span class="line"><span class="function"><span class="params">		DefaultBootstrapContext bootstrapContext, ApplicationArguments applicationArguments)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 获取或创建一个environment实例</span></span><br><span class="line">	ConfigurableEnvironment environment = getOrCreateEnvironment();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//配置环境：转换器、命令行参数等</span></span><br><span class="line">	configureEnvironment(environment, applicationArguments.getSourceArgs());</span><br><span class="line"></span><br><span class="line">   <span class="comment">//固定ConfigurationPropertySourcesPropertySource到environment</span></span><br><span class="line">	ConfigurationPropertySources.attach(environment);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//启动监听器</span></span><br><span class="line">	listeners.environmentPrepared(bootstrapContext, environment);</span><br><span class="line">   <span class="comment">//判断是否存在defaultProperties的属性源，存在则移动最后一位</span></span><br><span class="line">	DefaultPropertiesPropertySource.moveToEnd(environment);</span><br><span class="line">   </span><br><span class="line">	configureAdditionalProfiles(environment);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//将环境绑定到SpringApplication类上</span></span><br><span class="line">	bindToSpringApplication(environment);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//判断是否存在定制的环境</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="keyword">this</span>.isCustomEnvironment) &#123;</span><br><span class="line">		environment = <span class="keyword">new</span> EnvironmentConverter(getClassLoader()).convertEnvironmentIfNecessary(environment,</span><br><span class="line">				deduceEnvironmentClass());</span><br><span class="line">	&#125;</span><br><span class="line">	ConfigurationPropertySources.attach(environment);</span><br><span class="line">	<span class="keyword">return</span> environment;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="1、getOrCreateEnvironment"><a href="#1、getOrCreateEnvironment" class="headerlink" title="1、getOrCreateEnvironment()"></a>1、getOrCreateEnvironment()</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ConfigurableEnvironment <span class="title">getOrCreateEnvironment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>.environment != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.environment;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">switch</span> (<span class="keyword">this</span>.webApplicationType) &#123;</span><br><span class="line">		<span class="keyword">case</span> SERVLET:</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> StandardServletEnvironment();</span><br><span class="line">		<span class="keyword">case</span> REACTIVE:</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> StandardReactiveWebEnvironment();</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> StandardEnvironment();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>如果不存在environment则根据webApplicationType类型进行初始环境实例创建，通过上面的源码解析可知，此处类型为SERVLET，所以会创建StandardServletEnvironment实例。<br>StandardReactiveWebEnvironment构造：</p>
-<ul>
-<li>调用了父类AbstractEnvironment的构造函数，进行相关属性的初始化。<ol>
-<li>propertySources属性初始化MutablePropertySources实例。</li>
-<li>propertyResolver属性初始化PropertySourcesPropertyResolver实例，它的父类AbstractPropertyResolver中定义了”${}”占位符，用于后续解析配置文件时使用。</li>
-</ol>
-</li>
-<li>通过customizePropertySources()方法对propertySources增加了以下四个元素：servletConfigInitParams、servletContextInitParams、systemProperties、systemEnvironment。</li>
-</ul>
-<h5 id="2、configureEnvironment-environment-applicationArguments-getSourceArgs"><a href="#2、configureEnvironment-environment-applicationArguments-getSourceArgs" class="headerlink" title="2、configureEnvironment(environment, applicationArguments.getSourceArgs());"></a>2、configureEnvironment(environment, applicationArguments.getSourceArgs());</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configureEnvironment</span><span class="params">(ConfigurableEnvironment environment, String[] args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.addConversionService) &#123;</span><br><span class="line">    ConversionService conversionService = ApplicationConversionService.getSharedInstance();</span><br><span class="line">    environment.setConversionService((ConfigurableConversionService) conversionService);</span><br><span class="line">  &#125;</span><br><span class="line">  configurePropertySources(environment, args);</span><br><span class="line">  configureProfiles(environment, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>环境配置分三步，配置转换器、配置属性资源(命令行参数)、配置文件(命令行参数)。</p>
-<ul>
-<li>配置转换器：<ol>
-<li>addConversionService属性初始值为true，通过静态方法getSharedInstance()获取一个单例的转换器。构造函数包含一些默认的Formatter和GenericConverter。</li>
-<li>获取后配置到environment的propertyResolver属性中。</li>
-</ol>
-</li>
-<li><p>配置属性资源文件:configurePropertySources()</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">private</span> <span class="keyword">boolean</span> addCommandLineProperties = <span class="keyword">true</span>;</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String COMMAND_LINE_PROPERTY_SOURCE_NAME = <span class="string">"commandLineArgs"</span>;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configurePropertySources</span><span class="params">(ConfigurableEnvironment environment, String[] args)</span> </span>&#123;</span><br><span class="line">	MutablePropertySources sources = environment.getPropertySources();</span><br><span class="line">	<span class="keyword">if</span> (!CollectionUtils.isEmpty(<span class="keyword">this</span>.defaultProperties)) &#123;</span><br><span class="line">		DefaultPropertiesPropertySource.addOrMerge(<span class="keyword">this</span>.defaultProperties, sources);</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="comment">//若条件成立则将命令行参数设置进环境属性资源</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.addCommandLineProperties &amp;&amp; args.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		String name = CommandLinePropertySource.COMMAND_LINE_PROPERTY_SOURCE_NAME;</span><br><span class="line">		<span class="keyword">if</span> (sources.contains(name)) &#123;</span><br><span class="line">			PropertySource&lt;?&gt; source = sources.get(name);</span><br><span class="line">			CompositePropertySource composite = <span class="keyword">new</span> CompositePropertySource(name);</span><br><span class="line">			composite.addPropertySource(</span><br><span class="line">					<span class="keyword">new</span> SimpleCommandLinePropertySource(<span class="string">"springApplicationCommandLineArgs"</span>, args));</span><br><span class="line">			composite.addPropertySource(source);</span><br><span class="line">			sources.replace(name, composite);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			sources.addFirst(<span class="keyword">new</span> SimpleCommandLinePropertySource(args));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>初始化defaultProperties属性为null，args则根据是否在命令输入进行相关处理。</p>
-</li>
-<li><p>配置文件(命令行参数):configureProfiles()</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configureProfiles</span><span class="params">(ConfigurableEnvironment environment, String[] args)</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>未具体实现，应该是用于后续扩展使用。</p>
-</li>
-</ul>
-<h5 id="3、ConfigurationPropertySources-attach-environment"><a href="#3、ConfigurationPropertySources-attach-environment" class="headerlink" title="3、ConfigurationPropertySources.attach(environment)"></a>3、ConfigurationPropertySources.attach(environment)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ATTACHED_PROPERTY_SOURCE_NAME = <span class="string">"configurationProperties"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line">  Assert.isInstanceOf(ConfigurableEnvironment.class, environment);</span><br><span class="line">  MutablePropertySources sources = ((ConfigurableEnvironment) environment).getPropertySources();</span><br><span class="line">  PropertySource&lt;?&gt; attached = sources.get(ATTACHED_PROPERTY_SOURCE_NAME);</span><br><span class="line">  <span class="keyword">if</span> (attached != <span class="keyword">null</span> &amp;&amp; attached.getSource() != sources) &#123;</span><br><span class="line">    sources.remove(ATTACHED_PROPERTY_SOURCE_NAME);</span><br><span class="line">    attached = <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (attached == <span class="keyword">null</span>) &#123;</span><br><span class="line">    sources.addFirst(<span class="keyword">new</span> ConfigurationPropertySourcesPropertySource(ATTACHED_PROPERTY_SOURCE_NAME,</span><br><span class="line">        <span class="keyword">new</span> SpringConfigurationPropertySources(sources)));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该步骤的目的是将ConfigurationPropertySource支持固定到environment中，以便于PropertySourcesPropertyResolver使用配置属性名称进行解析。</p>
-<h5 id="4、listeners-environmentPrepared-bootstrapContext-environment"><a href="#4、listeners-environmentPrepared-bootstrapContext-environment" class="headerlink" title="4、listeners.environmentPrepared(bootstrapContext, environment)"></a>4、listeners.environmentPrepared(bootstrapContext, environment)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">environmentPrepared</span><span class="params">(ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment)</span> </span>&#123;</span><br><span class="line">		doWithListeners(<span class="string">"spring.boot.application.environment-prepared"</span>,</span><br><span class="line">				(listener) -&gt; listener.environmentPrepared(bootstrapContext, environment));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>向监听器发送环境准备事件。此处的代码就比较熟悉了，和启动监听事件[starting()]方法逻辑基本一致。此处主要用来解析配置文件的监听器为：EnvironmentPostProcessorApplicationListener。<br><img src="/image/springboot/springboot-yml读取过程.png" alt="springboot配置读取调用层次关系">  </p>
-<h5 id="5、DefaultPropertiesPropertySource-moveToEnd-environment"><a href="#5、DefaultPropertiesPropertySource-moveToEnd-environment" class="headerlink" title="5、DefaultPropertiesPropertySource.moveToEnd(environment)"></a>5、DefaultPropertiesPropertySource.moveToEnd(environment)</h5><p>判断是否存在defaultProperties的属性源，存在则移动最后一位</p>
-<h5 id="6、configureAdditionalProfiles-environment"><a href="#6、configureAdditionalProfiles-environment" class="headerlink" title="6、configureAdditionalProfiles(environment);"></a>6、configureAdditionalProfiles(environment);</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">configureAdditionalProfiles</span><span class="params">(ConfigurableEnvironment environment)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!CollectionUtils.isEmpty(<span class="keyword">this</span>.additionalProfiles)) &#123;</span><br><span class="line">			Set&lt;String&gt; profiles = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(Arrays.asList(environment.getActiveProfiles()));</span><br><span class="line">			<span class="keyword">if</span> (!profiles.containsAll(<span class="keyword">this</span>.additionalProfiles)) &#123;</span><br><span class="line">				profiles.addAll(<span class="keyword">this</span>.additionalProfiles);</span><br><span class="line">				environment.setActiveProfiles(StringUtils.toStringArray(profiles));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>此处获取additionalProfiles属性是通过SpringApplicationBuilder实例设置的，一般不是使用SpringApplicationBuilder对象的应用此处没有额外的配置进入。</p>
-<h5 id="7、bindToSpringApplication-environment"><a href="#7、bindToSpringApplication-environment" class="headerlink" title="7、bindToSpringApplication(environment)"></a>7、bindToSpringApplication(environment)</h5><p>将环境绑定到SpringApplication类上</p>
-<h5 id="8、if-this-isCustomEnvironment"><a href="#8、if-this-isCustomEnvironment" class="headerlink" title="8、if (!this.isCustomEnvironment)"></a>8、if (!this.isCustomEnvironment)</h5><p>判断是否存在定制的环境，一般springboot方式启动的服务该<strong>isCustomEnvironment</strong>均为false，只有当通过SpringApplicationBuilder以war包的形式启动才会对该参数进行true赋值。</p>
-<h5 id="9、ConfigurationPropertySources-attach-environment"><a href="#9、ConfigurationPropertySources-attach-environment" class="headerlink" title="9、ConfigurationPropertySources.attach(environment)"></a>9、ConfigurationPropertySources.attach(environment)</h5><p>通过lister的一系列操作后再次将ConfigurationPropertySource支持固定到environment中。</p>
-<p>自此Springboot启动流程中环境准备、配置等操作已完成。</p>
-<h4 id="3-6、准备容器，容器的前置处理——prepareContext-bootstrapContext-context-environment-listeners-applicationArguments-printedBanner"><a href="#3-6、准备容器，容器的前置处理——prepareContext-bootstrapContext-context-environment-listeners-applicationArguments-printedBanner" class="headerlink" title="3.6、准备容器，容器的前置处理——prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);"></a>3.6、准备容器，容器的前置处理——prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);</h4><p>参数属性对应的实际class类型：</p>
-<ul>
-<li>contex:AnnotationConfigServletWebServerApplicationContext</li>
-<li>listeners: SpringApplicationRunListeners</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">prepareContext</span><span class="params">(DefaultBootstrapContext bootstrapContext, ConfigurableApplicationContext context,</span></span></span><br><span class="line"><span class="function"><span class="params">		ConfigurableEnvironment environment, SpringApplicationRunListeners listeners,</span></span></span><br><span class="line"><span class="function"><span class="params">		ApplicationArguments applicationArguments, Banner printedBanner)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">   <span class="comment">//将给定的环境委托给底层的AnnotatedBeanDefinitionReader和ClassPathBeanDefinitionScanner。</span></span><br><span class="line">   context.setEnvironment(environment);</span><br><span class="line">	postProcessApplicationContext(context);</span><br><span class="line">	applyInitializers(context);</span><br><span class="line">	listeners.contextPrepared(context);</span><br><span class="line">	bootstrapContext.close(context);</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.logStartupInfo) &#123;</span><br><span class="line">		logStartupInfo(context.getParent() == <span class="keyword">null</span>);</span><br><span class="line">		logStartupProfileInfo(context);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Add boot specific singleton beans</span></span><br><span class="line">	ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();</span><br><span class="line">	beanFactory.registerSingleton(<span class="string">"springApplicationArguments"</span>, applicationArguments);</span><br><span class="line">	<span class="keyword">if</span> (printedBanner != <span class="keyword">null</span>) &#123;</span><br><span class="line">		beanFactory.registerSingleton(<span class="string">"springBootBanner"</span>, printedBanner);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (beanFactory <span class="keyword">instanceof</span> DefaultListableBeanFactory) &#123;</span><br><span class="line">		((DefaultListableBeanFactory) beanFactory)</span><br><span class="line">				.setAllowBeanDefinitionOverriding(<span class="keyword">this</span>.allowBeanDefinitionOverriding);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.lazyInitialization) &#123;</span><br><span class="line">		context.addBeanFactoryPostProcessor(<span class="keyword">new</span> LazyInitializationBeanFactoryPostProcessor());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// Load the sources</span></span><br><span class="line">	Set&lt;Object&gt; sources = getAllSources();</span><br><span class="line">	Assert.notEmpty(sources, <span class="string">"Sources must not be empty"</span>);</span><br><span class="line">	load(context, sources.toArray(<span class="keyword">new</span> Object[<span class="number">0</span>]));</span><br><span class="line">	listeners.contextLoaded(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>未完待续！</p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1926,7 +1933,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1955,7 +1962,15 @@
         
           
         
-        <span class="site-state-item-count">7</span>
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1990,7 +2005,13 @@
         
           
         
-        <span class="site-state-item-count">10</span>
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
