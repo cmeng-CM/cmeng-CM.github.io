@@ -59,18 +59,18 @@
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM内存模型">
-<meta property="og:url" content="cmeng001.github.io/2020/08/17/JVM/jvm-memory-model/index.html">
+<meta property="og:url" content="cmeng001.github.io/2020/08/17/java/JVM/jvm-memory-model/index.html">
 <meta property="og:site_name" content="c萌怪谈">
 <meta property="og:description" content="JVM内存一 概述内存 是硬盘和CPU的中间仓库及桥梁，承载着操作系统和应用程序的实时运行。JVM内存布局规定了Java在运行过程中内存申请、分配、管理的策略，保证了JVM的高效稳定运行. 在JVM自动内存管理机制，开发人员不需要去考虑内存的delete/free操作，不容易出现内存溢出和泄露问题。 二 运行时数据区域/内存布局1.8之前和之后略有区别，主要体现在为1.8之前存在方法区(Metho">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/image/JVM/Java虚拟机运行时数据区_水印.jpg">
 <meta property="og:image" content="/image/JVM/Heap.jpg">
-<meta property="og:updated_time" content="2021-05-14T08:56:40.124Z">
+<meta property="og:updated_time" content="2022-08-08T14:19:01.444Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM内存模型">
 <meta name="twitter:description" content="JVM内存一 概述内存 是硬盘和CPU的中间仓库及桥梁，承载着操作系统和应用程序的实时运行。JVM内存布局规定了Java在运行过程中内存申请、分配、管理的策略，保证了JVM的高效稳定运行. 在JVM自动内存管理机制，开发人员不需要去考虑内存的delete/free操作，不容易出现内存溢出和泄露问题。 二 运行时数据区域/内存布局1.8之前和之后略有区别，主要体现在为1.8之前存在方法区(Metho">
 <meta name="twitter:image" content="/image/JVM/Java虚拟机运行时数据区_水印.jpg">
-  <link rel="canonical" href="cmeng001.github.io/2020/08/17/JVM/jvm-memory-model/">
+  <link rel="canonical" href="cmeng001.github.io/2020/08/17/java/JVM/jvm-memory-model/">
 
 
 <script id="page-configurations">
@@ -234,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/JVM/jvm-memory-model/">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/java/JVM/jvm-memory-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cmeng">
@@ -276,7 +276,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-14 16:56:40" itemprop="dateModified" datetime="2021-05-14T16:56:40+08:00">2021-05-14</time>
+                <time title="修改时间：2022-08-08 22:19:01" itemprop="dateModified" datetime="2022-08-08T22:19:01+08:00">2022-08-08</time>
               </span>
             
           
@@ -286,7 +286,14 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
 
                 
                 
@@ -417,8 +424,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/08/17/algorithm/back_tracking/" rel="next" title="回溯">
-                  <i class="fa fa-chevron-left"></i> 回溯
+                <a href="/2019/08/12/Redis/redis持久化/" rel="next" title="redis持久化">
+                  <i class="fa fa-chevron-left"></i> redis持久化
                 </a>
               
             </div>
@@ -427,8 +434,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2020/08/18/JVM/JVM调优/" rel="prev" title="JVM调优之jps jinfo jstat jmap jhat">
-                  JVM调优之jps jinfo jstat jmap jhat <i class="fa fa-chevron-right"></i>
+                <a href="/2020/08/17/快捷键/vscode/" rel="prev" title="vscode快捷键">
+                  vscode快捷键 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -486,7 +493,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -523,7 +530,11 @@
         
           
         
-        <span class="site-state-item-count">11</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

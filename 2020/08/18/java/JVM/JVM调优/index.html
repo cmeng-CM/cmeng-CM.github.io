@@ -59,15 +59,15 @@
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM调优之jps jinfo jstat jmap jhat">
-<meta property="og:url" content="cmeng001.github.io/2020/08/18/JVM/JVM调优/index.html">
+<meta property="og:url" content="cmeng001.github.io/2020/08/18/java/JVM/JVM调优/index.html">
 <meta property="og:site_name" content="c萌怪谈">
 <meta property="og:description" content="JVM调优概述虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。 调优原则多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-05-31T14:02:31.166Z">
+<meta property="og:updated_time" content="2022-08-08T14:19:41.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM调优之jps jinfo jstat jmap jhat">
 <meta name="twitter:description" content="JVM调优概述虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。 调优原则多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更">
-  <link rel="canonical" href="cmeng001.github.io/2020/08/18/JVM/JVM调优/">
+  <link rel="canonical" href="cmeng001.github.io/2020/08/18/java/JVM/JVM调优/">
 
 
 <script id="page-configurations">
@@ -231,7 +231,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/18/JVM/JVM调优/">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/18/java/JVM/JVM调优/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cmeng">
@@ -273,7 +273,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-31 22:02:31" itemprop="dateModified" datetime="2022-05-31T22:02:31+08:00">2022-05-31</time>
+                <time title="修改时间：2022-08-08 22:19:41" itemprop="dateModified" datetime="2022-08-08T22:19:41+08:00">2022-08-08</time>
               </span>
             
           
@@ -283,7 +283,14 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
 
                 
                 
@@ -654,8 +661,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/08/17/JVM/jvm-memory-model/" rel="next" title="JVM内存模型">
-                  <i class="fa fa-chevron-left"></i> JVM内存模型
+                <a href="/2020/08/18/java/多线程/future/" rel="next" title="java的future体系">
+                  <i class="fa fa-chevron-left"></i> java的future体系
                 </a>
               
             </div>
@@ -723,7 +730,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -760,7 +767,11 @@
         
           
         
-        <span class="site-state-item-count">11</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

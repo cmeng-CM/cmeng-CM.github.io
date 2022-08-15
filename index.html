@@ -642,7 +642,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/18/JVM/JVM调优/">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/18/java/JVM/JVM调优/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cmeng">
@@ -658,7 +658,7 @@
         
           <h1 class="post-title" itemprop="name headline">
               
-              <a href="/2020/08/18/JVM/JVM调优/" class="post-title-link" itemprop="url">JVM调优之jps jinfo jstat jmap jhat</a>
+              <a href="/2020/08/18/java/JVM/JVM调优/" class="post-title-link" itemprop="url">JVM调优之jps jinfo jstat jmap jhat</a>
             
           </h1>
         
@@ -685,7 +685,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-31 22:02:31" itemprop="dateModified" datetime="2022-05-31T22:02:31+08:00">2022-05-31</time>
+                <time title="修改时间：2022-08-08 22:19:41" itemprop="dateModified" datetime="2022-08-08T22:19:41+08:00">2022-08-08</time>
               </span>
             
           
@@ -695,7 +695,14 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
 
                 
                 
@@ -1069,7 +1076,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/JVM/jvm-memory-model/">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/18/java/多线程/future/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cmeng">
@@ -1085,7 +1092,362 @@
         
           <h1 class="post-title" itemprop="name headline">
               
-              <a href="/2020/08/17/JVM/jvm-memory-model/" class="post-title-link" itemprop="url">JVM内存模型</a>
+              <a href="/2020/08/18/java/多线程/future/" class="post-title-link" itemprop="url">java的future体系</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-18 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-18T16:13:12+08:00">2020-08-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-15 08:57:12" itemprop="dateModified" datetime="2022-08-15T08:57:12+08:00">2022-08-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="一、Future概念"><a href="#一、Future概念" class="headerlink" title="一、Future概念"></a>一、Future概念</h2><h3 id="1-1、概念"><a href="#1-1、概念" class="headerlink" title="1.1、概念"></a>1.1、概念</h3><p><font color="blue"> <strong><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/util/concurrent/Future.html" target="_blank" rel="noopener">Oracle官方文档</a></strong> </font> 针对Future接口解释如下：未来表示异步计算的结果。提供了检查计算是否完成，等待计算完成以及检索计算结果的方法。只有在计算完成时，才能使用方法 <strong>get()</strong> 检索结果，如有必要，在计算准备就绪之前将其阻止。取消由取消方法执行。</p>
+<p>举个例子：发快递时的快递单号，整个快递过程中单号就是唯一的重要标识与凭证。<strong>Future</strong> 就类似于这个单号，在异步操作中，可以根据 <strong>Future</strong> 去提取相关的操作结果。所以<strong>Future</strong> 表示的是异步任务还没完成提前给出的未来结果。</p>
+<h3 id="1-2、Future"><a href="#1-2、Future" class="headerlink" title="1.2、Future"></a>1.2、Future</h3><p>java中 Future 就是对于具体的 <strong>Runnable</strong> 或者 <strong>Callable</strong>（下面会详细介绍） 任务的执行结果进行取消、查询是否完成、获取结果。必要时可以通过get方法获取执行结果，该方法会阻塞直到任务返回结果。</p>
+<p><strong>代码定义</strong>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Future</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">cancel</span><span class="params">(<span class="keyword">boolean</span> mayInterruptIfRunning)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isCancelled</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isDone</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">V <span class="title">get</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, ExecutionException</span>;</span><br><span class="line">    <span class="function">V <span class="title">get</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>提供功能点：</strong></p>
+<ul>
+<li>cancel：用来取消任务，成功：true，失败：false。如果任务【已完成】或【未执行】或【被取消过】则返回false。<ul>
+<li>参数 <strong>mayInterruptIfRunning</strong> 表示是否允许取消正在执行却没有执行完毕的任务。</li>
+</ul>
+</li>
+<li>isCancelled：方法表示任务是否被取消成功，如果在任务正常完成前被取消成功，则返回 true。</li>
+<li>isDone方法表示任务是否已经完成，若任务完成，则返回true；</li>
+<li>get()方法用来获取执行结果，这个方法会产生阻塞，会一直等到任务执行完毕才返回；</li>
+<li>get(long timeout, TimeUnit unit)用来获取执行结果，如果在指定时间内，还没获取到结果，就直接返回null。</li>
+</ul>
+<p><strong>也就是说Future提供了三种功能：</strong></p>
+<ul>
+<li>判断任务是否完成；</li>
+<li>能够中断任务；</li>
+<li>能够获取任务执行结果。<br>因为Future只是一个接口，所以是无法直接用来创建对象使用的，因此就有了下面的FutureTask。</li>
+</ul>
+<h3 id="1-2、与Thread区别"><a href="#1-2、与Thread区别" class="headerlink" title="1.2、与Thread区别"></a>1.2、与Thread区别</h3><p>常见的两种创建线程的方式。一种是直接继承Thread，另外一种就是实现Runnable接口。Future与这二者的唯一区别就是：<strong>Thread是没有返回结果的，而Future模式是有返回结果的。</strong></p>
+<h2 id="二、Future使用"><a href="#二、Future使用" class="headerlink" title="二、Future使用"></a>二、Future使用</h2><p>先假设个场景，我们要做烧仙草奶茶。那么就需要分别把烧仙草和奶茶做好，然后再做出烧仙草奶茶，前面的烧仙草的制作和奶茶的制作都耗时不短，而且二者完全独立，所以可以有二者同时进行即有两个线程分别去制作。等均完成后进行最后的制作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">    FutureTask&lt;String&gt; makeGrassJelly = <span class="keyword">new</span> FutureTask&lt;&gt;(<span class="keyword">new</span> Callable&lt;String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">":"</span> + <span class="string">"开始制作烧仙草。。。。。"</span>);</span><br><span class="line">            <span class="comment">// 模拟制作耗时耗时</span></span><br><span class="line">            Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">":"</span>  + <span class="string">"烧仙草已经做好了..."</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"烧仙草"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    executorService.submit(makeGrassJelly);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//也可使用如下方式，两种方式的效果一样，只不过一个使用的是ExecutorService，一个使用的是Thread</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Thread thread = new Thread(makeGrassJelly);</span></span><br><span class="line"><span class="comment">    thread.start();</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在制作烧仙草的同时制作奶茶</span></span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">":"</span>  + <span class="string">" 烧仙草的线程已经开始，下面我们做奶茶..."</span>);</span><br><span class="line">    <span class="comment">// 模拟奶茶制作的耗时</span></span><br><span class="line">    Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">":"</span>  + <span class="string">"奶茶准备好了"</span>);</span><br><span class="line">    String milkTea = <span class="string">"奶茶"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开水已经稍好，我们取得烧好的开水</span></span><br><span class="line">    String grassJelly = makeGrassJelly.get();</span><br><span class="line"></span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">":"</span>  + grassJelly  + milkTea + <span class="string">"：制作完成了，可以开吃了"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：</p>
+<blockquote>
+<p>main: 烧仙草的线程已经开始，下面我们做奶茶…<br>pool-1-thread-1:开始制作烧仙草。。。。。<br>main:奶茶准备好了<br>pool-1-thread-1:烧仙草已经做好了…<br>main:烧仙草奶茶：制作完成了，可以开吃了</p>
+</blockquote>
+<p><strong>从demo可知，使用Future步骤如下：</strong></p>
+<ul>
+<li>新建一个Callable匿名函数实现类对象，我们的业务逻辑在Callable的call方法中实现，其中Callable的泛型是返回结果类型；</li>
+<li>然后把Callable匿名函数对象作为FutureTask的构造参数传入，构建一个futureTask对象；</li>
+<li>然后再把futureTask对象作为Thread构造参数传入并开启这个线程执行去执行业务逻辑；</li>
+<li>最后我们调用futureTask对象的get方法得到业务逻辑执行结果。</li>
+</ul>
+<p>可以看到跟 Future 使用有关的JDK类主要有 <strong>FutureTask</strong> 和 <strong>Callable</strong> 两个，下面分别对对 <strong>Callable</strong> 和 <strong>FutureTask</strong> 进行源码分析。</p>
+<h2 id="三、Callable"><a href="#三、Callable" class="headerlink" title="三、Callable"></a>三、Callable</h2><p>正式进入Future模式讲解前，先了解下预备知识之——Callable。</p>
+<h3 id="3-1、Callable-介绍"><a href="#3-1、Callable-介绍" class="headerlink" title="3.1、Callable 介绍"></a>3.1、Callable 介绍</h3><p><strong>Callable：</strong> 代表一段可以调用并返回结果的代码；<strong>Future接口</strong> 表示异步任务，是还没有完成的任务给出的未来结果。所以说 <strong>Callable</strong> 用于产生结果，<strong>Future</strong> 用于获取结果。 </p>
+<p><strong>代码声明</strong>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callable</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算结果，如果计算失败则抛出异常</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> computed result</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception if unable to compute a result</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">V <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，这是一个泛型接口，call()函数返回的类型就是传递进来的V类型。<br>一般情况下是配合 ExecutorService 来使用的，在 ExecutorService 接口中声明了若干个submit方法的重载版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Callable&lt;T&gt; task)</span></span>;</span><br><span class="line">&lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Runnable task, T result)</span></span>;</span><br><span class="line">Future&lt;?&gt; submit(Runnable task);</span><br></pre></td></tr></table></figure></p>
+<p>第一个 <strong>submit</strong> 方法里面的参数类型就是 <strong>Callable</strong>。返回的是 <strong>Future</strong> 类型对象。</p>
+<h3 id="3-2、与Runnable"><a href="#3-2、与Runnable" class="headerlink" title="3.2、与Runnable"></a>3.2、与Runnable</h3><ol>
+<li><p>相同点</p>
+<ul>
+<li>都可以开发多线程。</li>
+<li>都可以使用ExecutorService来执行。   </li>
+</ul>
+</li>
+<li><p>不同点</p>
+<ul>
+<li>Callable有返回值，可以向上抛异常。Runnable不行。</li>
+<li>都使用 ExecutorService 来执行，Callable 的返回值有意义，Runnable 的返回值为空。</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3、Callable执行"><a href="#3-3、Callable执行" class="headerlink" title="3.3、Callable执行"></a>3.3、Callable执行</h3><p><strong>Callable</strong> 的使用方式有两种一种是结合 <strong>ExecutorService</strong> 提交使用，一种是构建 <strong>FutureTask</strong> 对象来使用。</p>
+<p>就先聊聊 Callable 的使用方法之一是：ExecutorService 的 submit 方法，那么我们就看下具体的执行逻辑和涉及的相关类型。</p>
+<p><strong>异步执行demo</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">executeTask</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//提交带有返回值的任务以供执行，并返回表示任务挂起结果的 Future</span></span><br><span class="line">    Future submit = executorService.submit(()-&gt;&#123;</span><br><span class="line">        <span class="comment">//业务逻辑执行</span></span><br><span class="line">        log.info(<span class="string">"in callable!!!!"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"callable"</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//获取执行结果</span></span><br><span class="line">        submit.get();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        log.error(<span class="string">"==== Asynchronous execution exception"</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>执行逻辑：</strong><br><strong>1. 获取 ExecutorService 实例</strong>：<br>获取 <strong>ExecutorService</strong> 实例，用于任务提交操作。<strong>newCachedThreadPool()</strong> 将返回 <strong>ThreadPoolExecutor</strong> 类型对象实例。</p>
+<p><strong>2. submit() 提交任务</strong></p>
+<ul>
+<li>执行对象类型<br><strong>Executors.newCachedThreadPool()</strong> 产生的对象实例类型为 <strong>ThreadPoolExecutor</strong>。其继承实现模型为：<br><img src="/image/java/多线程/ThreadPoolExecutor类结构模型.png" alt="ThreadPoolExecutor类结构模型">  </li>
+<li>方法调用源码分析<br>提交任务的方法 <strong>submit</strong> 由 <strong>ExecutorService</strong> 接口定义，在 <strong>AbstractExecutorService</strong> 里面实现。<strong>ThreadPoolExecutor</strong> 类没有再次覆盖实现。因此最终调用的代码逻辑为 AbstractExecutorService 内的逻辑，其实现逻辑如下：    </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AbstractExecutorService.java</span></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Callable&lt;T&gt; task)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    RunnableFuture&lt;T&gt; ftask = newTaskFor(task);</span><br><span class="line">    execute(ftask);</span><br><span class="line">    <span class="keyword">return</span> ftask;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// newTaskFor实现</span></span><br><span class="line"><span class="keyword">protected</span> &lt;T&gt; <span class="function">RunnableFuture&lt;T&gt; <span class="title">newTaskFor</span><span class="params">(Callable&lt;T&gt; callable)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FutureTask&lt;T&gt;(callable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由源码可知，submit执行时：</p>
+<ol>
+<li>先将Callable接口实现转化为 <strong>FutureTask</strong> 类型对象。</li>
+<li>然后再通过 <strong>execute</strong> 执行。  </li>
+</ol>
+<p>具体执行逻辑下面聊到 <strong>FutureTask</strong> 会详细说明。此处已经说明了 <strong>Callable 最终一定通过与 Future 结合进行使用</strong>，达到异步执行任务且返回相关结果的功能。所以两种执行方式的底层实现实为一种：即结合 <strong>FutureTask</strong> 进行使用。</p>
+<p>那么接下来就聊聊 <strong>FutureTask</strong> 。</p>
+<h2 id="四、FutureTask"><a href="#四、FutureTask" class="headerlink" title="四、FutureTask"></a>四、FutureTask</h2><h3 id="4-1、FutureTask类结构分析"><a href="#4-1、FutureTask类结构分析" class="headerlink" title="4.1、FutureTask类结构分析"></a>4.1、FutureTask类结构分析</h3><p>FutureTask的类结构：<br><img src="/image/java/多线程/FutureTask类结构模型.png" alt="ThreadPoolExecutor类结构模型">  </p>
+<p>通过类图我们不难看出,<strong>RunnableFuture</strong> 继承了 <strong>Runable</strong> 以及 <strong>Future</strong> 接口，所以它即可以被线程异步执行，也可作为Future得到callable的计算结果。</p>
+<p>下面进入正题聊聊 <strong>FutureTask</strong>，它实现了<strong>RunnableFuture</strong> 接口，所以也是 <strong>Future</strong> 和<strong>Runnable</strong> 接口的具体实现类，即异步任务执行后我们能够获取到异步任务的执行结果。</p>
+<p>下面就详详细的通过源码分析下 <strong>FutureTask</strong> 的执行逻辑。</p>
+<h3 id="4-2、源码分析——属性"><a href="#4-2、源码分析——属性" class="headerlink" title="4.2、源码分析——属性"></a>4.2、源码分析——属性</h3><p>先看下具体属性，这个在整体运行逻辑中都是很重要的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Possible state transitions:</span></span><br><span class="line"><span class="comment"> * NEW -&gt; COMPLETING -&gt; NORMAL</span></span><br><span class="line"><span class="comment"> * NEW -&gt; COMPLETING -&gt; EXCEPTIONAL</span></span><br><span class="line"><span class="comment"> * NEW -&gt; CANCELLED</span></span><br><span class="line"><span class="comment"> * NEW -&gt; INTERRUPTING -&gt; INTERRUPTED</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// 任务执行状态标识</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义运行状态码</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NEW          = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> COMPLETING   = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NORMAL       = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> EXCEPTIONAL  = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CANCELLED    = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INTERRUPTING = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INTERRUPTED  = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Callable对象实现，用于异步执行 */</span></span><br><span class="line"><span class="keyword">private</span> Callable&lt;V&gt; callable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 从 get() 返回的结果或抛出的异常 */</span></span><br><span class="line"><span class="keyword">private</span> Object outcome; </span><br><span class="line"></span><br><span class="line"><span class="comment">/** 用来执行callable任务的线程 */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> Thread runner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 在 Treiber 中记录等待线程的简单链表节点 */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> WaitNode waiters;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// VarHandle mechanics</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VarHandle STATE;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VarHandle RUNNER;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VarHandle WAITERS;</span><br></pre></td></tr></table></figure></p>
+<p>根据Java并发工具类三板斧：</p>
+<ul>
+<li>状态</li>
+<li>队列</li>
+<li>CAS操作<br>从这个方面分别对不同的属性进行详细的解析。</li>
+</ul>
+<h4 id="4-2-1、属性——状态"><a href="#4-2-1、属性——状态" class="headerlink" title="4.2.1、属性——状态"></a>4.2.1、属性——状态</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NEW          = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> COMPLETING   = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NORMAL       = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> EXCEPTIONAL  = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CANCELLED    = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INTERRUPTING = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INTERRUPTED  = <span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>FutureTask</strong> 中定义了七种状态，一种初始状态，四种终态，两种中间态，由 <strong>0-6</strong> 分别代表分别如下：</p>
+<ol>
+<li>初始状态：<ul>
+<li>NEW：初始状态，这是由构造函数保证的。</li>
+</ul>
+</li>
+<li>中间态：<strong>瞬间状态，而且此状态并不代表任务正执行，而是已经执行完成正（成功或失败异常）在设置返回结果</strong><ul>
+<li>COMPLETING： 正在设置任务结果</li>
+<li>INTERRUPTING： 正在中断运行任务的线程</li>
+</ul>
+</li>
+<li>终态<ul>
+<li>NORMAL：任务正常执行完毕</li>
+<li>EXCEPTIONAL：任务执行过程中发生异常</li>
+<li>CANCELLED：任务被取消</li>
+<li>INTERRUPTED：任务被中断</li>
+</ul>
+</li>
+</ol>
+<p><strong>执行状态流转顺序如下</strong>：</p>
+<ol>
+<li><strong>NEW -&gt; COMPLETING -&gt; NORMAL</strong><ul>
+<li>任务正常执行且完成设置返回结果。</li>
+<li>状态由 <strong>set</strong> 方法设置。</li>
+</ul>
+</li>
+<li><strong>NEW -&gt; COMPLETING -&gt; EXCEPTIONAL</strong><ul>
+<li>任务执行异常。</li>
+<li>状态由 <strong>setException</strong> 方法设置。</li>
+</ul>
+</li>
+<li><strong>NEW -&gt; CANCELLED</strong><ul>
+<li>任务取消，即调用了 <strong>cancel(false)</strong></li>
+<li>状态由 <strong>cancel</strong> 方法设置。</li>
+</ul>
+</li>
+<li><strong>NEW -&gt; INTERRUPTING -&gt; INTERRUPTED</strong><ul>
+<li>任务取消，即调用了 <strong>cancel(true)</strong></li>
+<li>状态由 <strong>cancel</strong> 方法设置。</li>
+</ul>
+</li>
+</ol>
+<p>因此涉及状态修改的只有 set、setException、cancel这三个方法，方法的具体逻辑后面再详细分析。</p>
+<h4 id="4-2-2、属性——队列"><a href="#4-2-2、属性——队列" class="headerlink" title="4.2.2、属性——队列"></a>4.2.2、属性——队列</h4><p>聊队列时同时将其它相关操作的属性一块聊一聊，</p>
+<ol>
+<li><strong>处理逻辑（callable）</strong><br>包含具体的异步执行逻辑内容，整个生命周期从构造函数接收，到call()方法调用执行，到最后的移除销毁整个过程与线程的具体执行逻辑息息相关。后面聊到具体执行逻辑再分析。</li>
+<li><strong>执行（runner）</strong><br>用来执行 callable 任务的线程，<strong>runner 属性是在运行时被初始化的。</strong> 简单点说，就是run方法被调用时赋值。</li>
+<li><strong>结果（outcome）</strong><br>任务的执行结果，成功为 callable 内的返回结果，失败为异常对象。</li>
+<li><strong>队列（waiters）</strong><br>所有等待任务执行完毕的线程的集合。</li>
+</ol>
+<p>在并发编程中使用队列通常是将 <strong>当前线程包装成某种类型的数据结构扔到等待队列中，</strong> 接下来看下waiters的结构定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">WaitNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">volatile</span> Thread thread;</span><br><span class="line">    <span class="keyword">volatile</span> WaitNode next;</span><br><span class="line">    WaitNode() &#123; thread = Thread.currentThread(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>简单的单项链表结构，仅有两个属性一个是当前线程 <strong>thread</strong>，一个是下一个队列节点对象 <strong>next</strong>。</p>
+<ul>
+<li><strong>thread</strong>：存放当前调用 <strong>FutureTask</strong> 内各相关方法的线程信息。</li>
+<li><strong>next</strong>：指向下一个节点的next属性。</li>
+</ul>
+<p>根据 <strong>WaitNode</strong> 对象的数据结构和属性内容，可以很明显的知道它的作用，即：将当前线程信息存放至链表，按照 <strong>后进先出</strong> 的规则进行相关操作。</p>
+<p>因为 <strong>Future</strong> 的 <strong>get()/get(timeout)</strong> 在 task 处于非完成状态时是需要 <strong>阻塞等待</strong> 的，如果多个线程进行 get 操作，显然需要一个链表/队列来维护这些等待线程，这就是waiters的意义所在。</p>
+<p>简答模拟了一下五个线程同时调用 <strong>get()</strong> 方法，可看到当第5个线程进行时，<strong>队列（waiters）</strong> 已经有五个等待线程了：<br><img src="/image/java/多线程/Future-waiters模拟.png" alt="Future-waiters模拟"> </p>
+<p>其中 <strong>runner</strong> , <strong>waiters</strong> 和 <strong>state</strong> 都是用 <strong>volatile</strong> 关键字修饰，说明这三个变量都是多线程共享的对象（成员变量），会被多线程操作，此时用volatile关键字修饰是为了一个线程操作volatile属性变量值后，能够及时对其他线程可见。当然仅仅如此依旧存在线程安全的问题，所以其相关操作使用的CAS机制来确保线程的安全性。下面就聊下CAS。</p>
+<h4 id="4-2-3、属性——CAS"><a href="#4-2-3、属性——CAS" class="headerlink" title="4.2.3、属性——CAS"></a>4.2.3、属性——CAS</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VarHandle STATE;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VarHandle RUNNER;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VarHandle WAITERS;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        MethodHandles.Lookup l = MethodHandles.lookup();</span><br><span class="line">        STATE = l.findVarHandle(FutureTask.class, <span class="string">"state"</span>, <span class="keyword">int</span>.class);</span><br><span class="line">        RUNNER = l.findVarHandle(FutureTask.class, <span class="string">"runner"</span>, Thread.class);</span><br><span class="line">        WAITERS = l.findVarHandle(FutureTask.class, <span class="string">"waiters"</span>, WaitNode.class);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ReflectiveOperationException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ExceptionInInitializerError(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从这个静态代码块中我们也可以看出，CAS操作主要针对3个属性，包括 <strong>STATE</strong>、<strong>RUNNER</strong> 和  <strong>WAITERS</strong>，说明这3个属性基本是会被多个线程同时访问的。其中 <strong>STATE</strong>属性代表了任务的状态，<strong>WAITERS</strong> 属性代表了指向栈顶节点的指针。<strong>RUNNER</strong> 主要是为了 <strong>中断或者取消任务</strong> 做准备的，只有知道了执行任务的线程是谁，我们才能去中断它。</p>
+<p>具体的操作也是使用了CAS方法即 <strong>compareAndSet</strong> 来完成的。</p>
+<h3 id="4-3、源码分析——构造函数"><a href="#4-3、源码分析——构造函数" class="headerlink" title="4.3、源码分析——构造函数"></a>4.3、源码分析——构造函数</h3><p>FutureTask有两个构造函数，分别看下源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造函数1</span></span><br><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FutureTask</span><span class="params">(Callable&lt;V&gt; callable)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (callable == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">this</span>.callable = callable;</span><br><span class="line">    <span class="keyword">this</span>.state = NEW;       <span class="comment">// ensure visibility of callable</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造函数2</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FutureTask</span><span class="params">(Runnable runnable, V result)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.callable = Executors.callable(runnable, result);</span><br><span class="line">    <span class="keyword">this</span>.state = NEW;       <span class="comment">// ensure visibility of callable</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>构造函数1很好理解，传入 <strong>Callable</strong> 的实现类，将参数赋值属性 <strong>callable</strong>，同时将状态 <strong>state</strong> 置为初始状态 <strong>NEW</strong>，代表新建任务状态。</p>
+<p>接着看构造函数2，很明显的区别在于入参变成了 <strong>Runnable</strong> 实现类，且增加了返回结果的泛型集。然后将二者通过 <strong>Executors.callable()</strong> 方法转变成了 <strong>callable</strong> 类型，那么就进入方法具体看下源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Callable&lt;T&gt; <span class="title">callable</span><span class="params">(Runnable task, T result)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RunnableAdapter&lt;T&gt;(task, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">RunnableAdapter</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Runnable task;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> T result;</span><br><span class="line"></span><br><span class="line">    RunnableAdapter(Runnable task, T result) &#123;</span><br><span class="line">        <span class="keyword">this</span>.task = task;</span><br><span class="line">        <span class="keyword">this</span>.result = result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        task.run();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.toString() + <span class="string">"[Wrapped task = "</span> + task + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由源码可知，方法直接调用了 <strong>RunnableAdapter</strong> 的构造函数，这个方法采用了设计模式中的适配器模式，将一个Runnable类型对象适配成Callable类型。当然 <strong>result</strong> 参数的存在只是为了将一个Runnable 类型适配成 Callable 类型，确实没什么实际意义。   </p>
+<h3 id="4-4、源码分析——执行-run方法"><a href="#4-4、源码分析——执行-run方法" class="headerlink" title="4.4、源码分析——执行(run方法)"></a>4.4、源码分析——执行(run方法)</h3><h4 id="4-4-1、执行-run方法-——执行逻辑"><a href="#4-4-1、执行-run方法-——执行逻辑" class="headerlink" title="4.4.1、执行(run方法)——执行逻辑"></a>4.4.1、执行(run方法)——执行逻辑</h4><p><strong>FutureTask</strong> 实现了 <strong>Runnable</strong>，覆写了 <strong>run</strong> 方法，即用于异步执行的线程逻辑。<strong>Callable</strong> 即是需要执行的业务逻辑，他是业务逻辑的基本表现形式，保存在类属性callable，在run函数里面，调用callalbe.call()来执行业务逻辑。下面从源码来了解具体的执行逻辑：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1、判断是否满足执行条件，满足条件设置runner属性</span></span><br><span class="line">    <span class="keyword">if</span> (state != NEW ||</span><br><span class="line">        !RUNNER.compareAndSet(<span class="keyword">this</span>, <span class="keyword">null</span>, Thread.currentThread()))</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 2、具体执行业务逻辑，根据执行情况做不同处理</span></span><br><span class="line">        Callable&lt;V&gt; c = callable;</span><br><span class="line">        <span class="comment">// 执行前再次判断状态</span></span><br><span class="line">        <span class="keyword">if</span> (c != <span class="keyword">null</span> &amp;&amp; state == NEW) &#123;</span><br><span class="line">            V result;</span><br><span class="line">            <span class="comment">// 执行状态标识</span></span><br><span class="line">            <span class="keyword">boolean</span> ran;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 具体业务执行</span></span><br><span class="line">                result = c.call();</span><br><span class="line">                ran = <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">                result = <span class="keyword">null</span>;</span><br><span class="line">                ran = <span class="keyword">false</span>;</span><br><span class="line">                <span class="comment">// 失败结果集设置</span></span><br><span class="line">                setException(ex);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (ran)</span><br><span class="line">            <span class="comment">// 成功结果集设置</span></span><br><span class="line">                set(result);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">//3、执行完的后处理逻辑</span></span><br><span class="line">        runner = <span class="keyword">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> s = state;</span><br><span class="line">        <span class="keyword">if</span> (s &gt;= INTERRUPTING)</span><br><span class="line">            handlePossibleCancellationInterrupt(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从源码可知，具体执行共三步：</p>
+<ol>
+<li>判断是否满足执行条件，满足条件设置runner属性<ul>
+<li>判断任务状态是否为 <strong>NEW</strong> 状态，如果不是，则可能执行完毕或已经被取消，所以直接返回。</li>
+<li>如果任务为 <strong>NEW</strong> 状态，则通过 <strong>CAS操作</strong> 将 <strong>runner</strong> 置为当前正在执行异步任务的线程。此处有两种情况：<ul>
+<li><strong>runner!=null</strong>：则说明任务依旧处于NEW状态，但已经有线程在执行该任务，所以无需再次执行，CAS操作失败，直接返回。</li>
+<li><strong>runner==null</strong> ：说明还未有线程执行过异步任务，此时满足执行异步任务的条件，CAS操作成功，继续执行任务。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>具体执行，并根据结果进行相关操作<ul>
+<li><strong>if (c != null &amp;&amp; state == NEW)</strong>：再次判断任务状态，状态为NEW则继续执行。</li>
+<li><strong>result = c.call();</strong>：调用call()方法执行具体的业务逻辑，根据结果进行操作。<ul>
+<li>失败则进入异常操作设置结果集 <strong>setException(ex)</strong>；并设置失败标识 <strong>ran = false</strong>。</li>
+<li>成功则设置成功标识 <strong>ran = true</strong> ，并进行成功后结果集的设置 <strong>set(result)</strong>；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>后处理逻辑<br>不管异步任务执行成功还是失败，首先将当前执行任务线程 <strong>runner</strong> 置为空，若其他线程有调用 <strong>FutureTask.cancel(true)</strong>，此时需要调用<strong>handlePossibleCancellationInterrupt</strong> 方法处理中断。</li>
+</ol>
+<h4 id="4-4-2、执行-run方法-——Java线程的实现"><a href="#4-4-2、执行-run方法-——Java线程的实现" class="headerlink" title="4.4.2、执行(run方法)——Java线程的实现"></a>4.4.2、执行(run方法)——Java线程的实现</h4><p>Java线程的使用方式有很多，但最后都会归于 <strong>Thread.start()</strong>方法，无论是使用 Thread 直接调用 start()方法还是使用线程池进行多线程调用，最终都会归于此处。start()内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Thread.java</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</span><br><span class="line">        group.add(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">boolean</span> started = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            start0();</span><br><span class="line">            started = <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!started) &#123;</span><br><span class="line">                    group.threadStartFailed(<span class="keyword">this</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</span><br><span class="line">                <span class="comment">/* do nothing. If start0 threw a Throwable then</span></span><br><span class="line"><span class="comment">                  it will be passed up the call stack */</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 本地方法start</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">start0</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册本地方法栈</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">registerNatives</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    registerNatives();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，最终实现都是调用本地方法栈的 <strong>start0();</strong>。而这些native方法的注册是在Thread对象初始化的时候完成的，即上面的静态代码块内调用的 <strong>registerNatives();</strong> 。当该类被加载到 JVM 中的时候，它就会被调用，进而注册相应的本地方法。</p>
+<p>而本地方法 <strong>registerNatives</strong> 是定义在 Thread.c 文件中的。Thread.c 是个很小的文件，它定义了各个操作系统平台都要用到的关于线程的公用数据和操作，如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// openJdk-10版本  THread.c</span></span><br><span class="line"><span class="keyword">static</span> JNINativeMethod methods[] = &#123;</span><br><span class="line">    &#123;<span class="string">"start0"</span>,           <span class="string">"()V"</span>,        (<span class="keyword">void</span> *)&amp;JVM_StartThread&#125;, <span class="comment">//java start0</span></span><br><span class="line">    &#123;<span class="string">"stop0"</span>,            <span class="string">"("</span> OBJ <span class="string">")V"</span>, (<span class="keyword">void</span> *)&amp;JVM_StopThread&#125;,</span><br><span class="line">    &#123;<span class="string">"isAlive"</span>,          <span class="string">"()Z"</span>,        (<span class="keyword">void</span> *)&amp;JVM_IsThreadAlive&#125;,</span><br><span class="line">    &#123;<span class="string">"suspend0"</span>,         <span class="string">"()V"</span>,        (<span class="keyword">void</span> *)&amp;JVM_SuspendThread&#125;,</span><br><span class="line">    &#123;<span class="string">"resume0"</span>,          <span class="string">"()V"</span>,        (<span class="keyword">void</span> *)&amp;JVM_ResumeThread&#125;,</span><br><span class="line">    &#123;<span class="string">"setPriority0"</span>,     <span class="string">"(I)V"</span>,       (<span class="keyword">void</span> *)&amp;JVM_SetThreadPriority&#125;,</span><br><span class="line">    &#123;<span class="string">"yield"</span>,            <span class="string">"()V"</span>,        (<span class="keyword">void</span> *)&amp;JVM_Yield&#125;,</span><br><span class="line">    &#123;<span class="string">"sleep"</span>,            <span class="string">"(J)V"</span>,       (<span class="keyword">void</span> *)&amp;JVM_Sleep&#125;,</span><br><span class="line">    &#123;<span class="string">"currentThread"</span>,    <span class="string">"()"</span> THD,     (<span class="keyword">void</span> *)&amp;JVM_CurrentThread&#125;,</span><br><span class="line">    &#123;<span class="string">"countStackFrames"</span>, <span class="string">"()I"</span>,        (<span class="keyword">void</span> *)&amp;JVM_CountStackFrames&#125;,</span><br><span class="line">    &#123;<span class="string">"interrupt0"</span>,       <span class="string">"()V"</span>,        (<span class="keyword">void</span> *)&amp;JVM_Interrupt&#125;,</span><br><span class="line">    &#123;<span class="string">"isInterrupted"</span>,    <span class="string">"(Z)Z"</span>,       (<span class="keyword">void</span> *)&amp;JVM_IsInterrupted&#125;,</span><br><span class="line">    &#123;<span class="string">"holdsLock"</span>,        <span class="string">"("</span> OBJ <span class="string">")Z"</span>, (<span class="keyword">void</span> *)&amp;JVM_HoldsLock&#125;,</span><br><span class="line">    &#123;<span class="string">"getThreads"</span>,        <span class="string">"()["</span> THD,   (<span class="keyword">void</span> *)&amp;JVM_GetAllThreads&#125;,</span><br><span class="line">    &#123;<span class="string">"dumpThreads"</span>,      <span class="string">"(["</span> THD <span class="string">")[["</span> STE, (<span class="keyword">void</span> *)&amp;JVM_DumpThreads&#125;,</span><br><span class="line">    &#123;<span class="string">"setNativeName"</span>,    <span class="string">"("</span> STR <span class="string">")V"</span>, (<span class="keyword">void</span> *)&amp;JVM_SetNativeThreadName&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> THD</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> OBJ</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> STE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> STR</span></span><br><span class="line"></span><br><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL</span><br><span class="line">Java_java_lang_Thread_registerNatives(JNIEnv *env, jclass cls)</span><br><span class="line">&#123;</span><br><span class="line">    (*env)-&gt;RegisterNatives(env, cls, methods, ARRAY_LENGTH(methods));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面就要找具体是怎么调用的 <strong>Thread.run()</strong> 方法，在 jvm.cpp 中有如下代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hotSpot-10版本  jvm.cpp</span></span><br><span class="line">JVM_ENTRY(<span class="keyword">void</span>, JVM_StartThread(JNIEnv* env, jobject jthread))</span><br><span class="line">  JVMWrapper(<span class="string">"JVM_StartThread"</span>);</span><br><span class="line">  JavaThread *native_thread = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">bool</span> throw_illegal_thread_state = <span class="literal">false</span>;</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function">MutexLocker <span class="title">mu</span><span class="params">(Threads_lock)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (java_lang_Thread::thread(JNIHandles::resolve_non_null(jthread)) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">      throw_illegal_thread_state = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      jlong size =</span><br><span class="line">             java_lang_Thread::stackSize(JNIHandles::resolve_non_null(jthread));</span><br><span class="line">      </span><br><span class="line">      NOT_LP64(<span class="keyword">if</span> (size &gt; SIZE_MAX) size = SIZE_MAX;)</span><br><span class="line">      <span class="keyword">size_t</span> sz = size &gt; <span class="number">0</span> ? (<span class="keyword">size_t</span>) size : <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//主要看这里</span></span><br><span class="line">      native_thread = <span class="keyword">new</span> JavaThread(&amp;thread_entry, sz);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (native_thread-&gt;osthread() != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        native_thread-&gt;prepare(jthread);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里JVM_ENTRY是一个宏，用来定义JVM_StartThread 函数，可以看到函数内创建了真正的平台相关的本地线程，其线程函数是<strong>thread_entry</strong>，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hotSpot-10版本  jvm.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">thread_entry</span><span class="params">(JavaThread* thread, TRAPS)</span> </span>&#123;</span><br><span class="line">    <span class="function">HandleMark <span class="title">hm</span><span class="params">(THREAD)</span></span>;</span><br><span class="line">    <span class="function">Handle <span class="title">obj</span><span class="params">(THREAD, thread-&gt;threadObj()</span>)</span>;</span><br><span class="line">    <span class="function">JavaValue <span class="title">result</span><span class="params">(T_VOID)</span></span>;</span><br><span class="line">    JavaCalls::call_virtual(&amp;result,obj,</span><br><span class="line">    KlassHandle(THREAD,SystemDictionary::Thread_klass()),</span><br><span class="line">    vmSymbolHandles::run_method_name(),    <span class="comment">//看这里</span></span><br><span class="line">    vmSymbolHandles::void_method_signature(),THREAD);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">class vmSymbolHandles: AllStatic &#123;</span><br><span class="line">   ...</span><br><span class="line">    template(run_method_name,<span class="string">"run"</span>)  <span class="comment">//这里!!! 这里决定了调用的方法名称是 “run”!</span></span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>自此调用流程就清晰了：<br><img src="/image/java/多线程/Thread-JVM运行机制.png" alt="Thread-JVM运行机制.png"> </p>
+<h4 id="4-4-3、执行-run方法-——成功结果set"><a href="#4-4-3、执行-run方法-——成功结果set" class="headerlink" title="4.4.3、执行(run方法)——成功结果set()"></a>4.4.3、执行(run方法)——成功结果set()</h4><p>老规矩，首先看源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(V v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (STATE.compareAndSet(<span class="keyword">this</span>, NEW, COMPLETING)) &#123;</span><br><span class="line">        outcome = v;</span><br><span class="line">        STATE.setRelease(<span class="keyword">this</span>, NORMAL); <span class="comment">// final state</span></span><br><span class="line">        finishCompletion();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该方法的调用只有通过 <strong>FutureTask.run()</strong> 方法才可以被调用，而 run 方法本身能执行到此处也是不会存在多线程的情况，因为能进行的前置要求存在 <strong>CAS操作修改状态</strong> 的步骤，由此分析其代码逻辑及含义：</p>
+<ol>
+<li>状态校验<br>其校验操作位<strong>CAS修改NEW状态为COMPLETING</strong>，所以只有状态为 <strong>NEW</strong> 的任务才可以进入其操作逻辑。这么做的意义在于执行<strong>run</strong> 方法逻辑时可能存在<strong>cancel</strong> 方法被调用，所以需要CAS操作来保证任务的状态为 NEW 才可以进入结果集设置的操作。</li>
+<li>设置结果集<br>根据执行结果即 <strong>set的入参：V</strong> 设置返回结果集。</li>
+<li>修改状态<br>将任务状态设置为 <strong>NORMAL</strong>，表示任务正常结束。此处对应的状态变化为：<strong>NEW -&gt; COMPLETING -&gt; NORMAL。</strong> </li>
+<li>唤醒阻塞进程<br>调用任务执行完成方法，此时会唤醒阻塞的线程，调用done()方法和清空等待线程链表等。具体阻塞的进程的来源，上面聊队列的时候分析过具体的原因和情况。</li>
+</ol>
+<h4 id="4-4-4、执行-run方法-——异常结果setException"><a href="#4-4-4、执行-run方法-——异常结果setException" class="headerlink" title="4.4.4、执行(run方法)——异常结果setException()"></a>4.4.4、执行(run方法)——异常结果setException()</h4><p>先上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setException</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (STATE.compareAndSet(<span class="keyword">this</span>, NEW, COMPLETING)) &#123;</span><br><span class="line">        outcome = t;</span><br><span class="line">        STATE.setRelease(<span class="keyword">this</span>, EXCEPTIONAL); <span class="comment">// final state</span></span><br><span class="line">        finishCompletion();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到 <strong>setException</strong> 内的逻辑与 <strong>set</strong> 基本一致，区别在于返回结果此处是将异常设置进去，终态设置为 <strong>EXCEPTIONAL</strong> ，其它无区别。此处状态转换为： <strong>NEW -&gt; COMPLETING -&gt; EXCEPTIONAL。</strong></p>
+<h4 id="4-4-5、执行-run方法-——finishCompletion"><a href="#4-4-5、执行-run方法-——finishCompletion" class="headerlink" title="4.4.5、执行(run方法)——finishCompletion()"></a>4.4.5、执行(run方法)——finishCompletion()</h4><p>先上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FutureTask.java</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">finishCompletion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// assert state &gt; COMPLETING;</span></span><br><span class="line">    <span class="comment">// 根据 get 方法阻塞的队列，进行唤醒、移除等操作，若是get方法未被调用，则不进入循环</span></span><br><span class="line">    <span class="keyword">for</span> (WaitNode q; (q = waiters) != <span class="keyword">null</span>;) &#123;</span><br><span class="line">        <span class="keyword">if</span> (WAITERS.weakCompareAndSet(<span class="keyword">this</span>, q, <span class="keyword">null</span>)) &#123;</span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                Thread t = q.thread;</span><br><span class="line">                <span class="keyword">if</span> (t != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    q.thread = <span class="keyword">null</span>;</span><br><span class="line">                    <span class="comment">// 唤醒线程</span></span><br><span class="line">                    LockSupport.unpark(t);</span><br><span class="line">                &#125;</span><br><span class="line">                WaitNode next = q.next;</span><br><span class="line">                <span class="keyword">if</span> (next == <span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                q.next = <span class="keyword">null</span>; <span class="comment">// unlink to help gc</span></span><br><span class="line">                q = next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 无论有无阻塞队列，都调用done()，FutureTask内done()无任务实现内容。</span></span><br><span class="line">    done();</span><br><span class="line">    <span class="comment">// 任务已执行完毕，已将结果存储至outcome中，因此将callable属性置为空</span></span><br><span class="line">    callable = <span class="keyword">null</span>;        <span class="comment">// to reduce footprint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此处主要是针对 <strong>waiters</strong> 内被阻塞的线程队列，针对阻塞的线程进行唤醒、移除等操作。由于FutureTask中的队列本质上是一个Treiber栈，因此操作的顺序是 <strong>后进先出</strong> 即后面先来的线程先被先操作。  </p>
+<h4 id="4-4-6、执行-run方法-——执行完成共有操作handlePossibleCancellationInterrupt"><a href="#4-4-6、执行-run方法-——执行完成共有操作handlePossibleCancellationInterrupt" class="headerlink" title="4.4.6、执行(run方法)——执行完成共有操作handlePossibleCancellationInterrupt()"></a>4.4.6、执行(run方法)——执行完成共有操作handlePossibleCancellationInterrupt()</h4><p>先上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handlePossibleCancellationInterrupt</span><span class="params">(<span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == INTERRUPTING)</span><br><span class="line">        <span class="keyword">while</span> (state == INTERRUPTING)</span><br><span class="line">            Thread.yield(); <span class="comment">// wait out pending interrupt</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>可见该方法是一个自旋操作，如果当前的state状态是 <strong>INTERRUPTING</strong>，我们在原地自旋，直到 <strong>state</strong> 状态转换成终止态。意义在于：检查是否有遗漏的中断，如果有，等待中断状态完成。具体 <strong>handlePossibleCancellationInterrupt</strong> 为什么在任务执行完毕后调用，等聊到 <strong>cancel()</strong> 方法再详细分析。</p>
+<h3 id="4-5、源码分析——获取执行结果"><a href="#4-5、源码分析——获取执行结果" class="headerlink" title="4.5、源码分析——获取执行结果"></a>4.5、源码分析——获取执行结果</h3><h4 id="4-5-1、获取执行结果——get"><a href="#4-5-1、获取执行结果——get" class="headerlink" title="4.5.1、获取执行结果——get()"></a>4.5.1、获取执行结果——get()</h4><p>先上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, ExecutionException </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> s = state;</span><br><span class="line">        <span class="keyword">if</span> (s &lt;= COMPLETING)</span><br><span class="line">            s = awaitDone(<span class="keyword">false</span>, <span class="number">0L</span>);</span><br><span class="line">        <span class="keyword">return</span> report(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@throws</span> CancellationException &#123;<span class="doctag">@inheritDoc</span>&#125;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (unit == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">int</span> s = state;</span><br><span class="line">    <span class="keyword">if</span> (s &lt;= COMPLETING &amp;&amp;</span><br><span class="line">        (s = awaitDone(<span class="keyword">true</span>, unit.toNanos(timeout))) &lt;= COMPLETING)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TimeoutException();</span><br><span class="line">    <span class="keyword">return</span> report(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由源码可知，获取执行结果有两个方法：</p>
+<ul>
+<li><strong>get()</strong>：获取执行结果，如果未执行完毕，则阻塞等待。</li>
+<li><strong>get(long timeout, TimeUnit unit)</strong>：获取执行结果，并设置超时时间，如果未超时则阻塞等待，如果已超时则 <strong>移除当前阻塞线程</strong> 并 <strong>直接返回当前执行状态</strong><br>除了后者存在超时时间设置外，其他执行逻辑并无区别，主要阻塞获取执行结果的方法都是 <strong>awaitDone</strong> 下面详细分析下此方法。</li>
+</ul>
+<h4 id="4-5-2、获取执行结果——awaitDone"><a href="#4-5-2、获取执行结果——awaitDone" class="headerlink" title="4.5.2、获取执行结果——awaitDone()"></a>4.5.2、获取执行结果——awaitDone()</h4><p>先上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">awaitDone</span><span class="params">(<span class="keyword">boolean</span> timed, <span class="keyword">long</span> nanos)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//超时相关设置</span></span><br><span class="line">    <span class="keyword">long</span> startTime = <span class="number">0L</span>;</span><br><span class="line">    <span class="comment">// 线程链表头节点</span></span><br><span class="line">    WaitNode q = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">//是否已入阻塞队列</span></span><br><span class="line">    <span class="keyword">boolean</span> queued = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="comment">// 【1-4】状态校验，如果已执行完毕，且当前队列节点不为空则将队列当前线程置为空后返回状态。如果当前队列节点为空则直接返回状态</span></span><br><span class="line">        <span class="keyword">int</span> s = state;</span><br><span class="line">        <span class="keyword">if</span> (s &gt; COMPLETING) &#123;</span><br><span class="line">            <span class="keyword">if</span> (q != <span class="keyword">null</span>)</span><br><span class="line">                q.thread = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">return</span> s;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 状态为COMPLETING则说明正在设置结果集，当前线程让出CPU时间片段，等待设置结果集完毕</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (s == COMPLETING)</span><br><span class="line">            Thread.yield();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 【3-1】当前执行线程被中断，则移除队列节点，抛出中断异常</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (Thread.interrupted()) &#123;</span><br><span class="line">            removeWaiter(q);</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InterruptedException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 【1-1】当前线程还未进入阻塞队列，则创建包含当前线程信息的队列节点。</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (q == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (timed &amp;&amp; nanos &lt;= <span class="number">0L</span>)</span><br><span class="line">                <span class="keyword">return</span> s;</span><br><span class="line">            q = <span class="keyword">new</span> WaitNode();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 【1-2】如果当前队列节点未入阻塞队列，则加入队列头部</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!queued)</span><br><span class="line">            queued = WAITERS.weakCompareAndSet(<span class="keyword">this</span>, q.next = waiters, q);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 【2-1】若有超时设置，那么处理超时获取任务结果的逻辑</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (timed) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">long</span> parkNanos;</span><br><span class="line">            <span class="keyword">if</span> (startTime == <span class="number">0L</span>) &#123; <span class="comment">// first time</span></span><br><span class="line">                startTime = System.nanoTime();</span><br><span class="line">                <span class="keyword">if</span> (startTime == <span class="number">0L</span>)</span><br><span class="line">                    startTime = <span class="number">1L</span>;</span><br><span class="line">                parkNanos = nanos;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">long</span> elapsed = System.nanoTime() - startTime;</span><br><span class="line">                <span class="keyword">if</span> (elapsed &gt;= nanos) &#123;</span><br><span class="line">                    removeWaiter(q);</span><br><span class="line">                    <span class="keyword">return</span> state;</span><br><span class="line">                &#125;</span><br><span class="line">                parkNanos = nanos - elapsed;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// nanoTime may be slow; recheck before parking</span></span><br><span class="line">            <span class="keyword">if</span> (state &lt; COMPLETING)</span><br><span class="line">                LockSupport.parkNanos(<span class="keyword">this</span>, parkNanos);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 【1-3】阻塞当前线程</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            LockSupport.park(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>获取结果集的自旋循环处理逻辑，存在多个分支处理，每个分支的校验条件和操作逻辑均已在注释中描述，那么下面就看下每次循环都会执行哪些分支，同时进一步了解为什么每个分支的逻辑如此设计。</p>
+<p><strong>情况 1：1、任务状态为NEW；2、无超时时间设置时，3、不存在中断操做时。循环内的情况</strong>：</p>
+<ol>
+<li>第一次循环：<br>此时 <strong>q=null</strong>，进入队列节点创建操作，即：【1-1】，操作完此次循环结束。此时队列节点已创建，但尚未放入阻塞队列内。</li>
+<li>第二次循环：<br>此时  <strong>queued=false</strong>，进入将当前节点放入阻塞队列操作，即【1-2】，操作完此次循环结束。</li>
+<li>第三次循环<br>当前队列节点已创建且已放入阻塞队列，此时进入阻塞阶段，即【1-3】，操作完成循环结束。</li>
+<li>第四次循环<br>此时任务已执行完毕，阻塞线程被激活，进入结果集获取操作，即【1-4】，<strong>awaitDone</strong> 方法执行完毕，返回异步任务结果集。</li>
+</ol>
+<p><strong>情况 2：1、任务状态为NEW；2、存在超时时间设置时，3、不存在中断操做时。循环内的情况</strong>：<br>则在【1-3】和【1-4】中间加入【2-1】超时判断操作。其它同 <strong>情况1</strong>。</p>
+<p><strong>情况 3：1、任务状态为NEW；2、无超时时间设置时，3、存在中断操做时。循环内情况：</strong><br>直接进入中断操作，移除当前队列节点，抛出异常即【3-1】。任务执行和任务取消都调用 <strong>finishCompletion()</strong> 方法，那么此处调用的意义在哪？此处调用意义：执行 <strong>awaitDone</strong> 时存在一种情况，即刚进行队列节点创建但还未将队列节点放入阻塞队列即【第一次循环】时。此时进行任务中断则队列节点无法在 <strong>finishCompletion()</strong> 中移除，所以需要在此处进行置空操作，方便GC回收。</p>
+<p><strong>情况 4：1、任务状态为不为NEW。循环内情况：</strong><br>直接返回当前任务状态，存在当前队列节点则移除当前队列节点即【1-4】。原因类似 <strong>情况2</strong>，只不过中断操作变为任务完成。</p>
+<h4 id="4-5-3、获取执行结果——report"><a href="#4-5-3、获取执行结果——report" class="headerlink" title="4.5.3、获取执行结果——report()"></a>4.5.3、获取执行结果——report()</h4><p>先上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> V <span class="title">report</span><span class="params">(<span class="keyword">int</span> s)</span> <span class="keyword">throws</span> ExecutionException </span>&#123;</span><br><span class="line">    Object x = outcome;</span><br><span class="line">    <span class="keyword">if</span> (s == NORMAL)</span><br><span class="line">        <span class="keyword">return</span> (V)x;</span><br><span class="line">    <span class="keyword">if</span> (s &gt;= CANCELLED)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> CancellationException();</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ExecutionException((Throwable)x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>根据状态获取结果集就很简单了，一共三个分支：</p>
+<ol>
+<li>状态为 <strong>NORMAL</strong>：即正常执行完成，返回 <strong>Callable.call()</strong> 方法执行结果即可。</li>
+<li>状态 <strong>s &gt;= CANCELLED</strong>，说明存在取消情况，则抛出中断异常。</li>
+<li>其它状态为执行过程存在异常，则将异常类返回即可。</li>
+</ol>
+<h3 id="4-6、源码分析——取消任务"><a href="#4-6、源码分析——取消任务" class="headerlink" title="4.6、源码分析——取消任务"></a>4.6、源码分析——取消任务</h3><p>线上源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">cancel</span><span class="params">(<span class="keyword">boolean</span> mayInterruptIfRunning)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 任务状态为NEW且根据mayInterruptIfRunning参数修改状态为INTERRUPTING或CANCELLED，二者任一</span></span><br><span class="line">    <span class="comment">// 失败或同时失败均返回 False</span></span><br><span class="line">    <span class="keyword">if</span> (!(state == NEW &amp;&amp; STATE.compareAndSet</span><br><span class="line">            (<span class="keyword">this</span>, NEW, mayInterruptIfRunning ? INTERRUPTING : CANCELLED)))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;    </span><br><span class="line">        <span class="comment">// 如果mayInterruptIfRunning=true，则获取当前任务执行线程，进行中断操作</span></span><br><span class="line">        <span class="keyword">if</span> (mayInterruptIfRunning) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread t = runner;</span><br><span class="line">                <span class="keyword">if</span> (t != <span class="keyword">null</span>)</span><br><span class="line">                    t.interrupt();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123; <span class="comment">// final state</span></span><br><span class="line">                <span class="comment">// 最后任务状态赋值为INTERRUPTED</span></span><br><span class="line">                STATE.setRelease(<span class="keyword">this</span>, INTERRUPTED);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">// 针对阻塞进程进行唤醒、移除等操作</span></span><br><span class="line">        finishCompletion();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由源码可知：</p>
+<ol>
+<li>状态校验：<ul>
+<li>状态不为NEW，直接返回false</li>
+<li>状态为NEW，根据参数 <strong>mayInterruptIfRunning</strong> 不同值，进行不同的状态修改，此处修改为CAS操作，修改失败则返回false。成功则继续执行取消操作。</li>
+</ul>
+</li>
+<li><p>根据 mayInterruptIfRunning 不同值进行操作：</p>
+<ul>
+<li>为flase：跳过 <strong>try</strong> 代码块，直接执行 <strong>finally</strong> 操作。此时状态变化为：<strong>NEW -&gt; CANCELLED。</strong></li>
+<li>为true：则 <strong>runner==null</strong>，因为可能存在此时任务已经执行完成，将 runner 置为空了。如果不为空，则发送线程中断信号，发送中中断信号并不代表一定会真正的中断线程。此时状态变化为：<strong>NEW -&gt; INTERRUPTING -&gt; INTERRUPTED</strong>。</li>
+</ul>
+</li>
+<li><p>唤醒阻塞线程<br>无论 <strong>mayInterruptIfRunning</strong> 参数为何值，最终都会唤醒阻塞的线程，即调用 <strong>finishCompletion</strong> 方法，因为此时任务已经是终态了。 <strong>cancel()</strong> 方法返回true。<br>如果<strong>cancel()</strong> 返回true了，那么线程无论最终是否执行，<strong>get()</strong> 方法都会抛出<strong>CancellationException</strong>异常，因为 <strong>report(int s)</strong> 内会校验 <strong>s &gt;= CANCELLED</strong>，具体可看上一节的 <strong>report()</strong>源码。</p>
+</li>
+</ol>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="4-7、源码分析——移除任务"><a href="#4-7、源码分析——移除任务" class="headerlink" title="4.7、源码分析——移除任务"></a>4.7、源码分析——移除任务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeWaiter</span><span class="params">(WaitNode node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node != <span class="keyword">null</span>) &#123;</span><br><span class="line">        node.thread = <span class="keyword">null</span>;</span><br><span class="line">        retry:</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;          <span class="comment">// restart on removeWaiter race</span></span><br><span class="line">            <span class="keyword">for</span> (WaitNode pred = <span class="keyword">null</span>, q = waiters, s; q != <span class="keyword">null</span>; q = s) &#123;</span><br><span class="line">                s = q.next;</span><br><span class="line">                <span class="keyword">if</span> (q.thread != <span class="keyword">null</span>)</span><br><span class="line">                    pred = q;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (pred != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    pred.next = s;</span><br><span class="line">                    <span class="keyword">if</span> (pred.thread == <span class="keyword">null</span>) <span class="comment">// check for race</span></span><br><span class="line">                        <span class="keyword">continue</span> retry;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (!WAITERS.compareAndSet(<span class="keyword">this</span>, q, s))</span><br><span class="line">                    <span class="keyword">continue</span> retry;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>移除指定节点，该方法仅在 <strong>awaitDone</strong> 方法内 <strong>等待执行结果超时</strong> 和 <strong>遇到线程中断</strong> 时调用。</p>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>至此 <strong>FutureTask</strong> 体系相关的逻辑已经分析完毕。直接使用就只关心三块内容即可：</p>
+<ol>
+<li>Callable实现想要做的业务逻辑，</li>
+<li>构建FutureTask类。</li>
+<li>使用 Thread或ExecutorService来执行，并在执行后阻塞获取执行结果。</li>
+</ol>
+<p><strong>Callable</strong>也可直接执行，但只能通过 <strong>ExecutorService.submit</strong> 方法来执行，但内部实际上还是转换为FutureTask来执行，FutureTask则既可以 <strong>ExecutorService.submit</strong> 来执行，也可以直接使用 <strong>Thread</strong> 来直接执行，因为它既实现 <strong>Runnable</strong> 又实现了 <strong>Future</strong> 。</p>
+<p><strong>FutureTask</strong> 内部则关系主要是 <strong>runner,waiters和state</strong> 这三个属性的定义概念和执行逻辑理清晰差不多也就把<strong>FutureTask</strong> 理解透彻了。</p>
+<p>至此 <strong>future体系</strong> 算是分析完毕了。</p>
+<p>参考：<br><a href="https://juejin.cn/post/6844903774985650183" target="_blank" rel="noopener">https://juejin.cn/post/6844903774985650183</a><br><a href="https://segmentfault.com/a/1190000015739343" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015739343</a></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/时间复杂度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/08/17/algorithm/时间复杂度/" class="post-title-link" itemprop="url">算法-时间复杂度</a>
             
           </h1>
         
@@ -1112,7 +1474,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-14 16:56:40" itemprop="dateModified" datetime="2021-05-14T16:56:40+08:00">2021-05-14</time>
+                <time title="修改时间：2020-08-18 17:00:25" itemprop="dateModified" datetime="2020-08-18T17:00:25+08:00">2020-08-18</time>
               </span>
             
           
@@ -1122,7 +1484,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -1142,93 +1504,64 @@
 
       
           
-            <h1 id="JVM内存"><a href="#JVM内存" class="headerlink" title="JVM内存"></a>JVM内存</h1><h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 概述"></a>一 概述</h3><p><strong>内存</strong> 是硬盘和CPU的中间仓库及桥梁，承载着操作系统和应用程序的实时运行。JVM内存布局规定了Java在运行过程中内存申请、分配、管理的策略，保证了JVM的高效稳定运行.</p>
-<p>在JVM自动内存管理机制，开发人员不需要去考虑内存的delete/free操作，不容易出现内存溢出和泄露问题。</p>
-<h3 id="二-运行时数据区域-内存布局"><a href="#二-运行时数据区域-内存布局" class="headerlink" title="二 运行时数据区域/内存布局"></a>二 运行时数据区域/内存布局</h3><p>1.8之前和之后略有区别，主要体现在为1.8之前存在方法区(Method Area)，1.8之后去掉方法区，增加元空间(MetaSpace)</p>
-<p><img src="/image/JVM/Java虚拟机运行时数据区_水印.jpg" alt="Java内存布局"></p>
-<h4 id="2-1-虚拟机栈"><a href="#2-1-虚拟机栈" class="headerlink" title="2.1 虚拟机栈"></a>2.1 虚拟机栈</h4><ol>
-<li><p>Java 虚拟机栈（Java Virtual Machine Stacks）也就是我们平时所说的 <strong>栈内存</strong>，或者指的就是虚拟机栈中的 <strong>局部变量表</strong> 部分。<br>虚拟机栈描述的是Java方法的内存模型：即每个方法在执行的同时都会创建一个 <strong>栈帧</strong>，用于存储局部变量表、操作数栈、动态链接、方法出口等信息。所以虚拟机栈是线程私有的，生命周期与线程相同。  </p>
-</li>
-<li><p><strong>栈针（Stack Frame）</strong> ：用于支持虚拟机进行方法调用和方法执行的数据结构。每一个方法从调用至执行完成的过程，都对应着一个栈帧在虚拟机栈里从入栈到出栈的过程。  </p>
-</li>
-<li><p><strong>局部变量表</strong>：存放编译期方法内部的各种基本数据类型（boolean、byte、char、short、int、float、long、double）、对象引用（reference）类型等。<br>局部变量表所需空间是在编译期间完成分配的，当进入方法，该方法需要的栈针分配的空间是固定，在方法运行期间不会改变.   </p>
-<p><strong>操作数栈</strong>：Java虚拟机的解释执行引擎称为“基于栈的执行引擎”，其中所指的“栈”就是操作数栈。当JVM为方法创建栈帧的时候，在栈帧中为方法创建一个操作数栈，保证方法内指令可以完成工作。</p>
-<p><strong>动态链接</strong>： 每个栈帧中包含一个在常量池中对当前方法的引用， 目的是支持方法调用过程的动态连接。</p>
-<p><strong>方法返回地址</strong>： 退出的两种形式，1、正常退出；2、抛出异常。</p>
-</li>
-<li><p>虚拟机栈在JVM中存在两种异常</p>
+            <h2 id="算法-时间复杂度"><a href="#算法-时间复杂度" class="headerlink" title="算法-时间复杂度"></a>算法-时间复杂度</h2><h3 id="1、数据结构-算法"><a href="#1、数据结构-算法" class="headerlink" title="1、数据结构-算法"></a>1、数据结构-算法</h3><p>数据结构和算法是相辅相成的，<strong>数据结构是为算法服务的，算法要作用在特定的数据结构之上</strong>。所以二者的学习不能互相孤立。</p>
+<h3 id="2、算法复杂度分析"><a href="#2、算法复杂度分析" class="headerlink" title="2、算法复杂度分析"></a>2、算法复杂度分析</h3><ol>
+<li>时间复杂度： 指算法需要消耗的时间资源。计算机算法是问题规模n 的函数f(n)，算法的时间复杂度也因此记做。<br>T(n)=Ο(f(n))</li>
+<li>空间复杂度：算法需要消耗的空间资源。其计算和表示方法与时间复杂度类似，一般都用复杂度的渐近性来表示。同时间复杂度相比，空间复杂度的分析要简单得多。</li>
+</ol>
+<h4 id="2-1、事后统计法"><a href="#2-1、事后统计法" class="headerlink" title="2.1、事后统计法"></a>2.1、事后统计法</h4><p>事后统计法：通过统计、分析等，计算出算法的实际执行时间和实际内存占用，从而得到算法的时间复杂度。</p>
 <ul>
-<li>StackOverflowError：若线程请求的栈深度大于当前虚拟机所允许的深度，抛出此异常</li>
-<li>OutOfMemoryError：若虚拟机栈可动态扩展，当扩展时无法申请到足够的内存，抛出此异常</li>
+<li>测试结果非常依赖测试环境。（服务器资源配置）</li>
+<li>测试结果受限于数据规模</li>
 </ul>
-</li>
-</ol>
-<h4 id="2-2-本地方法栈"><a href="#2-2-本地方法栈" class="headerlink" title="2.2 本地方法栈"></a>2.2 本地方法栈</h4><p>本地方法栈Native Method Stack）与虚拟机栈的作用是相似。区别是：<strong>虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。</strong>   </p>
-<p>此外，对于此区域出现的异常，和虚拟机栈是相同的。</p>
-<h4 id="2-3-程序计数器"><a href="#2-3-程序计数器" class="headerlink" title="2.3 程序计数器"></a>2.3 程序计数器</h4><p>程序计数器（Program Counter Register）是当前线程所执行的字节码的行号指示器，它占用一块较小的内存空间。<strong>字节码解释器通过改变该计数器的值来选取下一条需要执行的字节码指令，其中包括分支、循环、跳转、异常处理、线程恢复等基础功能。</strong>  </p>
-<p>Java多线程是处理器的时间片转轮的策略的实现的，任一确定时刻，一个处理器只执行一条线下中的命令，为了切换线程后可恢复到正确的执行位置，程序计数器为线程私有。</p>
-<p><strong>程序计数器是唯一一个在 Java 虚拟机规范中没有规定任何 OutOfMemoryError 情况的区域。</strong></p>
-<h4 id="2-4-堆"><a href="#2-4-堆" class="headerlink" title="2.4 堆"></a>2.4 堆</h4><ol>
-<li><p>堆（Heap）是JVM最重要的也是最大的一块内存，在虚拟机启动时创建。对于堆来说，它可以位于物理上不连续而逻辑上连续的内存空间中。在实际情况下也可以通过调整虚拟机参数的方式对堆进行扩展，即通过 -Xmx 和 -Xms 控制。</p>
-</li>
-<li><p>该区域的主要作用: <strong>为对象实例及数组分配内存</strong>，几乎存储了所有对象实例。同时也是垃圾回收器管理的主要区域，因此也被称作GC 堆（Garbage Collected Heap）。 <br><br><br>Java堆还可以细分为：新生代和老年代。再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。具体如下图：<br><img src="/image/JVM/Heap.jpg" alt="堆Heap详细分布">1.8后去除永生代，用元空间替代。<br><br><br>查看虚拟机默认配置命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:+PrintFlagsFinal -version</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="2-5-方法区-Method-Area"><a href="#2-5-方法区-Method-Area" class="headerlink" title="2.5 方法区(Method Area)"></a>2.5 方法区(Method Area)</h4><ol>
-<li><p>方法区（Method Area）用于存储已被虚拟机加载的 类信息、常量、静态变量、即时编译器编译后的代码等数据。虽然 <strong>Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆）</strong>，目的应该是与 Java 堆区分开来。</p>
-</li>
-<li><p>方法区也被成为永生代，二者关系分析起来比较容易混淆，引用下面个人认为比较好的释义：</p>
+<h4 id="2-2、大O复杂度表示法"><a href="#2-2、大O复杂度表示法" class="headerlink" title="2.2、大O复杂度表示法"></a>2.2、大O复杂度表示法</h4><p>时间复杂度通俗来讲，就是代码运行的时间。大O表示法就是在不运算代码的情况下来分析一段代码的时间复杂度。<br>看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从CPU的角度来看，代码的每一行都执行着类似的操作：<strong>读操作-运算-写操作</strong>。这里我们假设每行代码的执行时间一样，为unit_time，那么2，3行执行了1个unit_time，3，4行n个unit_time，总的执行时间就是（2n+2）*unit_time。<br>按照这个思路再来看下面一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>依旧假设单位时间为unit_time，2、3、4行执行时间分别为1unti_time，5、6加起来就是2n。7、8加起来就是2n²unit_time;总的时间就为(2n²+2n+3)unit_time.<br>这两段代码分析我们可得到一个重要的规律，那就是<strong>代码的执行时间T(n)和每段代码的执次数成正比</strong>，所以就得到了以下公式：</p>
 <blockquote>
-<p>《Java 虚拟机规范》只是规定了有方法区这么个概念和它的作用，并没有规定如何去实现它。那么，在不同的 JVM 上方法区的实现肯定是不同的了。<strong>方法区和永久代的关系很像 Java 中接口和类的关系，类实现了接口，而永久代就是 HotSpot 虚拟机对虚拟机规范中方法区的一种实现方式。</strong> 也就是说，永久代是 HotSpot 的概念，方法区是 Java 虚拟机规范中的定义，是一种规范，而永久代是一种实现，一个是标准一个是实现，其他的虚拟机实现并没有永久代这一说法。</p>
+<font color="orange">T(n)=O(f(n))</font>
+
 </blockquote>
+<p>其中T(n)代表了代码的执行时间，n代表数据规模，f(n)代表每行代码执行的次数总和。因为是公式，所以用f(n)表达。公式中的O则表示代码执行时间T(n)和表达式f(n)成正比。   </p>
+<p>两个例子中的T(n)=O(2n+2)和T(n)=O(2n²+2n+3)就是大O时间复杂度表示法，它并不代表具体的执行时间，而是代表<strong>代码的执行时间随着数据规模增加的变化趋势</strong>，所以也叫渐进时间复杂度（asymptotic time complexity），简称时间复杂度。  </p>
+<p>当n很大时，表达式中的低阶、常量、系数等部分并不左右增长趋势，所以大O表示法可记为：T(n)=O(n)、T(n)=O(n²)。</p>
+<h4 id="2-3-常见复杂度分析方法"><a href="#2-3-常见复杂度分析方法" class="headerlink" title="2.3 常见复杂度分析方法"></a>2.3 常见复杂度分析方法</h4><ol>
+<li><p>单段代码看高频：如循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>方法区或者称为永生代，<strong>在1.8中被去除</strong>。并用元空间（Metaspace）替换。</p>
+<li><p>多段代码取最高：如一段代码中存在单重循环和多重循环，则取多重循环。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套循环取乘积：比如多重循环，递归等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多数据规模取和：O(n+m)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;i&lt;m;i++)&#123;</span><br><span class="line">    sum += sum + i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="2-5-元空间（Metaspace）"><a href="#2-5-元空间（Metaspace）" class="headerlink" title="2.5 元空间（Metaspace）"></a>2.5 元空间（Metaspace）</h4><ol>
-<li>元空间替换方法区的原因：<ul>
-<li>因为PermGen/(Method Area)经常内存溢出。</li>
-<li>促进HotSpot和JRockit VM融合，因为 JRockit 没有永久代。<br>详细原因：<a href="http://openjdk.java.net/jeps/122" target="_blank" rel="noopener">JEP 122:Remove the Permanent Generation</a></li>
-</ul>
-</li>
-<li>根据上面的原因方法区被移除，方法区中类元信息、字段、静态属性、方法、常量等移至元空间，<strong>并在1.7时将运行时常量池从方法区中移了出来，在 Java 堆（Heap）中开辟了一块区域存放运行时常量池。</strong></li>
-<li>元空间和方法区本质类似，主要区别在于：<strong>元空间使用本地内存，方法区存在于虚拟机中。</strong> 所以元空间的大小取决于本地内存的容量。  </li>
+<h4 id="2-4-常见的时间复杂度"><a href="#2-4-常见的时间复杂度" class="headerlink" title="2.4 常见的时间复杂度"></a>2.4 常见的时间复杂度</h4><p><img src="/image/algorithm/常见时间复杂度.jpg" alt="常见时间复杂度"></p>
+<ol>
+<li>多项式阶，随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。  </li>
 </ol>
-<p>元空间对应的JVM调参：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">参数</th>
-<th style="text-align:left">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">-XX:MaxMetaspaceSize</td>
-<td style="text-align:left">分配给Metaspace 的最大值，超过此值就会触发Full GC，此值默认没有限制，但应取决于系统内存的大小。JVM会动态地改变此值。</td>
-</tr>
-<tr>
-<td style="text-align:left">-XX:MinMetaspaceFreeRatio</td>
-<td style="text-align:left">在GC之后，最小的Metaspace剩余空间容量的百分比，减少为分配空间所导致的垃圾收集</td>
-</tr>
-<tr>
-<td style="text-align:left">-XX:MaxMetaspaceFreeRatio</td>
-<td style="text-align:left">在GC之后，最大的Metaspace剩余空间容量的百分比，减少为释放空间所导致的垃圾收集</td>
-</tr>
-<tr>
-<td style="text-align:left">-XX:MetaspaceSize</td>
-<td style="text-align:left">分配给Metaspace（以字节计）的初始大小</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h4 id="2-6-直接内存（Direct-Memory）"><a href="#2-6-直接内存（Direct-Memory）" class="headerlink" title="2.6 直接内存（Direct Memory）"></a>2.6 直接内存（Direct Memory）</h4><p>直接内存并不属于Java内存的一员，但这部分也经常被使用并也会出现OutOfMemoryError 异常。<br>虽然直接内存不受Java堆大小的限制，但还是会受到本机总内存的大小及处理器寻址空间的限制。如果内存区域总和大于物理内存的限制，也会出现OOM。</p>
-<hr>
-<h5 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h5><ul>
-<li><a href="https://dyfloveslife.github.io/2019/11/18/java-memory-areas" target="_blank" rel="noopener">https://dyfloveslife.github.io/2019/11/18/java-memory-areas</a></li>
+<ul>
+<li>O(1)（常数阶）<br>常数阶的概念并不是只执行一行代码，一般情况下算法中不存在循环、递归等语句，即使有成千上万行代码，复杂度也是O(1)</li>
+<li><p>O(logn)（对数阶）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当2^x&gt;=n时，循环结束，所以这段代码的执行次数就是x= $log_2n$;大O法记作：$O(log_2n)$。那么再看下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按照上面的逻辑，这段的复杂度为$O(log_3n)$。二者之间是可以转换的$log_3n=log_32 * log_2n$；基于大O法的理论：在采用大O计数法时可以忽略系数等。则此类复杂度可统一记为O(logn)。   </p>
+</li>
+<li>O(n)（线性阶）</li>
+<li>O(nlogn)（线性对数阶）<br>基于O(logn)，那么O(nlogn)就容易理解了，就相当于上面的嵌套取乘积规则一样，就是O(logn)执行的n遍。</li>
+<li>O(n^2)（平方阶）、O(n^3)（立方阶）….、O(n^k)(K次方阶)</li>
 </ul>
+<ol>
+<li>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。</li>
+</ol>
+<ul>
+<li>O(2^n)（指数阶）</li>
+<li>O(n!)（阶乘阶）</li>
+</ul>
+<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>虽然上面说的事后统计法有一定的缺点，但时间复杂度的分析与其并不是对立冲突的。时间复杂度是一个理论上的模型，可以比较直观的给我们一个算法的效率上的感性认知，只能提供粗略的分析。它是与宿主平台无关的，并不是说O(n)的效率一定就优于O(n²)。针对不同的宿主平台环境，不同的数据集，不同的数据规模，在实际应用上性能可能会各有不同，所以实际应用中进行一定的性能基准测试是有必要的。<br>综上所述，时间复杂度分析和性能测试是相辅相成的。但一个低阶的时间复杂度确实有极大的可能优于高阶的时间复杂度，所以在编程中时刻关心复杂度的趋势走向是很有必要的，而且能很大幅度的提升输出质量。因此在编程中具有这种复杂度分析的思维还是十分有必要的。</p>
 
           
         
@@ -1338,6 +1671,128 @@
 <p>在最坏的情况下，回溯法会导致一次复杂度为指数时间的计算。</p>
 <p><strong>例如:</strong><br>在统计1~N中整数的所有子集问题时，就可以使用 <font color="#0099ff">回溯法</font> 进行处理。从1开始每个数字都有两种可能，存在子集或不存在子集，每种可能都会有一种结果，那么问题的结果就是所有可能的子集的集合。</p>
 <h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a><strong>实例</strong></h3><p><strong>1. 实例1</strong><br><a href="https://leetcode-cn.com/problems/subsets/" target="_blank" rel="noopener"></a></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/浅析最好、最坏、平均、均摊时间复杂度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cmeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c萌怪谈">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/08/17/algorithm/浅析最好、最坏、平均、均摊时间复杂度/" class="post-title-link" itemprop="url">浅析最好、最坏、平均、均摊时间复杂度</a>
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-17 09:09:04" itemprop="dateModified" datetime="2022-03-17T09:09:04+08:00">2022-03-17</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <p>对大O复杂度分析有一定基础的情况，可以进一步了解 <strong>最好情况时间复杂度</strong>（best case time complexity）、 <strong>最坏情况时间复杂度</strong>（worst case time complexity）、 <strong>平均情况时间复杂度</strong>（average case time complexity）、 <strong>均摊时间复杂度</strong>（amortized time complexity）。如果这几个概念你都能掌握，那对你来说，复杂度分析这部分内容就没什么大问题了。</p>
+<h2 id="1、最好、最坏时间复杂度"><a href="#1、最好、最坏时间复杂度" class="headerlink" title="1、最好、最坏时间复杂度"></a>1、最好、最坏时间复杂度</h2><p>先分析下下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span> <span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pos = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(array[i] == x) &#123;</span><br><span class="line">      pos = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>按照大O分析法，这段代码的复杂度就为O(n)；n代表数组的长度。但其实我们在查找数组中某个元素时，不一定非要把整个数组都遍历一遍，可以进行简单优化，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span> <span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pos = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(array[i] == x) &#123;</span><br><span class="line">      pos = i;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>优化后的代码的时间复杂度还是O(n)吗？其实看一下也不尽然。这样就可以引进三个新的概念：最好时间复杂度、最坏时间复杂度和平均时间复杂度。<br>可以比较直观的分析得到两种情况：</p>
+<ul>
+<li>当x位于数组的最前面的下标，极端一些就在下标0的位置，那么时间复杂度就为O(1)，这就是最好时间复杂度。</li>
+<li>另一种情况则是所查询的x不存在与数组之中，那么就要遍历整个数组，这样时间复杂度就为O(n)。这种极度糟糕的情况对应的就是最坏时间复杂度。</li>
+</ul>
+<h2 id="2、平均时间复杂度"><a href="#2、平均时间复杂度" class="headerlink" title="2、平均时间复杂度"></a>2、平均时间复杂度</h2><p>依旧拿上面例子为主，发生最好和最坏的情况的概率还是很小的。为了更好的表示平均情况下的时间复杂度，就需要引入一个新的概念：平均情况时间复杂度，简称平均时间复杂度。</p>
+<p>我们知道要找的x在数组和不在数组的准确概率计算是极其复杂的，我们概括性的假设二者的概率均为1/2。另外查找的x出现在0~(n-1)这n个位置的概率为1/n。那么考虑在数组或不在数组的概率，根据概率乘积法则，x出现在0~(n-1)这n个位置的概率为1/2n，由此可以推到出以下公式：<br><img src="/image/algorithm/平均时间复杂度.jpg" alt="推到公式">  </p>
+<p>这个值就是概率论中的加权平均值，也叫作期望值，所以平均时间复杂度的全称应该叫加权平均时间复杂度或者期望时间复杂度。用大 O 表示法来表示，去掉系数和常量，这段代码的加权平均时间复杂度仍然是 O(n)。  </p>
+<p>平均时间复杂度看起来很复杂，又是引入概率又是需要推导。不过平常情况下只需要一种复杂度就可以满足需求。除非是在同一个代码块因不同情况出现，时间复杂度有量级上的差距，才需要用这三种时间复杂度进行分析。  </p>
+<h2 id="3、均摊时间复杂度"><a href="#3、均摊时间复杂度" class="headerlink" title="3、均摊时间复杂度"></a>3、均摊时间复杂度</h2><p>均摊复杂度听起来和平均时间复杂度十分相似，而且也经常容易混淆。那具体均摊复杂度是什么呢？我们还是通过具体例子来了解一下，以及它的分析方法：摊还分析/平摊分析.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> element)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum;</span><br><span class="line">  <span class="keyword">if</span>(count==array.length)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">      sum = sum + array[i];</span><br><span class="line">    &#125;</span><br><span class="line">    array[<span class="number">0</span>] = sum;</span><br><span class="line">    count = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  array[count] = element;</span><br><span class="line">  count++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面是一个很简单的数组插入数据的代码块，当数组满了时，将数组所有内容求和放入下标为0的位置，再继续插入数据。按照大O分析法，我们进行最好、最坏和平均时间复杂度分析。</p>
+<p>通过分析代码，我们可知。只有在数组满时才会进行数组遍历并求和，此时的时间复杂度为O(n)，其余时间的复杂度均为O(1)。所以最坏时间复杂度为O(n)，最好时间复杂度为O(1)。<br>那么接下来进行平均时间复杂度分析。假设插入的数组位于0~(n-1)间位置的概率是一样的均为1/n，由此推导出平均时间复杂度为O(1)，以下为推导过程：<br><img src="/image/algorithm/平均时间复杂度-1.jpg" alt="推到公式">    </p>
+<p>到此最好、最坏、平均时间复杂度进阶推导出来，其实这个例子的时间复杂度大可不必如此麻烦，还引入概率。我们仔细分析一下find()和insert()两个方法的区别。</p>
+<ul>
+<li>O(n)的出现是小概率事件，O(1)反而出现的概率很大。</li>
+<li>O(n)和O(1)出现是极其有规律的。当出现一次O(n)后，后面就会跟着n-1个O(1)。循环往复。  </li>
+</ul>
+<p>这种情况其实就没必要引入概率来进行平均时间复杂度的计算。针对这种特殊的场景，引入一种更简单的分析方法：摊还分析法，由此引出新的时间复杂度：摊还时间复杂度。具体分析如下：在了解O(n)和O(1)出现的规律后，可以把耗时多的O(n)的时间均摊到接下来的n-1次操作上，这样下来，摊还时间复杂度就为O(1)。</p>
+<p>摊还时间复杂度可以针对特殊的场景进行简单化的分析，如：针对特殊的数据结构，在一段连续操作的代码块中，其中大多数操作耗时很短，只有极少数的操作耗时较长，就可以针对性的适用摊还分析进行时间复杂度分析。个人认为摊还时间复杂度可以算作一种特殊的评价时间复杂度</p>
 
           
         
@@ -1621,286 +2076,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/时间复杂度/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cmeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c萌怪谈">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/08/17/algorithm/时间复杂度/" class="post-title-link" itemprop="url">算法-时间复杂度</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-18 17:00:25" itemprop="dateModified" datetime="2020-08-18T17:00:25+08:00">2020-08-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h2 id="算法-时间复杂度"><a href="#算法-时间复杂度" class="headerlink" title="算法-时间复杂度"></a>算法-时间复杂度</h2><h3 id="1、数据结构-算法"><a href="#1、数据结构-算法" class="headerlink" title="1、数据结构-算法"></a>1、数据结构-算法</h3><p>数据结构和算法是相辅相成的，<strong>数据结构是为算法服务的，算法要作用在特定的数据结构之上</strong>。所以二者的学习不能互相孤立。</p>
-<h3 id="2、算法复杂度分析"><a href="#2、算法复杂度分析" class="headerlink" title="2、算法复杂度分析"></a>2、算法复杂度分析</h3><ol>
-<li>时间复杂度： 指算法需要消耗的时间资源。计算机算法是问题规模n 的函数f(n)，算法的时间复杂度也因此记做。<br>T(n)=Ο(f(n))</li>
-<li>空间复杂度：算法需要消耗的空间资源。其计算和表示方法与时间复杂度类似，一般都用复杂度的渐近性来表示。同时间复杂度相比，空间复杂度的分析要简单得多。</li>
-</ol>
-<h4 id="2-1、事后统计法"><a href="#2-1、事后统计法" class="headerlink" title="2.1、事后统计法"></a>2.1、事后统计法</h4><p>事后统计法：通过统计、分析等，计算出算法的实际执行时间和实际内存占用，从而得到算法的时间复杂度。</p>
-<ul>
-<li>测试结果非常依赖测试环境。（服务器资源配置）</li>
-<li>测试结果受限于数据规模</li>
-</ul>
-<h4 id="2-2、大O复杂度表示法"><a href="#2-2、大O复杂度表示法" class="headerlink" title="2.2、大O复杂度表示法"></a>2.2、大O复杂度表示法</h4><p>时间复杂度通俗来讲，就是代码运行的时间。大O表示法就是在不运算代码的情况下来分析一段代码的时间复杂度。<br>看下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从CPU的角度来看，代码的每一行都执行着类似的操作：<strong>读操作-运算-写操作</strong>。这里我们假设每行代码的执行时间一样，为unit_time，那么2，3行执行了1个unit_time，3，4行n个unit_time，总的执行时间就是（2n+2）*unit_time。<br>按照这个思路再来看下面一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>依旧假设单位时间为unit_time，2、3、4行执行时间分别为1unti_time，5、6加起来就是2n。7、8加起来就是2n²unit_time;总的时间就为(2n²+2n+3)unit_time.<br>这两段代码分析我们可得到一个重要的规律，那就是<strong>代码的执行时间T(n)和每段代码的执次数成正比</strong>，所以就得到了以下公式：</p>
-<blockquote>
-<font color="orange">T(n)=O(f(n))</font>
-
-</blockquote>
-<p>其中T(n)代表了代码的执行时间，n代表数据规模，f(n)代表每行代码执行的次数总和。因为是公式，所以用f(n)表达。公式中的O则表示代码执行时间T(n)和表达式f(n)成正比。   </p>
-<p>两个例子中的T(n)=O(2n+2)和T(n)=O(2n²+2n+3)就是大O时间复杂度表示法，它并不代表具体的执行时间，而是代表<strong>代码的执行时间随着数据规模增加的变化趋势</strong>，所以也叫渐进时间复杂度（asymptotic time complexity），简称时间复杂度。  </p>
-<p>当n很大时，表达式中的低阶、常量、系数等部分并不左右增长趋势，所以大O表示法可记为：T(n)=O(n)、T(n)=O(n²)。</p>
-<h4 id="2-3-常见复杂度分析方法"><a href="#2-3-常见复杂度分析方法" class="headerlink" title="2.3 常见复杂度分析方法"></a>2.3 常见复杂度分析方法</h4><ol>
-<li><p>单段代码看高频：如循环</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;++i)&#123;</span><br><span class="line">    sum = sum + i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多段代码取最高：如一段代码中存在单重循环和多重循环，则取多重循环。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>嵌套循环取乘积：比如多重循环，递归等。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;i&lt;n;i++)&#123;</span><br><span class="line">    j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (;j&lt;=n;j++)&#123;</span><br><span class="line">      sum += sum + i * j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多数据规模取和：O(n+m)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cal</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (;a&lt;n;++a)&#123;</span><br><span class="line">    temp = temp + i;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;i&lt;m;i++)&#123;</span><br><span class="line">    sum += sum + i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="2-4-常见的时间复杂度"><a href="#2-4-常见的时间复杂度" class="headerlink" title="2.4 常见的时间复杂度"></a>2.4 常见的时间复杂度</h4><p><img src="/image/algorithm/常见时间复杂度.jpg" alt="常见时间复杂度"></p>
-<ol>
-<li>多项式阶，随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。  </li>
-</ol>
-<ul>
-<li>O(1)（常数阶）<br>常数阶的概念并不是只执行一行代码，一般情况下算法中不存在循环、递归等语句，即使有成千上万行代码，复杂度也是O(1)</li>
-<li><p>O(logn)（对数阶）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当2^x&gt;=n时，循环结束，所以这段代码的执行次数就是x= $log_2n$;大O法记作：$O(log_2n)$。那么再看下面这段代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i =<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">  i = i * <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>按照上面的逻辑，这段的复杂度为$O(log_3n)$。二者之间是可以转换的$log_3n=log_32 * log_2n$；基于大O法的理论：在采用大O计数法时可以忽略系数等。则此类复杂度可统一记为O(logn)。   </p>
-</li>
-<li>O(n)（线性阶）</li>
-<li>O(nlogn)（线性对数阶）<br>基于O(logn)，那么O(nlogn)就容易理解了，就相当于上面的嵌套取乘积规则一样，就是O(logn)执行的n遍。</li>
-<li>O(n^2)（平方阶）、O(n^3)（立方阶）….、O(n^k)(K次方阶)</li>
-</ul>
-<ol>
-<li>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。</li>
-</ol>
-<ul>
-<li>O(2^n)（指数阶）</li>
-<li>O(n!)（阶乘阶）</li>
-</ul>
-<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h3><p>虽然上面说的事后统计法有一定的缺点，但时间复杂度的分析与其并不是对立冲突的。时间复杂度是一个理论上的模型，可以比较直观的给我们一个算法的效率上的感性认知，只能提供粗略的分析。它是与宿主平台无关的，并不是说O(n)的效率一定就优于O(n²)。针对不同的宿主平台环境，不同的数据集，不同的数据规模，在实际应用上性能可能会各有不同，所以实际应用中进行一定的性能基准测试是有必要的。<br>综上所述，时间复杂度分析和性能测试是相辅相成的。但一个低阶的时间复杂度确实有极大的可能优于高阶的时间复杂度，所以在编程中时刻关心复杂度的趋势走向是很有必要的，而且能很大幅度的提升输出质量。因此在编程中具有这种复杂度分析的思维还是十分有必要的。</p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="cmeng001.github.io/2020/08/17/algorithm/浅析最好、最坏、平均、均摊时间复杂度/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cmeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c萌怪谈">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/08/17/algorithm/浅析最好、最坏、平均、均摊时间复杂度/" class="post-title-link" itemprop="url">浅析最好、最坏、平均、均摊时间复杂度</a>
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-08-17 16:13:12" itemprop="dateCreated datePublished" datetime="2020-08-17T16:13:12+08:00">2020-08-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-17 09:09:04" itemprop="dateModified" datetime="2022-03-17T09:09:04+08:00">2022-03-17</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <p>对大O复杂度分析有一定基础的情况，可以进一步了解 <strong>最好情况时间复杂度</strong>（best case time complexity）、 <strong>最坏情况时间复杂度</strong>（worst case time complexity）、 <strong>平均情况时间复杂度</strong>（average case time complexity）、 <strong>均摊时间复杂度</strong>（amortized time complexity）。如果这几个概念你都能掌握，那对你来说，复杂度分析这部分内容就没什么大问题了。</p>
-<h2 id="1、最好、最坏时间复杂度"><a href="#1、最好、最坏时间复杂度" class="headerlink" title="1、最好、最坏时间复杂度"></a>1、最好、最坏时间复杂度</h2><p>先分析下下面的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span> <span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pos = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(array[i] == x) &#123;</span><br><span class="line">      pos = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>按照大O分析法，这段代码的复杂度就为O(n)；n代表数组的长度。但其实我们在查找数组中某个元素时，不一定非要把整个数组都遍历一遍，可以进行简单优化，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find</span> <span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pos = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(array[i] == x) &#123;</span><br><span class="line">      pos = i;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>优化后的代码的时间复杂度还是O(n)吗？其实看一下也不尽然。这样就可以引进三个新的概念：最好时间复杂度、最坏时间复杂度和平均时间复杂度。<br>可以比较直观的分析得到两种情况：</p>
-<ul>
-<li>当x位于数组的最前面的下标，极端一些就在下标0的位置，那么时间复杂度就为O(1)，这就是最好时间复杂度。</li>
-<li>另一种情况则是所查询的x不存在与数组之中，那么就要遍历整个数组，这样时间复杂度就为O(n)。这种极度糟糕的情况对应的就是最坏时间复杂度。</li>
-</ul>
-<h2 id="2、平均时间复杂度"><a href="#2、平均时间复杂度" class="headerlink" title="2、平均时间复杂度"></a>2、平均时间复杂度</h2><p>依旧拿上面例子为主，发生最好和最坏的情况的概率还是很小的。为了更好的表示平均情况下的时间复杂度，就需要引入一个新的概念：平均情况时间复杂度，简称平均时间复杂度。</p>
-<p>我们知道要找的x在数组和不在数组的准确概率计算是极其复杂的，我们概括性的假设二者的概率均为1/2。另外查找的x出现在0~(n-1)这n个位置的概率为1/n。那么考虑在数组或不在数组的概率，根据概率乘积法则，x出现在0~(n-1)这n个位置的概率为1/2n，由此可以推到出以下公式：<br><img src="/image/algorithm/平均时间复杂度.jpg" alt="推到公式">  </p>
-<p>这个值就是概率论中的加权平均值，也叫作期望值，所以平均时间复杂度的全称应该叫加权平均时间复杂度或者期望时间复杂度。用大 O 表示法来表示，去掉系数和常量，这段代码的加权平均时间复杂度仍然是 O(n)。  </p>
-<p>平均时间复杂度看起来很复杂，又是引入概率又是需要推导。不过平常情况下只需要一种复杂度就可以满足需求。除非是在同一个代码块因不同情况出现，时间复杂度有量级上的差距，才需要用这三种时间复杂度进行分析。  </p>
-<h2 id="3、均摊时间复杂度"><a href="#3、均摊时间复杂度" class="headerlink" title="3、均摊时间复杂度"></a>3、均摊时间复杂度</h2><p>均摊复杂度听起来和平均时间复杂度十分相似，而且也经常容易混淆。那具体均摊复杂度是什么呢？我们还是通过具体例子来了解一下，以及它的分析方法：摊还分析/平摊分析.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> element)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum;</span><br><span class="line">  <span class="keyword">if</span>(count==array.length)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">      sum = sum + array[i];</span><br><span class="line">    &#125;</span><br><span class="line">    array[<span class="number">0</span>] = sum;</span><br><span class="line">    count = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  array[count] = element;</span><br><span class="line">  count++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面是一个很简单的数组插入数据的代码块，当数组满了时，将数组所有内容求和放入下标为0的位置，再继续插入数据。按照大O分析法，我们进行最好、最坏和平均时间复杂度分析。</p>
-<p>通过分析代码，我们可知。只有在数组满时才会进行数组遍历并求和，此时的时间复杂度为O(n)，其余时间的复杂度均为O(1)。所以最坏时间复杂度为O(n)，最好时间复杂度为O(1)。<br>那么接下来进行平均时间复杂度分析。假设插入的数组位于0~(n-1)间位置的概率是一样的均为1/n，由此推导出平均时间复杂度为O(1)，以下为推导过程：<br><img src="/image/algorithm/平均时间复杂度-1.jpg" alt="推到公式">    </p>
-<p>到此最好、最坏、平均时间复杂度进阶推导出来，其实这个例子的时间复杂度大可不必如此麻烦，还引入概率。我们仔细分析一下find()和insert()两个方法的区别。</p>
-<ul>
-<li>O(n)的出现是小概率事件，O(1)反而出现的概率很大。</li>
-<li>O(n)和O(1)出现是极其有规律的。当出现一次O(n)后，后面就会跟着n-1个O(1)。循环往复。  </li>
-</ul>
-<p>这种情况其实就没必要引入概率来进行平均时间复杂度的计算。针对这种特殊的场景，引入一种更简单的分析方法：摊还分析法，由此引出新的时间复杂度：摊还时间复杂度。具体分析如下：在了解O(n)和O(1)出现的规律后，可以把耗时多的O(n)的时间均摊到接下来的n-1次操作上，这样下来，摊还时间复杂度就为O(1)。</p>
-<p>摊还时间复杂度可以针对特殊的场景进行简单化的分析，如：针对特殊的数据结构，在一段连续操作的代码块中，其中大多数操作耗时很短，只有极少数的操作耗时较长，就可以针对性的适用摊还分析进行时间复杂度分析。个人认为摊还时间复杂度可以算作一种特殊的评价时间复杂度</p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1941,7 +2116,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1978,7 +2153,11 @@
         
           
         
-        <span class="site-state-item-count">11</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
