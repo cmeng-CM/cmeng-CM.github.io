@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>c萌怪谈</title>
+  
+  <subtitle>奇葩事迹、奇趣怪谈、记录一切新奇怪异。</subtitle>
+  <link href="http://cmeng001.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://cmeng001.github.io/"/>
+  <updated>2022-09-20T02:19:37.861Z</updated>
+  <id>http://cmeng001.github.io/</id>
+  
+  <author>
+    <name>cmeng</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://cmeng001.github.io/2022/09/16/demo/front-matter-xuan-xiang-xiang-jie/"/>
+    <id>http://cmeng001.github.io/2022/09/16/demo/front-matter-xuan-xiang-xiang-jie/</id>
+    <published>2022-09-16T06:51:16.336Z</published>
+    <updated>2022-09-20T02:19:37.861Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;table-container&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;配置选项&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;默认值&lt;/th&gt;
+&lt;th</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://cmeng001.github.io/2022/09/08/demo/markmap/"/>
+    <id>http://cmeng001.github.io/2022/09/08/demo/markmap/</id>
+    <published>2022-09-08T13:23:52.783Z</published>
+    <updated>2022-09-16T06:51:33.154Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>并发模型比较</title>
+    <link href="http://cmeng001.github.io/2022/07/17/theoretical-knowledge/concurrency-model/"/>
+    <id>http://cmeng001.github.io/2022/07/17/theoretical-knowledge/concurrency-model/</id>
+    <published>2022-07-17T08:13:12.000Z</published>
+    <updated>2022-08-03T14:23:06.545Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、进程、线程、协程&quot;&gt;&lt;a href=&quot;#一、进程、线程、协程&quot; class=&quot;headerlink&quot; title=&quot;一、进程、线程、协程&quot;&gt;&lt;/a&gt;一、进程、线程、协程&lt;/h2&gt;&lt;h3 id=&quot;1-1、进程&quot;&gt;&lt;a href=&quot;#1-1、进程&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="http://cmeng001.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    <category term="并发相关" scheme="http://cmeng001.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%B9%B6%E5%8F%91%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="并发" scheme="http://cmeng001.github.io/tags/%E5%B9%B6%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分库分表</title>
+    <link href="http://cmeng001.github.io/2021/08/18/database/fen-ku-fen-biao/"/>
+    <id>http://cmeng001.github.io/2021/08/18/database/fen-ku-fen-biao/</id>
+    <published>2021-08-18T08:13:12.000Z</published>
+    <updated>2022-09-15T08:08:31.652Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot; title=&quot;一、概述&quot;&gt;&lt;/a&gt;一、概述&lt;/h2&gt;&lt;h3 id=&quot;1-1、为什么分库？&quot;&gt;&lt;a href=&quot;#1-1、为什么分库？&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="分库分表" scheme="http://cmeng001.github.io/categories/%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/"/>
+    
+    <category term="ShardingSphere" scheme="http://cmeng001.github.io/categories/%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/ShardingSphere/"/>
+    
+    
+    <category term="Database" scheme="http://cmeng001.github.io/tags/Database/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>血常规/血分析</title>
+    <link href="http://cmeng001.github.io/2021/08/01/yi-xue-xin-xi/xie-fen-xi-xie-chang-gui/"/>
+    <id>http://cmeng001.github.io/2021/08/01/yi-xue-xin-xi/xie-fen-xi-xie-chang-gui/</id>
+    <published>2021-08-01T15:13:12.000Z</published>
+    <updated>2021-08-01T13:09:41.119Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;血常规相关指标解读&quot;&gt;&lt;a href=&quot;#血常规相关指标解读&quot; class=&quot;headerlink&quot; title=&quot;血常规相关指标解读&quot;&gt;&lt;/a&gt;血常规相关指标解读&lt;/h2&gt;&lt;p&gt; </summary>
+        
+      
+    
+    
+    
+    <category term="化验" scheme="http://cmeng001.github.io/categories/%E5%8C%96%E9%AA%8C/"/>
+    
+    
+    <category term="化验-验血" scheme="http://cmeng001.github.io/tags/%E5%8C%96%E9%AA%8C-%E9%AA%8C%E8%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://cmeng001.github.io/2021/04/15/database/zhi-xing-ji-hua/"/>
+    <id>http://cmeng001.github.io/2021/04/15/database/zhi-xing-ji-hua/</id>
+    <published>2021-04-15T10:05:10.596Z</published>
+    <updated>2021-06-09T09:17:01.799Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL主从、主主、主备模式</title>
+    <link href="http://cmeng001.github.io/2020/08/18/database/master-slave-sync/"/>
+    <id>http://cmeng001.github.io/2020/08/18/database/master-slave-sync/</id>
+    <published>2020-08-18T08:13:12.000Z</published>
+    <updated>2022-09-07T13:02:22.583Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;a href=&quot;#一、主从、主主、主备模式介绍&quot; class=&quot;headerlink&quot; title=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;/a&gt;一、主从、主主、主备模式介绍&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://cmeng001.github.io/categories/MySQL/"/>
+    
+    <category term="同步" scheme="http://cmeng001.github.io/categories/MySQL/%E5%90%8C%E6%AD%A5/"/>
+    
+    
+    <category term="Database" scheme="http://cmeng001.github.io/tags/Database/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker之MySQL安装</title>
+    <link href="http://cmeng001.github.io/2020/08/18/docker/mysql/"/>
+    <id>http://cmeng001.github.io/2020/08/18/docker/mysql/</id>
+    <published>2020-08-18T08:13:12.000Z</published>
+    <updated>2022-08-24T12:46:23.578Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;docker-安装-mysql&quot;&gt;&lt;a href=&quot;#docker-安装-mysql&quot; class=&quot;headerlink&quot; title=&quot;docker 安装 mysql&quot;&gt;&lt;/a&gt;docker 安装 mysql&lt;/h1&gt;&lt;h2 id=&quot;一、下载镜像&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="docker" scheme="http://cmeng001.github.io/categories/docker/"/>
+    
+    <category term="mysql" scheme="http://cmeng001.github.io/categories/docker/mysql/"/>
+    
+    
+    <category term="MySQL" scheme="http://cmeng001.github.io/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker日常命令</title>
+    <link href="http://cmeng001.github.io/2020/08/18/docker/ri-chang-ming-ling/"/>
+    <id>http://cmeng001.github.io/2020/08/18/docker/ri-chang-ming-ling/</id>
+    <published>2020-08-18T08:13:12.000Z</published>
+    <updated>2022-08-30T08:21:57.480Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;容器挂载文件相关&quot;&gt;&lt;a href=&quot;#容器挂载文件相关&quot; class=&quot;headerlink&quot; title=&quot;容器挂载文件相关&quot;&gt;&lt;/a&gt;容器挂载文件相关&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;查看容器挂的文件信息：&lt;ul&gt;
+&lt;li&gt;命令：docker inspect</summary>
+        
+      
+    
+    
+    
+    <category term="Docker" scheme="http://cmeng001.github.io/categories/Docker/"/>
+    
+    
+    <category term="command" scheme="http://cmeng001.github.io/tags/command/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM调优之jps jinfo jstat jmap jhat</title>
+    <link href="http://cmeng001.github.io/2020/08/18/java/jvm/jvm-diao-you/"/>
+    <id>http://cmeng001.github.io/2020/08/18/java/jvm/jvm-diao-you/</id>
+    <published>2020-08-18T08:13:12.000Z</published>
+    <updated>2022-08-08T14:19:41.089Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;JVM调优&quot;&gt;&lt;a href=&quot;#JVM调优&quot; class=&quot;headerlink&quot; title=&quot;JVM调优&quot;&gt;&lt;/a&gt;JVM调优&lt;/h2&gt;&lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="http://cmeng001.github.io/categories/java/"/>
+    
+    <category term="JVM" scheme="http://cmeng001.github.io/categories/java/JVM/"/>
+    
+    
+    <category term="JVM" scheme="http://cmeng001.github.io/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java的future体系</title>
+    <link href="http://cmeng001.github.io/2020/08/18/java/duo-xian-cheng/future/"/>
+    <id>http://cmeng001.github.io/2020/08/18/java/duo-xian-cheng/future/</id>
+    <published>2020-08-18T08:13:12.000Z</published>
+    <updated>2022-08-15T00:57:12.603Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、Future概念&quot;&gt;&lt;a href=&quot;#一、Future概念&quot; class=&quot;headerlink&quot; title=&quot;一、Future概念&quot;&gt;&lt;/a&gt;一、Future概念&lt;/h2&gt;&lt;h3 id=&quot;1-1、概念&quot;&gt;&lt;a href=&quot;#1-1、概念&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="http://cmeng001.github.io/categories/java/"/>
+    
+    <category term="多线程" scheme="http://cmeng001.github.io/categories/java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+    <category term="JVM" scheme="http://cmeng001.github.io/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>回溯</title>
+    <link href="http://cmeng001.github.io/2020/08/17/algorithm/back-tracking/"/>
+    <id>http://cmeng001.github.io/2020/08/17/algorithm/back-tracking/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-04-18T01:21:09.661Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;回溯&quot;&gt;&lt;a href=&quot;#回溯&quot; class=&quot;headerlink&quot; title=&quot;回溯&quot;&gt;&lt;/a&gt;回溯&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="回溯" scheme="http://cmeng001.github.io/tags/%E5%9B%9E%E6%BA%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>二分查找法</title>
+    <link href="http://cmeng001.github.io/2020/08/17/algorithm/binary-search/"/>
+    <id>http://cmeng001.github.io/2020/08/17/algorithm/binary-search/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-03-30T09:14:44.033Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;二分查找法&quot;&gt;&lt;a href=&quot;#二分查找法&quot; class=&quot;headerlink&quot; title=&quot;二分查找法&quot;&gt;&lt;/a&gt;二分查找法&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="二分查找法" scheme="http://cmeng001.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>双指针</title>
+    <link href="http://cmeng001.github.io/2020/08/17/algorithm/dual-pointers/"/>
+    <id>http://cmeng001.github.io/2020/08/17/algorithm/dual-pointers/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-03-30T09:15:00.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;双指针&quot;&gt;&lt;a href=&quot;#双指针&quot; class=&quot;headerlink&quot; title=&quot;双指针&quot;&gt;&lt;/a&gt;双指针&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="双指针" scheme="http://cmeng001.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>算法-时间复杂度</title>
+    <link href="http://cmeng001.github.io/2020/08/17/algorithm/shi-jian-fu-za-du/"/>
+    <id>http://cmeng001.github.io/2020/08/17/algorithm/shi-jian-fu-za-du/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2020-08-18T09:00:25.116Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;算法-时间复杂度&quot;&gt;&lt;a href=&quot;#算法-时间复杂度&quot; class=&quot;headerlink&quot; title=&quot;算法-时间复杂度&quot;&gt;&lt;/a&gt;算法-时间复杂度&lt;/h2&gt;&lt;h3 id=&quot;1、数据结构-算法&quot;&gt;&lt;a href=&quot;#1、数据结构-算法&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅析最好、最坏、平均、均摊时间复杂度</title>
+    <link href="http://cmeng001.github.io/2020/08/17/algorithm/qian-xi-zui-hao-zui-pi-ping-jun-jun-tan-shi-jian-fu-za-du/"/>
+    <id>http://cmeng001.github.io/2020/08/17/algorithm/qian-xi-zui-hao-zui-pi-ping-jun-jun-tan-shi-jian-fu-za-du/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-03-17T01:09:04.898Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;对大O复杂度分析有一定基础的情况，可以进一步了解 &lt;strong&gt;最好情况时间复杂度&lt;/strong&gt;（best case time complexity）、 &lt;strong&gt;最坏情况时间复杂度&lt;/strong&gt;（worst case time complexity）、</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式CAP</title>
+    <link href="http://cmeng001.github.io/2020/08/17/microservice/cap/"/>
+    <id>http://cmeng001.github.io/2020/08/17/microservice/cap/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-08-03T14:34:23.186Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;以下引用至维基百科：  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在理论计算机科学中，CAP定理（CAP</summary>
+        
+      
+    
+    
+    
+    <category term="CAP" scheme="http://cmeng001.github.io/categories/CAP/"/>
+    
+    
+    <category term="CAP" scheme="http://cmeng001.github.io/tags/CAP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot 启动 —— 源码解析</title>
+    <link href="http://cmeng001.github.io/2020/08/17/microservice/spriingboot-run/"/>
+    <id>http://cmeng001.github.io/2020/08/17/microservice/spriingboot-run/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2021-06-10T05:14:20.636Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;font size=&quot;7&quot;&gt;SpringBoot 启动 —— 源码解析&lt;/font&gt;
+
+&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="springboot" scheme="http://cmeng001.github.io/categories/springboot/"/>
+    
+    
+    <category term="springboot" scheme="http://cmeng001.github.io/tags/springboot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rust基础信息</title>
+    <link href="http://cmeng001.github.io/2020/08/17/rust/basic-information/"/>
+    <id>http://cmeng001.github.io/2020/08/17/rust/basic-information/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-07-31T13:40:50.308Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;一、rust基础信息&quot;&gt;&lt;a href=&quot;#一、rust基础信息&quot; class=&quot;headerlink&quot; title=&quot;一、rust基础信息&quot;&gt;&lt;/a&gt;一、rust基础信息&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;在 Linux 或 macOS 上安装</summary>
+        
+      
+    
+    
+    
+    <category term="rust" scheme="http://cmeng001.github.io/categories/rust/"/>
+    
+    
+    <category term="rust" scheme="http://cmeng001.github.io/tags/rust/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Zookeeper之Watcher机制</title>
+    <link href="http://cmeng001.github.io/2020/08/17/zookeeper/zk-watcher/"/>
+    <id>http://cmeng001.github.io/2020/08/17/zookeeper/zk-watcher/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2021-03-25T03:42:29.374Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;font size=&quot;7&quot;&gt;Zookeeper之Watcher&lt;/font&gt;
+
+&lt;p&gt;watcher机制是zookeeper的三大特性之一，它是很多应用场景的前提，比如：集群配置、管理，发布、订阅，资源抢占协调等等。&lt;/p&gt;
+&lt;h2 id=&quot;watcher原理&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="zookeeper" scheme="http://cmeng001.github.io/categories/zookeeper/"/>
+    
+    
+    <category term="zookeeper" scheme="http://cmeng001.github.io/tags/zookeeper/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,1687 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JVM调优之jps jinfo jstat jmap jhat, c萌怪谈">
+    <meta name="description" content="JVM调优概述虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究J">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>JVM调优之jps jinfo jstat jmap jhat | c萌怪谈</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="c萌怪谈" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">c萌怪谈</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">c萌怪谈</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JVM调优之jps jinfo jstat jmap jhat</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JVM/">
+                                <span class="chip bg-color">JVM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/java/" class="post-category">
+                                java
+                            </a>
+                        
+                            <a href="/categories/java/JVM/" class="post-category">
+                                JVM
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-08-18
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    21 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。</p>
+<h4 id="调优原则"><a href="#调优原则" class="headerlink" title="调优原则"></a>调优原则</h4><p>多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更多的在代码上面。如：全局变量对象创建过多等。GC是最后不得已下的手段而已。所以通过GC情况分析并优化代码比GC调优要更多。</p>
+<p>本文基于JDK8，相关监控和处理故障的命令有：jps、jinfo、jstat、jmap、jhat。</p>
+<h2 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h2><p>jps（JVM Process Status Tool）：显示指定系统内所有Hotspot虚拟机进程</p>
+<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jps [options] [hostid]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>options参数：  <p></p>
+<ul>
+<li>-l：输入主类的全名或路径  </li>
+<li>-q：输出LVMID  </li>
+<li>-m：输出JVM启动时传递给main()的参数  </li>
+<li>-v：输出JVM启动时显示指定的参数    </li>
+</ul>
+<p>示例：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jps -l
+39392 org.jetbrains.jps.cmdline.Launcher
+77060 sun.tools.jps.Jps
+115404 org.jetbrains.idea.maven.server.RemoteMavenServer<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h2 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h2><p>jinfo(JVM Configuration info)：生成指定进程的JVM配置信息。</p>
+<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jinfo -&lt;options&gt; vmid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<h3 id="options参数"><a href="#options参数" class="headerlink" title="options参数"></a>options参数</h3><ul>
+<li>-flag <name>：打印指定参数的名称和值。</name></li>
+<li>-flag [+|-]name：启用或禁用指定的布尔命令标志。</li>
+<li>-flag <name>=<value>：设定指定参数的值。</value></name></li>
+<li>-flags：输出所有JVM参数。</li>
+<li>-sysprops：以key-value形式，输出Java系统属性。</li>
+</ul>
+<p>示例：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jinfo -flag MaxNewSize 75052
+  -XX:MaxNewSize=1418723328<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
+<h2 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h2><p>jstat（JVM Statistics Monitoring）：监视虚拟机运行时状态信息的命令，它可显示JVM的类加载、内存、垃圾收集、JIT编译等运行数据等。</p>
+<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jstat -&lt;option&gt; [-t] [-h&lt;lines&gt;] &lt;vmid&gt; [&lt;interval&gt; [&lt;count&gt;]]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<ul>
+<li>option：操作参数</li>
+<li>-t ：将时间戳列显示为输出的第一列。时间戳是自目标JVM启动时间以来的时间。</li>
+<li>-h<lines>：即-h跟数字，代表隔几行显示标题，默认为0</lines></li>
+<li>vmid ：代表vm进程id</li>
+<li>interval：代表监控间隔时间段，默认毫秒做单位</li>
+<li>count：代表取数次数</li>
+</ul>
+<h3 id="options参数-1"><a href="#options参数-1" class="headerlink" title="options参数"></a>options参数</h3><h4 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">class</td>
+<td style="text-align:left">class loader的行为统计<br>Statistics about the behavior of the class loader.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">compiler</td>
+<td style="text-align:left">HotSpt JIT编译器行为统计。<br>Statistics about the behavior of the Java HotSpot VM Just-in-Time compiler.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gc</td>
+<td style="text-align:left">垃圾收集堆行为统计.<br>Statistics about the behavior of the garbage collected heap.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gccapacity</td>
+<td style="text-align:left">代的容量及其相应空间的统计信息。<br>Statistics about the capacities of the generations and their corresponding spaces.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gccause</td>
+<td style="text-align:left">垃圾收集器统计概述(同gcutil)，及最近两次垃圾回收原因。<br>A summary about garbage collection statistics (same as -gcutil), with the cause of the last and current (when applicable) garbage collection events.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcnew</td>
+<td style="text-align:left">新生代代行为统计<br>Statistics about the behavior of the new generation.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcnewcapacity</td>
+<td style="text-align:left">新生代与其相应的内存空间统计。<br>Statistics about the sizes of the new generations and their corresponding spaces.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcold</td>
+<td style="text-align:left">老年代和元空间的行为统计。<br>Statistics about the behavior of the old generation and metaspace statistics.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcoldcapacity</td>
+<td style="text-align:left">老年代大小统计。<br>Statistics about the sizes of the old generation.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcmetacapacity</td>
+<td style="text-align:left">元空间大小统计。<br>Statistics about the sizes of the metaspace.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">gcutil</td>
+<td style="text-align:left">垃圾收集器统计概述。<br>A summary about garbage collection statistics.</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">printcompilation</td>
+<td style="text-align:left">HotSpot编译方法统计。<br>Java HotSpot VM compilation method statistics.</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="options参数详解"><a href="#options参数详解" class="headerlink" title="options参数详解"></a>options参数详解</h4><h5 id="class"><a href="#class" class="headerlink" title="-class"></a>-class</h5><p>Class loader statistics.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -class 62044
+  Loaded  Bytes    Unloaded  Bytes     Time
+  6152    12149.8     0       0.0       8.72<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>Loaded：加载class数量。  </li>
+<li>Bytes：加载的class字节大小（KB）。</li>
+<li>Unloaded：未加载的class数量。</li>
+<li>Bytes：未加载calss字节大小（KB）。</li>
+<li>Time：执行类加载和卸载的总时间。</li>
+</ul>
+<h5 id="compiler"><a href="#compiler" class="headerlink" title="-compiler"></a>-compiler</h5><p>Java HotSpot VM Just-in-Time compiler statistics.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -compiler 62044
+  Compiled Failed Invalid   Time   FailedType FailedMethod
+      8306      2       0    34.24          1 com/alibaba/druid/pool/DruidDataSource shrink<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>Compilerd：编译数量</li>
+<li>Failed：编译失败的数量</li>
+<li>Invalid：无效的数量</li>
+<li>Time：执行编译时长</li>
+<li>FailedType : 失败类型</li>
+<li>FailedMethod : 失败方法的全限定名</li>
+</ul>
+<h5 id="gc"><a href="#gc" class="headerlink" title="-gc"></a>-gc</h5><p>Garbage collected heap statistics.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gc 62044
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT
+512.0  512.0   0.0    96.0  27648.0   6616.5   67584.0    55474.4   42112.0 41055.1 4736.0 4522.8  50299   94.002  12      0.677   94.679<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>C：Capacity，即总容量，容量单位为KB；U：Used，即已使用容量。  <p></p>
+<ul>
+<li>S0C：survivor0总容量  </li>
+<li>S1C：survivor1总容量  </li>
+<li>S0U：survivor0已使用容量</li>
+<li>S1U：survivor1已使用容量</li>
+<li>EC：Eden区总容量</li>
+<li>EU：Eden区已使用容量</li>
+<li>OC：老年代总容量</li>
+<li>OU：老年代已使用容量</li>
+<li>MC：元空间承诺大小</li>
+<li>MU：元空间已使用容量</li>
+<li>CCSC：压缩类容量大小</li>
+<li>CCSU：压缩类已使用容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>YGCT：新生代垃圾回收时间</li>
+<li>FGC：老年代垃圾回收次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gccapacity"><a href="#gccapacity" class="headerlink" title="-gccapacity"></a>-gccapacity</h5><p>Memory pool generation and space capacities.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jstat -gccapacity 62044
+ NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC
+ 86528.0 1385472.0  32256.0  512.0  512.0  30720.0   173568.0  2771968.0    83968.0    83968.0      0.0 1085440.0  39936.0      0.0 1048576.0   4608.0   1306     2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>NGCMN：新生代最小容量</li>
+<li>NGCMX：新生代最大容量</li>
+<li>NGC：当前新生代容量</li>
+<li>S0C：survivor0总容量  </li>
+<li>S1C：survivor1总容量  </li>
+<li>EC：Eden区总容量  </li>
+<li>OGCMN：老年代最小容量</li>
+<li>OGCMX：老年代最大容量</li>
+<li>OGC：当前老年代容量</li>
+<li>OC：老年代总容量</li>
+<li>MCMN：元空间最小容量</li>
+<li>MCMX：元空间最大容量</li>
+<li>MC：元空间当前容量</li>
+<li>CCSMN：压缩类空间最小容量</li>
+<li>CCSMX：压缩类空间最大容量</li>
+<li>CCSC：当前压缩类空间容量</li>
+<li>YGC：年轻的GC次数</li>
+<li>FGC：老年代GC次数</li>
+</ul>
+<h5 id="gccause"><a href="#gccause" class="headerlink" title="-gccause"></a>-gccause</h5><p>垃圾收集器统计概述(同gcutil)，及最近两次垃圾回收原因。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gccause 62044
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC
+ 25.00   0.00  49.19  37.97  97.21  96.06   2360    4.765     2    0.099    4.865 Allocation Failure   No GC<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>LGCC：上次垃圾回收原因</li>
+<li>GCC：当前垃圾回收原因</li>
+</ul>
+<h5 id="gcnew"><a href="#gcnew" class="headerlink" title="-gcnew"></a>-gcnew</h5><p>新生代代行为统计<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcnew 62044
+ S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT
+ 512.0  512.0    0.0   96.0 15  15  512.0  30720.0   6082.8   2557    5.169<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>S0C：survivor0总容量  </li>
+<li>S1C：survivor1总容量  </li>
+<li>S0U：survivor0已使用容量</li>
+<li>S1U：survivor1已使用容量</li>
+<li>TT：Tenuring threshold.(任期阈值)</li>
+<li>DTT： Maximum tenuring threshold.</li>
+<li>DSS：DSS: Desired survivor size (KB).survivor的容量</li>
+<li>EC：Eden区总容量</li>
+<li>EU：Eden区已使用容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>YGCT：新生代垃圾回收时间</li>
+</ul>
+<h4 id="gcnewcapacity"><a href="#gcnewcapacity" class="headerlink" title="-gcnewcapacity"></a>-gcnewcapacity</h4><p>新生代与其相应的内存空间统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcnewcapacity 105308
+  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC
+   86528.0  1385472.0    64512.0 461824.0   9728.0 461824.0    512.0  1384448.0    45056.0    25     2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>NGCMN：新生代最小容量</li>
+<li>NGCMX：新生代最大容量</li>
+<li>NGC：当前新生代容量</li>
+<li>S0CMX：survivor0最大容量</li>
+<li>S0C：当前survivor0容量</li>
+<li>ECMX：Eden最大容量</li>
+<li>EC：当前Eden容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>FGC：老年代GC次数</li>
+</ul>
+<h5 id="gcold"><a href="#gcold" class="headerlink" title="-gcold"></a>-gcold</h5><p>老年代和元空间的行为统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcold 105308
+   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT
+ 39680.0  38773.6   4608.0   4422.3     80896.0     22094.7    313     2    0.098    0.805<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>MC：元空间承诺大小</li>
+<li>MU：元空间已使用容量</li>
+<li>CCSC：压缩类容量大小</li>
+<li>CCSU：压缩类已使用容量</li>
+<li>OC：老年代总容量</li>
+<li>OU：老年代已使用容量</li>
+<li>YGC：新生代垃圾回收次数</li>
+<li>FGC：老年代垃圾回收次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gcoldcapacity"><a href="#gcoldcapacity" class="headerlink" title="-gcoldcapacity"></a>-gcoldcapacity</h5><p>老年代大小统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcoldcapacity 105308
+   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT
+   173568.0   2771968.0     80896.0     80896.0   740     2    0.098    1.668<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>OGCMN：老年代最小容量</li>
+<li>OGCMX：老年代最大容量</li>
+<li>OGC：当前老年代容量</li>
+<li>OC：老年代总容量</li>
+<li>YGC：年轻的GC次数</li>
+<li>FGC：老年代GC次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gcmetacapacity"><a href="#gcmetacapacity" class="headerlink" title="-gcmetacapacity"></a>-gcmetacapacity</h5><p>元空间大小统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcmetacapacity 105308
+   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT
+       0.0  1085440.0    40448.0        0.0  1048576.0     4608.0   848     2    0.098    1.885<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>MCMN：元空间最小容量</li>
+<li>MCMX：元空间最大容量</li>
+<li>MC：元空间当前容量</li>
+<li>CCSMN：压缩类空间最小容量</li>
+<li>CCSMX：压缩类空间最大容量</li>
+<li>CCSC：当前压缩类空间容量</li>
+<li>YGC：年轻的GC次数</li>
+<li>FGC：老年代GC次数</li>
+<li>FGCT：老年代垃圾回收时间</li>
+<li>GCT：垃圾回收总耗时</li>
+</ul>
+<h5 id="gcutil"><a href="#gcutil" class="headerlink" title="-gcutil"></a>-gcutil</h5><p>垃圾收集器统计概述。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcutil 105308
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
+  0.00  31.25  57.06  30.97  97.41  96.00    959    2.047     2    0.098    2.145<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>S0、S1、E、O、M、CCS分别为对应内存空间已使用容量占总容量的百分比。</li>
+</ul>
+<h4 id="printcompilation"><a href="#printcompilation" class="headerlink" title="-printcompilation"></a>-printcompilation</h4><p>HotSpot编译方法统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -printcompilation 105308
+Compiled  Size  Type Method
+    7351     30    1 org/apache/http/message/TokenParser isWhitespace<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>Compiled：被执行的编译任务的数量</li>
+<li>Size：方法字节码的字节数</li>
+<li>Type：编译类型</li>
+<li>Method：编译方法的类名和方法名。类名使用”/“ 代替 “.” 作为空间分隔符. 方法名是给出类的方法名. 格式是一致于HotSpot - XX:+PrintComplation 选项</li>
+</ul>
+<h3 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h3><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcutil 105308 200 10
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
+ 31.25   0.00  69.70  41.31  97.43  96.12   3050    6.466     2    0.098    6.564
+  0.00  25.00  25.65  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+  0.00  25.00  38.43  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+  0.00  25.00  50.31  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+  0.00  25.00  63.75  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+  0.00  25.00  73.27  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+  0.00  25.00  84.72  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+  0.00  25.00  99.04  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
+ 31.25   0.00  11.40  41.31  97.43  96.12   3052    6.469     2    0.098    6.567
+ 31.25   0.00  20.88  41.31  97.43  96.12   3052    6.469     2    0.098    6.567<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>示例中vmid为105308，指令含义为输出垃圾收集统计概述，输出策略为每200毫秒一次共输出10次<br>根据结果可得出以下结果：</p>
+<ol>
+<li>10次内进行两次新生代GC</li>
+<li>第一次新生代GC耗时0.002秒，第二次耗时0.001秒。</li>
+<li>没有进行老年代收集，老年代没有空间上的变化，说明Eden区没有对象年龄晋升到老年代</li>
+<li>第一次YGC将S0内对象提升到S1，S1部分对象提升到Eden区</li>
+<li>元空间没有变化，但元空间使用程度已经极高，到了96.12%，这个时候就可以考虑下元空间调优的问题了。</li>
+</ol>
+<h2 id="jmap-print-details-of-a-specified-process"><a href="#jmap-print-details-of-a-specified-process" class="headerlink" title="jmap - print details of a specified process"></a>jmap - print details of a specified process</h2><p>jmap(JVM Memory Map)：用于生成heap dump文件，还可以查询finalize执行队列、Java堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。<br>可以使用XX:+HeapDumpOnOutOfMemoryError参数来让虚拟机出现OOM的时候·自动生成dump文件。</p>
+<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jmap -&lt;options&gt; &lt;vmid&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<h3 id="options参数-2"><a href="#options参数-2" class="headerlink" title="options参数"></a>options参数</h3><h4 id="总览-1"><a href="#总览-1" class="headerlink" title="总览"></a>总览</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-clstats</td>
+<td style="text-align:left">打印java堆类加载统计信息<br>Prints class loader wise statistics of Java heap.</td>
+</tr>
+<tr>
+<td style="text-align:left">-finalizerinfo</td>
+<td style="text-align:left">打印等待结束的对象信息<br>Prints information about objects that are awaiting finalization.</td>
+</tr>
+<tr>
+<td style="text-align:left">-histo[:live]</td>
+<td style="text-align:left">打印堆的对象统计，包括对象数量，大小等。也可以单独指定子项：live，只打印存活对象。<br>Prints a histogram of the heap. For each Java class, the number of objects, memory size in bytes, and the fully qualified class names are printed. The JVM internal class names are printed with an asterisk (*) prefix. If the live suboption is specified, then only active objects are counted.</td>
+</tr>
+<tr>
+<td style="text-align:left">-dump:[live,] format=b, file=filename</td>
+<td style="text-align:left">将Java堆以hprof二进制格式转储为文件名filename。live子选项选定时，只转储存活对象。<br>Dumps the Java heap in hprof binary format to filename. The live suboption is optional, but when specified, only the active objects in the heap are dumped. To browse the heap dump, you can use the jhat(1) command to read the generated file.</td>
+</tr>
+<tr>
+<td style="text-align:left">-heap</td>
+<td style="text-align:left">输出java堆概览.<br>Prints a heap summary of the garbage collection used, the head configuration, and generation-wise heap usage. In addition, the number and size of interned Strings are printed.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><h5 id="clstats"><a href="#clstats" class="headerlink" title="-clstats"></a>-clstats</h5><p>连接正在运行的进程，打印类加载器的统计信息<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -clstats 75052
+Attaching to process ID 75052, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.131-b11
+finding class loader instances ..done.
+computing per loader stat ..done.
+please wait.. computing liveness.liveness analysis may be inaccurate ...
+class_loader    classes bytes   parent_loader   alive?  type
+
+&lt;bootstrap&gt;     3735    6715263   null          live    &lt;internal&gt;
+0x00000006c24851c8      1       889     0x00000006c24853f0      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c3220ba0      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c3820380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c383c380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2cea748      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf8178      1       1472      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c337c6f0      1       1483    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2485100      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2418f08      2749    5382011 0x00000006c2418f68      dead    sun/misc/Launcher$AppClassLoader@0x00000007c000f6a0
+0x00000006c3220c68      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2cea680      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c337c838      1       1473    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c3908b40      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2ceab58      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c3908c08      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c28bafd0      0       0       0x00000006c2418f08      dead    java/util/ResourceBundle$RBClassLoader@0x00000007c0089950
+0x00000006c2ceaa90      1       1472    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf87a0      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf89a0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2485328      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c39089b0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c3222ec0      1       880     0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c37cced8      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bd2298      40      93710   0x00000006c2418f08      dead    com/alibaba/fastjson/util/ASMClassLoader@0x00000007c02af098
+0x00000006c2cea428      1       1474      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf86d8      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c337d290      1       1485    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c3908a78      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2418f68      124     266033    null          dead    sun/misc/Launcher$ExtClassLoader@0x00000007c000fa48
+0x00000006c3222f88      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c37cce10      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2cea360      1       1485      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf8610      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2485038      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2cea5b8      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf8308      1       1471    0x00000006c2418f68      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf8548      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c337cf80      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2484ef0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c24853f0      12      37276   0x00000006c2418f08      dead    sun/reflect/misc/MethodUtil@0x00000007c0116af8
+0x00000006c2cea4f0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c2bf8240      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c337d048      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+0x00000006c37fe380      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
+
+total = 45      6699    12545217            N/A         alive=1, dead=44            N/A<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<ul>
+<li>class_loader：类加载器</li>
+<li>classes：加载的class数</li>
+<li>bytes：加载字节码大小</li>
+<li>parent_loader：父类加载器</li>
+<li>live：存活状态</li>
+<li>type：加载器类型</li>
+</ul>
+<h5 id="finalizerinfo"><a href="#finalizerinfo" class="headerlink" title="-finalizerinfo"></a>-finalizerinfo</h5><p>打印等待结束的对象信息<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -finalizerinfo 75052
+  Attaching to process ID 75052, please wait...
+  Debugger attached successfully.
+  Server compiler detected.
+  JVM version is 25.131-b11
+  Number of objects pending for finalization: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可以看出来，目前没有等待结束的对象<p></p>
+<h5 id="histo"><a href="#histo" class="headerlink" title="-histo"></a>-histo</h5><p>打印堆的对象统计，包括对象数量，大小等。也可以单独指定子项：live，只打印存活对象。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -histo:live 75052|more
+
+ num     #instances         #bytes  class name
+----------------------------------------------
+   1:          4071        5668128  [I
+   2:         52491        4982384  [C
+   3:          3629        1511648  [B
+   4:         51380        1233120  java.lang.String
+   5:          6620         751480  java.lang.Class
+   6:         16354         523328  java.util.concurrent.ConcurrentHashMap$Node
+   7:         15464         494848  java.util.HashMap$Node
+   8:          6599         409624  [Ljava.lang.Object;
+   9:          2787         245256  java.lang.reflect.Method
+  10:          1363         200728  [Ljava.util.HashMap$Node;
+  11:          8237         197688  sun.font.TrueTypeFont$DirectoryEntry
+  12:          6121         195872  java.util.Hashtable$Entry
+  13:           209         143976  [J
+-- More  --<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>因histo统计对象的类型很多，带上more后，可根据命令窗口大小进行部分展示，可回车后继续展示。<br>其中class name为对象类型的，部分为简写，含义如下：<p></p>
+<ul>
+<li>B  byte</li>
+<li>C  char</li>
+<li>D  double</li>
+<li>F  float</li>
+<li>I  int</li>
+<li>J  long</li>
+<li>Z  boolean</li>
+<li>[  数组，如[I表示int[]</li>
+<li>[L+类名 其他对象</li>
+</ul>
+<h5 id="dump"><a href="#dump" class="headerlink" title="-dump"></a>-dump</h5><p>转储java堆信息，包含子项如下：</p>
+<ul>
+<li>live：当指定后，只转储存活对象</li>
+<li>format=b：转储格式，以hprof二进制格式转储Java堆</li>
+<li>file=filename：转储文件名  </li>
+</ul>
+<pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -dump:live,format=b,file=heap 75052
+  Dumping heap to C:\Users\Y\heap1 ...
+  Heap dump file created<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>示例中转储文件会生成在C:\Users\Y\目录下，后续dump文件分析可以根据文件大小进行选择。<br>分析工具：</p>
+<ul>
+<li>JDK自带程序jvisiualvm.exe</li>
+<li>jhat命令</li>
+<li>Eclipse Memory Analyzer(MAT)</li>
+</ul>
+<h5 id="heap"><a href="#heap" class="headerlink" title="-heap"></a>-heap</h5><p>输出java堆概览<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -heap 75052
+Attaching to process ID 75052, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.131-b11
+
+using thread-local object allocation.
+Parallel GC with 4 thread(s)  //GC方式，并行
+
+Heap Configuration:			//堆初始配置，可以通过 -XX:*(eg:NewSize) 进行对应参数设置
+   MinHeapFreeRatio         = 0		//最小空闲比率
+   MaxHeapFreeRatio         = 100		//最大空闲比率
+   MaxHeapSize              = 4257218560 (4060.0MB)		//最大堆内存
+   NewSize                  = 88604672 (84.5MB)		//新生代内存容量
+   MaxNewSize               = 1418723328 (1353.0MB)		//最大新生代内存容量
+   OldSize                  = 177733632 (169.5MB)		//老年代内存容量
+   NewRatio                 = 2		//新生代和老年代大小比例
+   SurvivorRatio            = 8		//Eden区与Survivor区的大小比值
+   MetaspaceSize            = 21807104 (20.796875MB)		//元空内存容量
+   CompressedClassSpaceSize = 1073741824 (1024.0MB)		//压缩类空间内存容量
+   MaxMetaspaceSize         = 17592186044415 MB		//最大元空间内存
+   G1HeapRegionSize         = 0 (0.0MB)		//G1垃圾回收器中指定分区大小(1MB~32MB，且必须是2的幂)，默认将整堆划分为2048个分区
+
+Heap Usage:
+PS Young Generation
+Eden Space:		//Eden区使用情况：总容量、已使用、空闲、使用比例
+   capacity = 31981568 (30.5MB)
+   used     = 5003392 (4.7716064453125MB)
+   free     = 26978176 (25.7283935546875MB)
+   15.644611296106557% used
+From Space:		//survivor0使用情况
+   capacity = 524288 (0.5MB)
+   used     = 131072 (0.125MB)
+   free     = 393216 (0.375MB)
+   25.0% used
+To Space:		//survivor1使用情况
+   capacity = 524288 (0.5MB)
+   used     = 0 (0.0MB)
+   free     = 524288 (0.5MB)
+   0.0% used
+PS Old Generation		//老年代使用情况
+   capacity = 88604672 (84.5MB)
+   used     = 22120552 (21.095802307128906MB)
+   free     = 66484120 (63.404197692871094MB)
+   24.965446517312316% used
+
+21409 interned Strings occupying 2142768 bytes.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h2 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h2><p>jhat(JVM Heap Analysis Tool)与jmap结合使用，用来分析dump文件。jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看.<br>本文基于JDK8来分析使用相关命令，所以依旧存在jhat命令。从JDK9的时候已经删除了（JEP 241: Remove the jhat Tool）。现在Oracle官方推荐的分析工具是Eclipse Memory Analyzer Tool (MAT) 和 VisualVM(jvisualvm.exe)。</p>
+<p>相关操作参数,有兴趣的可以深入了解一下：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">Usage:  jhat [-stack &lt;bool&gt;] [-refs &lt;bool&gt;] [-port &lt;port&gt;] [-baseline &lt;file&gt;] [-debug &lt;int&gt;] [-version] [-h|-help] &lt;file&gt;
+
+        -J&lt;flag&gt;          Pass &lt;flag&gt; directly to the runtime system. For
+                          example, -J-mx512m to use a maximum heap size of 512MB
+        -stack false:     Turn off tracking object allocation call stack.
+        -refs false:      Turn off tracking of references to objects
+        -port &lt;port&gt;:     Set the port for the HTTP server.  Defaults to 7000
+        -exclude &lt;file&gt;:  Specify a file that lists data members that should
+                          be excluded from the reachableFrom query.
+        -baseline &lt;file&gt;: Specify a baseline object dump.  Objects in
+                          both heap dumps with the same ID and same class will
+                          be marked as not being "new".
+        -debug &lt;int&gt;:     Set debug level.
+                            0:  No debug output
+                            1:  Debug hprof file parsing
+                            2:  Debug hprof file parsing, no server
+        -version          Report version number
+        -h|-help          Print this help and exit
+        &lt;file&gt;            The file to read<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">cmeng</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://cmeng001.github.io/2020/08/18/java/jvm/jvm-diao-you/">http://cmeng001.github.io/2020/08/18/java/jvm/jvm-diao-you/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">cmeng</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/08/18/docker/ri-chang-ming-ling/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="docker日常命令">
+                        
+                        <span class="card-title">docker日常命令</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docker/" class="post-category">
+                                    Docker
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/command/">
+                        <span class="chip bg-color">command</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/08/18/java/duo-xian-cheng/future/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="java的future体系">
+                        
+                        <span class="card-title">java的future体系</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/java/" class="post-category">
+                                    java
+                                </a>
+                            
+                            <a href="/categories/java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-category">
+                                    多线程
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JVM/">
+                        <span class="chip bg-color">JVM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2018-2022</span>
+            
+            <a href="/about" target="_blank">cmeng</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">52.1k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2018";
+                        var startMonth = "6";
+                        var startDate = "28";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/cmeng001" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:cmeng.email@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
