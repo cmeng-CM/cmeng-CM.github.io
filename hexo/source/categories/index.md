@@ -1,6 +1,6 @@
 ---
-title: 类别
-date: 2019-08-12 11:12:12
+title: categories
+date: 2019-09-30 17:25:30
 type: "categories"
-comments: false
+layout: "categories"
 ---

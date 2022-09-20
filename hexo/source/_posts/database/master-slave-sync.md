@@ -1,7 +1,7 @@
 ---
 title: MySQL主从、主主、主备模式
 date: 2020-08-18 16:13:12
-tags: MySQL
+tags: Database
 categories: [MySQL,同步]
 ---
 
