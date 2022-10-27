@@ -463,32 +463,6 @@
   </entry>
   
   <entry>
-    <title>rust基础信息</title>
-    <link href="http://cmeng001.github.io/2020/08/17/rust/basic-information/"/>
-    <id>http://cmeng001.github.io/2020/08/17/rust/basic-information/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2022-07-31T13:40:50.308Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;一、rust基础信息&quot;&gt;&lt;a href=&quot;#一、rust基础信息&quot; class=&quot;headerlink&quot; title=&quot;一、rust基础信息&quot;&gt;&lt;/a&gt;一、rust基础信息&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;在 Linux 或 macOS 上安装</summary>
-        
-      
-    
-    
-    
-    <category term="rust" scheme="http://cmeng001.github.io/categories/rust/"/>
-    
-    
-    <category term="rust" scheme="http://cmeng001.github.io/tags/rust/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Zookeeper之Watcher机制</title>
     <link href="http://cmeng001.github.io/2020/08/17/zookeeper/zk-watcher/"/>
     <id>http://cmeng001.github.io/2020/08/17/zookeeper/zk-watcher/</id>
@@ -513,6 +487,32 @@
     
     
     <category term="zookeeper" scheme="http://cmeng001.github.io/tags/zookeeper/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rust基础信息</title>
+    <link href="http://cmeng001.github.io/2020/08/17/rust/basic-information/"/>
+    <id>http://cmeng001.github.io/2020/08/17/rust/basic-information/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-07-31T13:40:50.308Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;一、rust基础信息&quot;&gt;&lt;a href=&quot;#一、rust基础信息&quot; class=&quot;headerlink&quot; title=&quot;一、rust基础信息&quot;&gt;&lt;/a&gt;一、rust基础信息&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;在 Linux 或 macOS 上安装</summary>
+        
+      
+    
+    
+    
+    <category term="rust" scheme="http://cmeng001.github.io/categories/rust/"/>
+    
+    
+    <category term="rust" scheme="http://cmeng001.github.io/tags/rust/"/>
     
   </entry>
   
