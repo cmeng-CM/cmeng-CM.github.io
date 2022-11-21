@@ -6,7 +6,7 @@
   <link href="http://cmeng001.github.io/atom.xml" rel="self"/>
   
   <link href="http://cmeng001.github.io/"/>
-  <updated>2022-09-20T02:33:01.508Z</updated>
+  <updated>2022-11-21T12:47:08.950Z</updated>
   <id>http://cmeng001.github.io/</id>
   
   <author>
@@ -17,9 +17,59 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MQ原理和技术选型</title>
+    <link href="http://cmeng001.github.io/2022/11/13/message-queue/mq-yuan-li-he-ji-zhu-xuan-xing/"/>
+    <id>http://cmeng001.github.io/2022/11/13/message-queue/mq-yuan-li-he-ji-zhu-xuan-xing/</id>
+    <published>2022-11-13T08:13:12.000Z</published>
+    <updated>2022-11-21T12:47:08.950Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;MQ原理及选型&quot;&gt;&lt;a href=&quot;#MQ原理及选型&quot; class=&quot;headerlink&quot; title=&quot;MQ原理及选型&quot;&gt;&lt;/a&gt;MQ原理及选型&lt;/h1&gt;&lt;h2 id=&quot;一、消息队列概念&quot;&gt;&lt;a href=&quot;#一、消息队列概念&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MQ" scheme="http://cmeng001.github.io/categories/MQ/"/>
+    
+    
+    <category term="MQ" scheme="http://cmeng001.github.io/tags/MQ/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Markdowm语法</title>
+    <link href="http://cmeng001.github.io/2022/11/13/syntax-format/markdown-yu-fa/"/>
+    <id>http://cmeng001.github.io/2022/11/13/syntax-format/markdown-yu-fa/</id>
+    <published>2022-11-13T08:13:12.000Z</published>
+    <updated>2022-11-21T12:51:14.045Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;超链接&quot;&gt;&lt;a href=&quot;#超链接&quot; class=&quot;headerlink&quot; title=&quot;超链接&quot;&gt;&lt;/a&gt;超链接&lt;/h2&gt;&lt;p&gt;markdown内超链接分为两种形式，分别是 &lt;strong&gt;行内式&lt;/strong&gt; 和</summary>
+        
+      
+    
+    
+    
+    <category term="Markdowm" scheme="http://cmeng001.github.io/categories/Markdowm/"/>
+    
+    
+    <category term="Markdowm" scheme="http://cmeng001.github.io/tags/Markdowm/"/>
+    
+  </entry>
+  
+  <entry>
     <title>主题标题相关设置</title>
-    <link href="http://cmeng001.github.io/2022/09/16/demo/front-matter-xuan-xiang-xiang-jie/"/>
-    <id>http://cmeng001.github.io/2022/09/16/demo/front-matter-xuan-xiang-xiang-jie/</id>
+    <link href="http://cmeng001.github.io/2022/09/16/syntax-format/front-matter-xuan-xiang-xiang-jie/"/>
+    <id>http://cmeng001.github.io/2022/09/16/syntax-format/front-matter-xuan-xiang-xiang-jie/</id>
     <published>2022-09-16T06:51:16.336Z</published>
     <updated>2022-09-20T02:33:01.508Z</updated>
     
@@ -45,8 +95,8 @@
   
   <entry>
     <title>markdown思维导图demo</title>
-    <link href="http://cmeng001.github.io/2022/09/08/demo/markmap/"/>
-    <id>http://cmeng001.github.io/2022/09/08/demo/markmap/</id>
+    <link href="http://cmeng001.github.io/2022/09/08/syntax-format/markmap/"/>
+    <id>http://cmeng001.github.io/2022/09/08/syntax-format/markmap/</id>
     <published>2022-09-08T13:23:52.783Z</published>
     <updated>2022-09-20T02:33:14.672Z</updated>
     
@@ -149,33 +199,6 @@
   </entry>
   
   <entry>
-    <title>MySQL主从、主主、主备模式</title>
-    <link href="http://cmeng001.github.io/2020/08/18/database/master-slave-sync/"/>
-    <id>http://cmeng001.github.io/2020/08/18/database/master-slave-sync/</id>
-    <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2022-09-07T13:02:22.583Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;a href=&quot;#一、主从、主主、主备模式介绍&quot; class=&quot;headerlink&quot; title=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;/a&gt;一、主从、主主、主备模式介绍&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    <category term="MySQL" scheme="http://cmeng001.github.io/categories/MySQL/"/>
-    
-    <category term="同步" scheme="http://cmeng001.github.io/categories/MySQL/%E5%90%8C%E6%AD%A5/"/>
-    
-    
-    <category term="Database" scheme="http://cmeng001.github.io/tags/Database/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Docker之MySQL安装</title>
     <link href="http://cmeng001.github.io/2020/08/18/docker/mysql/"/>
     <id>http://cmeng001.github.io/2020/08/18/docker/mysql/</id>
@@ -230,11 +253,38 @@
   </entry>
   
   <entry>
+    <title>MySQL主从、主主、主备模式</title>
+    <link href="http://cmeng001.github.io/2020/08/18/database/master-slave-sync/"/>
+    <id>http://cmeng001.github.io/2020/08/18/database/master-slave-sync/</id>
+    <published>2020-08-18T08:13:12.000Z</published>
+    <updated>2022-09-07T13:02:22.583Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;a href=&quot;#一、主从、主主、主备模式介绍&quot; class=&quot;headerlink&quot; title=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;/a&gt;一、主从、主主、主备模式介绍&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://cmeng001.github.io/categories/MySQL/"/>
+    
+    <category term="同步" scheme="http://cmeng001.github.io/categories/MySQL/%E5%90%8C%E6%AD%A5/"/>
+    
+    
+    <category term="Database" scheme="http://cmeng001.github.io/tags/Database/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JVM调优之jps jinfo jstat jmap jhat</title>
     <link href="http://cmeng001.github.io/2020/08/18/java/jvm/jvm-diao-you/"/>
     <id>http://cmeng001.github.io/2020/08/18/java/jvm/jvm-diao-you/</id>
     <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2022-08-08T14:19:41.089Z</updated>
+    <updated>2022-11-13T08:40:46.566Z</updated>
     
     
       
@@ -261,7 +311,7 @@
     <link href="http://cmeng001.github.io/2020/08/18/java/duo-xian-cheng/future/"/>
     <id>http://cmeng001.github.io/2020/08/18/java/duo-xian-cheng/future/</id>
     <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2022-08-15T00:57:12.603Z</updated>
+    <updated>2022-11-13T08:40:31.036Z</updated>
     
     
       
@@ -280,31 +330,6 @@
     
     
     <category term="JVM" scheme="http://cmeng001.github.io/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>二分查找法</title>
-    <link href="http://cmeng001.github.io/2020/08/17/algorithm/binary-search/"/>
-    <id>http://cmeng001.github.io/2020/08/17/algorithm/binary-search/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2022-03-30T09:14:44.033Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;二分查找法&quot;&gt;&lt;a href=&quot;#二分查找法&quot; class=&quot;headerlink&quot; title=&quot;二分查找法&quot;&gt;&lt;/a&gt;二分查找法&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="二分查找法" scheme="http://cmeng001.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
     
   </entry>
   
@@ -359,6 +384,31 @@
   </entry>
   
   <entry>
+    <title>二分查找法</title>
+    <link href="http://cmeng001.github.io/2020/08/17/algorithm/binary-search/"/>
+    <id>http://cmeng001.github.io/2020/08/17/algorithm/binary-search/</id>
+    <published>2020-08-17T08:13:12.000Z</published>
+    <updated>2022-03-30T09:14:44.033Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;二分查找法&quot;&gt;&lt;a href=&quot;#二分查找法&quot; class=&quot;headerlink&quot; title=&quot;二分查找法&quot;&gt;&lt;/a&gt;二分查找法&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="http://cmeng001.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="二分查找法" scheme="http://cmeng001.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>算法-时间复杂度</title>
     <link href="http://cmeng001.github.io/2020/08/17/algorithm/shi-jian-fu-za-du/"/>
     <id>http://cmeng001.github.io/2020/08/17/algorithm/shi-jian-fu-za-du/</id>
@@ -409,32 +459,6 @@
   </entry>
   
   <entry>
-    <title>rust基础信息</title>
-    <link href="http://cmeng001.github.io/2020/08/17/rust/basic-information/"/>
-    <id>http://cmeng001.github.io/2020/08/17/rust/basic-information/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2022-07-31T13:40:50.308Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;一、rust基础信息&quot;&gt;&lt;a href=&quot;#一、rust基础信息&quot; class=&quot;headerlink&quot; title=&quot;一、rust基础信息&quot;&gt;&lt;/a&gt;一、rust基础信息&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;在 Linux 或 macOS 上安装</summary>
-        
-      
-    
-    
-    
-    <category term="rust" scheme="http://cmeng001.github.io/categories/rust/"/>
-    
-    
-    <category term="rust" scheme="http://cmeng001.github.io/tags/rust/"/>
-    
-  </entry>
-  
-  <entry>
     <title>分布式CAP</title>
     <link href="http://cmeng001.github.io/2020/08/17/microservice/cap/"/>
     <id>http://cmeng001.github.io/2020/08/17/microservice/cap/</id>
@@ -458,33 +482,6 @@
     
     
     <category term="CAP" scheme="http://cmeng001.github.io/tags/CAP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot 启动 —— 源码解析</title>
-    <link href="http://cmeng001.github.io/2020/08/17/microservice/spriingboot-run/"/>
-    <id>http://cmeng001.github.io/2020/08/17/microservice/spriingboot-run/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2021-06-10T05:14:20.636Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;font size=&quot;7&quot;&gt;SpringBoot 启动 —— 源码解析&lt;/font&gt;
-
-&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="springboot" scheme="http://cmeng001.github.io/categories/springboot/"/>
-    
-    
-    <category term="springboot" scheme="http://cmeng001.github.io/tags/springboot/"/>
     
   </entry>
   
