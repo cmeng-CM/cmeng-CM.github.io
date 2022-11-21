@@ -3,6 +3,7 @@ title: JVM内存模型
 date: 2020-08-17 16:13:12
 tags: JVM
 categories: [java,JVM]
+top: true
 ---
 
 
