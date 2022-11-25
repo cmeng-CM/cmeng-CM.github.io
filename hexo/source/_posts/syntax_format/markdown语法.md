@@ -7,15 +7,28 @@ categories: [Markdowm]
 
 ## 超链接
 markdown内超链接分为两种形式，分别是 **行内式** 和 **参考式**
-1. 行内式
+1. 行内式：
     * 格式：
     ```
         [链接名称](链接地址)
         或：
         <连接>
     ```
-    * 示例：[这是一个连接]()
+    * 示例：
+    ```
+        [这是一个连接](https://cmeng-cm.github.io/)
+    ```
+    效果：[这是一个连接](https://cmeng-cm.github.io/)
+2. 参考式：参考式链接的写法相当于行内式拆分成两部分，并通过一个 识别符 来连接两部分。
+    * 示例
+    ```
+    [这是一个连接][link]
+    [link]: https://cmeng-cm.github.io/
+    ```
+    效果：
+    [这是一个连接][link]
 
+___
 
 
 
@@ -37,6 +50,7 @@ ___
 <hr class="dotted">
 <!-- 双线 -->
 <hr class="double">
+<hr class="double">
 
 <style>
 .solid {
@@ -54,18 +68,6 @@ ___
 
 </style>
 ```
-
-
-
-
-
-
-
-
-
-
-
-
 
 ![效果图][dividing_line]
 
@@ -92,10 +94,16 @@ ___
 
 
 
+<style>
+.dashed {
+    border-top: 3px dashed #D3D3D3;
+}
+</style>
+
 
 [dividing_line]: https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/markdown/dividing_line.jpg
 
-
+[link]: https://cmeng-cm.github.io/
 
 
 

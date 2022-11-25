@@ -35,7 +35,7 @@ if __name__=="__main__":
     
     # 原文件地址
     imgPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image'
-    imgPath = imgPath+'/markdown/dividing_line.jpg'
+    imgPath = imgPath+'/MQ/MQ_contrast.jpg'
     
     img_hosting_path = '/Users/workerspace/github/image-hosting/img'
 
