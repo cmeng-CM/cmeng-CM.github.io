@@ -7,15 +7,12 @@
     <meta name="keywords" content="Markdowm语法, c萌怪谈">
     <meta name="description" content="超链接markdown内超链接分为两种形式，分别是 行内式 和 参考式
 
-行内式
+行内式：
 格式：[链接名称](链接地址)
 或：
 &amp;lt;连接&amp;gt;
-示例：这是一个连接
-
-
-
-分割线1、markdown官方提供的分割线语法三个星号（*）、三个中划线">
+示例：[这是一个连接](https://cmeng-cm.github.io/)
+效果：这是一个">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -410,7 +407,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    216
+                    300
                 </div>
                 
 
@@ -442,14 +439,22 @@
             <div id="articleContent">
                 <h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p>markdown内超链接分为两种形式，分别是 <strong>行内式</strong> 和 <strong>参考式</strong></p>
 <ol>
-<li>行内式<ul>
+<li>行内式：<ul>
 <li>格式：<pre class="line-numbers language-none"><code class="language-none">[链接名称](链接地址)
 或：
 &lt;连接&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-<li>示例：<a href="">这是一个连接</a></li>
+<li>示例：<pre class="line-numbers language-none"><code class="language-none">[这是一个连接](https://cmeng-cm.github.io/)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+效果：<a href="https://cmeng-cm.github.io/">这是一个连接</a></li>
+</ul>
+</li>
+<li>参考式：参考式链接的写法相当于行内式拆分成两部分，并通过一个 识别符 来连接两部分。<ul>
+<li>示例<pre class="line-numbers language-none"><code class="language-none">[这是一个连接][link]
+[link]: https://cmeng-cm.github.io/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+效果：<br><a href="https://cmeng-cm.github.io/">这是一个连接</a></li>
 </ul>
 </li>
 </ol>
+<hr>
 <h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><h3 id="1、markdown官方提供的分割线语法"><a href="#1、markdown官方提供的分割线语法" class="headerlink" title="1、markdown官方提供的分割线语法"></a>1、markdown官方提供的分割线语法</h3><p>三个星号（*）、三个中划线（-）、三个下划线（-）三者都能达到下面的效果：</p>
 <hr>
 <h3 id="2、特殊效果"><a href="#2、特殊效果" class="headerlink" title="2、特殊效果"></a>2、特殊效果</h3><p><strong>Markdown</strong> 只控制文档的结构，不控制文档的样式。但是既然依托于<strong>html</strong>语法，那我们就依然能通过HTML+CSS的方式定制分割线的样式。<br></p><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 简单示例 --&gt;</span>
@@ -461,6 +466,7 @@
 <span class="token comment">&lt;!-- 点状 --&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hr</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dotted<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
 <span class="token comment">&lt;!-- 双线 --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hr</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>double<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hr</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>double<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style"><span class="token language-css">
@@ -477,8 +483,15 @@
     <span class="token property">border-top</span><span class="token punctuation">:</span> 8px double #FF7F24<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/markdown/dividing_line.jpg" alt="效果图"></p>
+<style>
+.dashed {
+    border-top: 3px dashed #D3D3D3;
+}
+</style>
+
+
 
                 
             </div>
@@ -896,7 +909,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">53.4k</span>
+                        class="white-color">55.5k</span>
             
             
             

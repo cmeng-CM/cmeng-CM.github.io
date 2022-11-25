@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="MQ原理和技术选型, c萌怪谈">
-    <meta name="description" content="MQ原理及选型一、消息队列概念消息队列（英语：Message queue，简称：MQ）：是一种进程间通信或同一进程的不同线程间的通信方式。
+    <meta name="description" content="MQ原理及选型一、消息队列概念1.1、概述消息队列（英语：Message queue，简称：MQ）：是一种进程间通信或同一进程的不同线程间的通信方式。
 
-消息（Message）：是指在应用之间传送的数据，消息可以非常简单，比如只包含文本字符串，也可以更">
+消息（Message）：是指在应用之间传送的数据，消息可以非常简单，比如只包含文本字符">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -402,14 +402,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    10 分
                 </div>
                 
 
@@ -432,13 +432,34 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="MQ原理及选型"><a href="#MQ原理及选型" class="headerlink" title="MQ原理及选型"></a>MQ原理及选型</h1><h2 id="一、消息队列概念"><a href="#一、消息队列概念" class="headerlink" title="一、消息队列概念"></a>一、消息队列概念</h2><p><strong>消息队列（英语：Message queue，简称：MQ）</strong>：是一种进程间通信或同一进程的不同线程间的通信方式。</p>
+                <h1 id="MQ原理及选型"><a href="#MQ原理及选型" class="headerlink" title="MQ原理及选型"></a>MQ原理及选型</h1><h2 id="一、消息队列概念"><a href="#一、消息队列概念" class="headerlink" title="一、消息队列概念"></a>一、消息队列概念</h2><h3 id="1-1、概述"><a href="#1-1、概述" class="headerlink" title="1.1、概述"></a>1.1、概述</h3><p><strong>消息队列（英语：Message queue，简称：MQ）</strong>：是一种进程间通信或同一进程的不同线程间的通信方式。</p>
 <ul>
 <li>消息（Message）：是指在应用之间传送的数据，消息可以非常简单，比如只包含文本字符串，也可以更复杂，可能包含嵌入对象。</li>
 <li>队列（Queue）：保持消息的容器，本质上为队列。</li>
 </ul>
-<p><strong>基本模型</strong><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_basic_model.jpg" alt="MQ基本模型"></p>
+<p><strong>原始模型：</strong><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_basic_model.jpg" alt="MQ基本模型"></p>
 <p>消息队列的本质很好理解，本质都是：<strong><font color="red">一发、一存、一消</font></strong>，所有复杂模型和中间件实现都是基于这个最初原理和模型来实现的。</p>
+<h3 id="1-2、MQ模型"><a href="#1-2、MQ模型" class="headerlink" title="1.2、MQ模型"></a>1.2、MQ模型</h3><p>现在有MQ产品都是在上面的原始模型基础上进行演化、扩展出来的功能更完善、性能更稳定的中间件。目前比较通用的MQ模型有两种：</p>
+<ul>
+<li>点对点模型（point to point，queue）模型。</li>
+<li>发布/订阅（publish/subscribe，topic）模型。</li>
+</ul>
+<h4 id="点对点模型"><a href="#点对点模型" class="headerlink" title="点对点模型"></a>点对点模型</h4><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_peertopeer_model.jpg" alt="MQ_peertopeer_model"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>消息的消费顺序和生产顺序一致。</li>
+<li>它允许多个生产者往同一个队列发送消息。</li>
+<li>若多消费者接收同一队列的消息，这些消费者间就是竞争关系。一条消息只能被其中一个消费者接收到，读完即被删除。</li>
+<li>接收者在成功接收消息之后需向队列应答成功</li>
+</ul>
+<h4 id="发布-订阅模型"><a href="#发布-订阅模型" class="headerlink" title="发布/订阅模型"></a>发布/订阅模型</h4><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_pub-sub_model.jpg" alt="MQ_pub-sub_model"></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>每个消息可以有多个消费者：和点对点方式不同，发布消息可以被所有订阅者消费。</li>
+<li>发布者和订阅者之间有时间上的依赖性。</li>
+<li>针对某个主题 <strong>（Topic）</strong> 的订阅者，它必须创建一个订阅者之后，才能消费发布者的消息。</li>
+<li>为了消费消息，订阅者必须保持运行的状态。</li>
+</ul>
 <hr>
 <h2 id="二、消息队列优、缺"><a href="#二、消息队列优、缺" class="headerlink" title="二、消息队列优、缺"></a>二、消息队列优、缺</h2><p>消息队列使用三个经典的场景：异步、解耦、削峰。无论因为什么都是这三点的延伸。下面就这三个模块展开细说。</p>
 <h3 id="2-1、优-异步"><a href="#2-1、优-异步" class="headerlink" title="2.1、优-异步"></a>2.1、优-异步</h3><p>消息队列的主要特点就是异步执行，以异步的方式执行非核心业务逻辑来降低 <strong>RT（Response Time）</strong>，提高用户体验和流畅性。</p>
@@ -452,18 +473,214 @@
 <h3 id="2-3、优-削峰"><a href="#2-3、优-削峰" class="headerlink" title="2.3、优-削峰"></a>2.3、优-削峰</h3><p>削峰就比较好理解了，比如系统推广或秒杀的时候，突然<strong>QPS</strong>（QPS：Queries Per Second：每秒查询率）极速上涨。这个时候就得考虑服务是否能承载这么大的访问，如果超出系统负责可能直接就是崩掉了。</p>
 <p>这个时候就可以把请求先放到MQ中，至于每秒消费多少就根据数据库、中间件以及服务本身的实际情况来判断并消费对应的消息就可以了。虽然响应慢一些，但不至于直接把服务干蹦掉。</p>
 <p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_weaken_peak_model.jpg" alt="削峰模型"></p>
-<h3 id="2-4、使用MQ的缺点"><a href="#2-4、使用MQ的缺点" class="headerlink" title="2.4、使用MQ的缺点"></a>2.4、使用MQ的缺点</h3><p>以上均为系统加入MQ的优点，那么有没有缺点呢？当然有了，所有东西都要辩证的来得看</p>
+<h3 id="2-4、使用MQ的缺点"><a href="#2-4、使用MQ的缺点" class="headerlink" title="2.4、使用MQ的缺点"></a>2.4、使用MQ的缺点</h3><p>以上均为系统加入MQ的优点，那么有没有缺点呢？当然有了，所有东西都要辩证的来得。</p>
 <ul>
-<li><p>系统复杂性：原本系统的基础上增加中间件，就要考虑其使用、维护、问题定位等问题。再加上MQ机制本身也要考虑：重复消费、消息丢失、消息的顺序消费等等问题。系统复杂性的增加不言而喻了。</p>
-</li>
-<li><p>数据一致性：比如刚刚的充值，充值操作是完成了，那返利是否完成？优惠券是否发放？短信是否已通知到位？</p>
-</li>
-<li><p>可用性：原本只需要考虑系统的健壮性就可以，现在增加了中间件MQ，那MQ挂了怎么处理？系统是否就直接宕掉了？</p>
-</li>
+<li>系统复杂性：原本系统的基础上增加中间件，就要考虑其使用、维护、问题定位等问题。再加上MQ机制本身也要考虑：重复消费、消息丢失、消息的顺序消费等等问题。系统复杂性的增加不言而喻了。</li>
+<li>数据一致性：比如刚刚的充值，充值操作是完成了，那返利是否完成？优惠券是否发放？短信是否已通知到位？</li>
+<li>可用性：原本只需要考虑系统的健壮性就可以，现在增加了中间件MQ，那MQ挂了怎么处理？系统是否就直接宕掉了？</li>
 </ul>
 <p>当然这些都是可以处理，只不过增加相应的开发、维护成本。最终是否使用MQ还是需要根据实际的系统和业务需求来考虑其使用情况</p>
 <hr>
-<h2 id="三、消息队列协议"><a href="#三、消息队列协议" class="headerlink" title="三、消息队列协议"></a>三、消息队列协议</h2><h3 id="3-1、"><a href="#3-1、" class="headerlink" title="3.1、"></a>3.1、</h3><p>JMS：<strong>Java 消息服务API</strong> 是一种消息传递标准，它允许基于 Java 平台企业版 (Java EE) 的应用程序组件创建、发送、接收和读取消息。它支持松耦合、可靠和异步的分布式通信。</p>
+<h2 id="三、消息队列协议"><a href="#三、消息队列协议" class="headerlink" title="三、消息队列协议"></a>三、消息队列协议</h2><h3 id="3-1、JMS：Java-Message-Service（Java-消息服务）"><a href="#3-1、JMS：Java-Message-Service（Java-消息服务）" class="headerlink" title="3.1、JMS：Java Message Service（Java 消息服务）"></a>3.1、JMS：Java Message Service（Java 消息服务）</h3><p><a target="_blank" rel="noopener" href="https://www.oracle.com/technical-resources/articles/java/intro-java-message-service.html">JMS</a>：Java 消息服务 (JMS) API 是一种消息传递标准，它允许基于 Java 平台企业版 (Java EE) 的应用程序组件创建、发送、接收和读取消息。它支持松耦合、可靠和异步的分布式通信。</p>
+<font size="5" color="#b9268d">支持两种模型： </font>
+
+<ul>
+<li>点对点（队列目的地）：在此模型中，消息从生产者传递到一个消费者。</li>
+<li>发布/订阅（主题目的地）：在此模型中，消息从生产者传递到任意数量的消费者。</li>
+</ul>
+<font size="5" color="#b9268d">JMS优点：</font>
+
+<ul>
+<li>同时支持同步和异步<ul>
+<li>同步：在这种模式下，客户端通过调用对象的receive()方法来接收消息MessageConsumer。应用程序线程阻塞直到方法返回，这会导致如果消息不可用，它会阻塞直到消息可用或receive()方法超时。</li>
+<li>异步：在这种模式下，客户端MessageListener向消息消费者注册一个对象。这类似于回调，其中客户端在会话调用onMessage()方法时使用消息。</li>
+</ul>
+</li>
+<li>可靠的；JMS 定义了两种传递模式：<ul>
+<li>持久化消息：保证一次且仅一次成功消费。消息不会丢失。</li>
+<li>非持久消息：保证最多传递一次。消息丢失不是问题。<br>JMS 提供了确保消息将被传递一次且仅一次的设施。我们知道重复的消息会产生问题。JMS 可以帮助您避免此类问题。</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://activemq.apache.org/">ActiveMQ</a>：就是<strong>JMS</strong>规范中的一种消息中间件。</p>
+<hr class="dotted">
+
+<h3 id="3-2、AMQP：Advanced-Message-Queuing-Protocol（高级消息队列协议）"><a href="#3-2、AMQP：Advanced-Message-Queuing-Protocol（高级消息队列协议）" class="headerlink" title="3.2、AMQP：Advanced Message Queuing Protocol（高级消息队列协议）"></a>3.2、AMQP：Advanced Message Queuing Protocol（高级消息队列协议）</h3><p><strong>AMQP：</strong> 是一个二进制的、面向消息的中间件的开放标准，应用层协议。</p>
+<ul>
+<li>旨在有效地支持各种消息传递应用程序和通信模式。</li>
+<li>其特征是消息导向、队列、路由（包括点对点和发布-订阅）、可靠性和安全性。</li>
+<li>基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件不同产品，不同开发语言等条件的限制。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">RabbitMQ</a>：就是AMQP协议的标准实现。<br><strong>基础模型：</strong><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_amqp_model.jpg" alt="MQ_amqp_model"></p>
+<hr class="dotted">
+
+
+<h3 id="3-3、STOMP：The-Simple-Text-Oriented-Messaging-Protocol（面向简单文本的消息协议）"><a href="#3-3、STOMP：The-Simple-Text-Oriented-Messaging-Protocol（面向简单文本的消息协议）" class="headerlink" title="3.3、STOMP：The Simple Text Oriented Messaging Protocol（面向简单文本的消息协议）"></a>3.3、STOMP：The Simple Text Oriented Messaging Protocol（面向简单文本的消息协议）</h3><p><strong>STOMP：</strong> 是简单（或流式）文本导向消息传递协议，其设计的主要理念是简单性和互操作性。<br><strong>STOMP：</strong> 是一种基于框架的协议，框架以 <strong>HTTP</strong> 为模型。一个框架由一个命令、一组可选的头部和一个可选的主体组成。<strong>STOMP</strong> 基于文本，但也允许传输二进制消息。</p>
+<p><strong>兼容STOMP协议的中间件：</strong><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_compatible_stomp_server.jpg" alt="MQ_compatible_stomp_server"></p>
+<hr class="dotted">
+
+<h3 id="3-4、MQTT"><a href="#3-4、MQTT" class="headerlink" title="3.4、MQTT"></a>3.4、MQTT</h3><p><strong>MQTT：</strong> 最初IBM最初发布时定义名称为：Message Queuing Telemetry Transport（消息队列遥测传输协议），但随着在物联网内的应用和发展 <strong>MQTT</strong> 正迅速成为IOT（物联网）部署的主要协议之一。所以称它为：<strong>用于物联网 (IoT) 的 OASIS 标准消息传递协议</strong> 更为准确。</p>
+<p><strong>MQTT：</strong> 被设计为一种极其轻量级的发布/订阅消息传输，非常适合连接具有小代码占用空间和最小网络带宽的远程设备。如今，MQTT 被广泛用于各种行业，例如汽车、制造、电信、石油和天然气等。</p>
+<p><strong>官方架构图：</strong><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/MQ/MQ_mqtt_official_architecture.jpg" alt="MQ_mqtt_official_architecture"></p>
+<hr class="dotted">
+
+<h3 id="3-5、XMPP：Extensible-Messaging-and-Presence-Protocol（可扩展消息与存在协议）"><a href="#3-5、XMPP：Extensible-Messaging-and-Presence-Protocol（可扩展消息与存在协议）" class="headerlink" title="3.5、XMPP：Extensible Messaging and Presence Protocol（可扩展消息与存在协议）"></a>3.5、XMPP：Extensible Messaging and Presence Protocol（可扩展消息与存在协议）</h3><p><strong>XXMP：</strong> 是一种以XML为基础的开放式即时通信协议。该协议于 1999 年从 Jabber 开源社区出现，最初旨在为 ICQ、AIM 和 MSN 等面向消费者的即时消息 (IM) 服务提供一种开放、安全、去中心化的替代方案。核心技术于 2004 年在IETF中以可扩展消息传递和存在协议 (XMPP) 的名称正式确定  。这些核心技术包括：</p>
+<ul>
+<li>基本 XML 流层</li>
+<li>使用传输层安全性 (TLS) 的通道加密</li>
+<li>使用简单身份验证和安全层 (SASL) 的强身份验证</li>
+<li>使用 UTF-8 获得完整的 Unicode 支持，包括完全国际化的地址</li>
+<li>关于网络可用性的内置信息（“存在”）</li>
+<li>用于双向授权的 Presence 订阅</li>
+<li>启用在线状态的联系人列表（“花名册”）</li>
+</ul>
+<h2 id="四、MQ中间件"><a href="#四、MQ中间件" class="headerlink" title="四、MQ中间件"></a>四、MQ中间件</h2><h4 id="参照网络数据形成的各MQ不同维度的对比"><a href="#参照网络数据形成的各MQ不同维度的对比" class="headerlink" title="参照网络数据形成的各MQ不同维度的对比"></a>参照网络数据形成的各MQ不同维度的对比</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>ActiveMQ</th>
+<th>RabbitMQ</th>
+<th>RocketMQ</th>
+<th>Kafka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发语言</td>
+<td>java</td>
+<td>Erlang</td>
+<td>Java</td>
+<td>Scala</td>
+</tr>
+<tr>
+<td>支持的协议</td>
+<td>OpenWire、STOMP、REST、XMPP、AMQP</td>
+<td>AMQP</td>
+<td>自定义</td>
+<td>基于TCP自定义的一套</td>
+</tr>
+<tr>
+<td>客户端支持语言</td>
+<td>JAVA、C、C++、Python、PHP、Pert、net等</td>
+<td>官方支持Erlang、Java/Ruby等，社区产出多种语言API，几乎支持所有常用语言</td>
+<td>JAVA、C++（不成熟）</td>
+<td>官方支持JAVA,开源社区有多语言版本，如PHP,Python,GO,C/C++，Ruby，NodeJS等编程语言</td>
+</tr>
+<tr>
+<td>单机吞吐量</td>
+<td>万级</td>
+<td>万级</td>
+<td>10万级</td>
+<td>10万级别</td>
+</tr>
+<tr>
+<td>topic数量对吞吐量的影响</td>
+<td></td>
+<td></td>
+<td>topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降 这是RocketMQ的一大优势，在同等机器下，可以支撑大量的topic</td>
+<td>topic从几十个到几百个的时候，吞吐量会大幅度下降 所以在同等机器下，kafka尽量保证topic数量不要过多。如果要支撑大规模topic，需要增加更多的机器资源</td>
+</tr>
+<tr>
+<td>时效性</td>
+<td>ms级</td>
+<td>微秒级</td>
+<td>ms级</td>
+<td>延迟在ms级以内</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>高，基于主从架构实现高可用性</td>
+<td>高，基于主从架构实现高可用性</td>
+<td>非常高，分布式架构</td>
+<td>非常高，kafka是分布式的，一个数据多个副本，少数机器宕机，不会丢失数据，不会导致不可用</td>
+</tr>
+<tr>
+<td>消息可靠性</td>
+<td>有较低的概率丢失数据</td>
+<td>基本不丢</td>
+<td>经过参数优化配置，可以做到0丢失</td>
+<td>经过参数优化配置，消息可以做到0丢失</td>
+</tr>
+<tr>
+<td>事物</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>持久化</td>
+<td>内存、文件、数据库</td>
+<td>内存、文件，支持数据堆积，但数据堆积会影响生产速率</td>
+<td>磁盘文件</td>
+<td>磁盘文件，只要磁盘容量足够，可以做到无限消息堆积</td>
+</tr>
+<tr>
+<td>功能支持</td>
+<td>MQ领域的功能极其完备</td>
+<td>基于erlang开发，所以并发能力很强，性能极其好，延时很低</td>
+<td>MQ功能较为完善，还是分布式的，扩展性好</td>
+<td>功能较为简单，主要支持简单的MQ功能，在大数据领域的实时计算以及日志采集被大规模使用，是事实上的标准</td>
+</tr>
+<tr>
+<td>社区活跃度</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>综合上面的对比数据再结合项目实际的业务需求其实就已经可以很好的总结出具体的技术选型了。</p>
+<font size="5" color="#b9268d">记住，没有最好的技术，只有最适合的技术，不要为了用而用。</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+.dotted {
+    border-top: 2px dotted #eed5d2;
+}
+</style>
+
 
                 
             </div>
@@ -895,7 +1112,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">53.4k</span>
+                        class="white-color">55.5k</span>
             
             
             
