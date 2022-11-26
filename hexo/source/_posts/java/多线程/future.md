@@ -4,6 +4,7 @@ date: 2020-08-18 16:13:12
 tags: JVM
 categories: [java,多线程]
 top: true
+keywords: Future
 ---
 
 ## 一、Future概念
@@ -172,7 +173,7 @@ public void executeTask(){
 **2. submit() 提交任务**
 * 执行对象类型
 **Executors.newCachedThreadPool()** 产生的对象实例类型为 **ThreadPoolExecutor**。其继承实现模型为：  
-![ThreadPoolExecutor类结构模型](/image/java/多线程/ThreadPoolExecutor类结构模型.png)  
+![ThreadPoolExecutor类结构模型][ThreadPoolExecutor类结构模型]
 * 方法调用源码分析
 提交任务的方法 **submit** 由 **ExecutorService** 接口定义，在 **AbstractExecutorService** 里面实现。**ThreadPoolExecutor** 类没有再次覆盖实现。因此最终调用的代码逻辑为 AbstractExecutorService 内的逻辑，其实现逻辑如下：    
 
@@ -202,7 +203,7 @@ protected <T> RunnableFuture<T> newTaskFor(Callable<T> callable) {
 
 ### 4.1、FutureTask类结构分析
 FutureTask的类结构：
-![ThreadPoolExecutor类结构模型](/image/java/多线程/FutureTask类结构模型.png)  
+![FutureTask类结构模型][FutureTask类结构模型]
 
 通过类图我们不难看出,**RunnableFuture** 继承了 **Runable** 以及 **Future** 接口，所以它即可以被线程异步执行，也可作为Future得到callable的计算结果。
 
@@ -328,7 +329,8 @@ static final class WaitNode {
 因为 **Future** 的 **get()/get(timeout)** 在 task 处于非完成状态时是需要 **阻塞等待** 的，如果多个线程进行 get 操作，显然需要一个链表/队列来维护这些等待线程，这就是waiters的意义所在。
 
 简答模拟了一下五个线程同时调用 **get()** 方法，可看到当第5个线程进行时，**队列（waiters）** 已经有五个等待线程了：
-![Future-waiters模拟](/image/java/多线程/Future-waiters模拟.png) 
+
+![Future-waiters模拟][Future-waiters模拟]
 
 
 其中 **runner** , **waiters** 和 **state** 都是用 **volatile** 关键字修饰，说明这三个变量都是多线程共享的对象（成员变量），会被多线程操作，此时用volatile关键字修饰是为了一个线程操作volatile属性变量值后，能够及时对其他线程可见。当然仅仅如此依旧存在线程安全的问题，所以其相关操作使用的CAS机制来确保线程的安全性。下面就聊下CAS。
@@ -584,7 +586,7 @@ class vmSymbolHandles: AllStatic {
 }
 ```
 自此调用流程就清晰了：
-![Thread-JVM运行机制.png](/image/java/多线程/Thread-JVM运行机制.png) 
+![Thread-JVM运行机制.png][Thread-JVM运行机制] 
 
 
 #### 4.4.3、执行(run方法)——成功结果set()
@@ -893,6 +895,17 @@ private void removeWaiter(WaitNode node) {
 参考：
 https://juejin.cn/post/6844903774985650183
 https://segmentfault.com/a/1190000015739343
+
+
+
+
+[ThreadPoolExecutor类结构模型]: https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/java/多线程/ThreadPoolExecutor类结构模型.png
+
+[FutureTask类结构模型]: https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/java/多线程/FutureTask类结构模型.png
+
+[Future-waiters模拟]: https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/java/多线程/Future-waiters模拟.png
+
+[Thread-JVM运行机制]: https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/java/多线程/Thread-JVM运行机制.png
 
 
 

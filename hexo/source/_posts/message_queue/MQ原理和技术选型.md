@@ -4,6 +4,7 @@ date: 2022-11-13 16:13:12
 tags: MQ
 categories: [MQ]
 top: true
+keywords: MQ、选型
 ---
 
 # MQ原理及选型

@@ -22,21 +22,14 @@ def add_img_watermark(img_path,watermark_path,out_path):
     img.paste(watermark, (x, y), mask=a)
     
     # 显示
-    img.show()
+    # img.show()
     # 保存
     out_path = os.path.join(out_path,img_name)
     print('保存路径：',out_path)
     img.save(out_path)
 
-
-if __name__=="__main__":
-    # 水印图片
-    watermarkPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image/watermark/watermark_tm.jpeg'
-    
-    # 原文件地址
-    imgPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image'
-    imgPath = imgPath+'/MQ/MQ_contrast.jpg'
-    
+# 处理图床git文件夹不存在问题
+def process_file(watermarkPath,imgPath):
     img_hosting_path = '/Users/workerspace/github/image-hosting/img'
 
     
@@ -49,6 +42,43 @@ if __name__=="__main__":
         os.makedirs(img_hosting_path)
 
     add_img_watermark(imgPath,watermarkPath,img_hosting_path)
+
+# 遍历文件夹
+def find_all_file(base):
+    for root, ds, fs in os.walk(base):
+        for f in fs:
+            fullname = os.path.join(root, f)
+            yield fullname
+
+if __name__=="__main__":
+    # 水印图片
+    watermarkPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image/watermark/watermark_tm.jpeg'
+    
+    # 原文件地址
+    imgPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image'
+
+    # 遍历文件夹
+    for filePath in find_all_file(imgPath):
+        if 'DS_Store' not in filePath:
+            if 'MQ' not in filePath:
+                if 'watermark' not in filePath:
+                    process_file(watermarkPath,filePath)
+
+
+    # imgPath = imgPath+'/MQ/MQ_contrast.jpg'
+    
+    # img_hosting_path = '/Users/workerspace/github/image-hosting/img'
+
+    
+    # # 处理图床地址
+    # path_array = imgPath.split('image')[1].split('/')
+    # for path in path_array:
+    #     if '.' not in path:
+    #         img_hosting_path = os.path.join(img_hosting_path,path)
+    # if not os.path.exists(img_hosting_path):
+    #     os.makedirs(img_hosting_path)
+
+    # add_img_watermark(imgPath,watermarkPath,img_hosting_path)
 
 
     
