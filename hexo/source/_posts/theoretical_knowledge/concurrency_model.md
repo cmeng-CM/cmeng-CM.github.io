@@ -46,7 +46,7 @@ mathjax: true
 协作式调度也叫非抢占式调度，是指当前运行的进程通过自身代码逻辑出让CPU控制权。与抢占式调度的区别在于进程运行不会被中断信号打断，除非其主动出让控制权给其他进程。  
 
 3. 结构示意图
-![调度方式](/image/theoretical_knowledge/线程调度方式.png)
+![调度方式](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/线程调度方式.png)
 
 ### 1.4、协程(Coroutines - Cooperative User-Level Threads)
 **协程：** 又称微线程，纤程。英文名Coroutine。是应用程序通过线程库自行实现的 **协作式调度** 的运行在用户空间的用户线程，是编译器级别的。**系统的并发是时间片的轮转** ，单处理器交互执行不同的执行流，营造不同线程同时执行的感觉；而 **协程的并发，是单线程内控制权的轮转** 。相比抢占式调度，协程是主动让权，实现协作。
@@ -64,7 +64,7 @@ mathjax: true
 
 典型的是 **Apache Web Server**，每个用户请求接入的时候都会创建一个进程，这样应用就可以同时支持多个用户。
 
-![Apache-Web-Server-Thread](/image/theoretical_knowledge/Apache-Web-Server-Thread.jpeg)
+![Apache-Web-Server-Thread](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/Apache-Web-Server-Thread.jpeg)
 
 在图中M1、M2与M3都代表内存资源，在多进程中如果不同进程想共享内存中的数据必须通过 **进程间通信**的方式来实现。
 
@@ -72,7 +72,7 @@ mathjax: true
 在操作系统的视角看，比如Linux中，在进程中创建线程是通过 **clone()** 系统调用来实现，这和创建子进程的区别不大。线程与进程的区别在于同一个进程内的线程共享着进程分配的资源，线程不被分配资源，只是操作系统调度执行任务的抽象的最小单元。
 
 比如下图中，PID为10的进程P0通过clone()系统调用创建了3个线程，这些线程都可以访问进程分配的内存资源M0。
-![多线程模型](/image/theoretical_knowledge/多线程模型.jpeg)
+![多线程模型](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/多线程模型.jpeg)
 
 #### 2.3.1、多线程：通信方式——共享内存通信(Shared memory communication)
 **共享内存通信(Shared memory communication)** ：不同线程间可以访问同一内存地址空间，并可修改此地址空间的数据。

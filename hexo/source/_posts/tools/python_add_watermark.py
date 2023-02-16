@@ -1,5 +1,7 @@
 from PIL import Image
 import os
+import git
+
 
 def add_img_watermark(img_path,watermark_path,out_path):
     # 获取原图
@@ -21,12 +23,32 @@ def add_img_watermark(img_path,watermark_path,out_path):
     y = img_h-watermark_h
     img.paste(watermark, (x, y), mask=a)
     
-    # 显示
-    # img.show()
     # 保存
     out_path = os.path.join(out_path,img_name)
     print('保存路径：',out_path)
     img.save(out_path)
+
+    #输出访问路径
+    git_access_path = "https://raw.githubusercontent.com/cmeng-CM"
+    git_img_path = out_path.split("image-hosting")[1]
+    url = git_access_path+"/image-hosting/master"+git_img_path
+    print('url：'+url)
+
+    git_path = "/Users/workerspace/github/image-hosting"
+    git_push(git_path,out_path)
+    # 显示
+    # img.show()
+
+# 提交
+def git_push(git_path,push_file):
+    repo = git.Repo(git_path)
+    repo.git.add(push_file)
+    repo.git.add(update=True)
+    repo.index.commit('python-auto-update')
+    origin = repo.remote(name='origin')
+    origin.push()
+
+
 
 # 处理图床git文件夹不存在问题
 def process_file(watermarkPath,imgPath):
@@ -53,16 +75,19 @@ def find_all_file(base):
 if __name__=="__main__":
     # 水印图片
     watermarkPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image/watermark/watermark_tm.jpeg'
-    
     # 原文件地址
-    imgPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image'
+    imgPath = '/Users/workerspace/github/image-hosting/img/theoretical_knowledge/file_read.jpg'
+    outPath = '/Users/workerspace/github/image-hosting/img/theoretical_knowledge/'
 
-    # 遍历文件夹
-    for filePath in find_all_file(imgPath):
-        if 'DS_Store' not in filePath:
-            if 'MQ' not in filePath:
-                if 'watermark' not in filePath:
-                    process_file(watermarkPath,filePath)
+    add_img_watermark(imgPath,watermarkPath,outPath)
+
+
+    # # 遍历文件夹
+    # for filePath in find_all_file(imgPath):
+    #     if 'DS_Store' not in filePath:
+    #         if 'MQ' not in filePath:
+    #             if 'watermark' not in filePath:
+    #                 process_file(watermarkPath,filePath)
 
 
     # imgPath = imgPath+'/MQ/MQ_contrast.jpg'
