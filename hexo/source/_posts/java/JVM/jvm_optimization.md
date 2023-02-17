@@ -6,6 +6,7 @@ categories: [java,JVM]
 top: true
 ---
 
+
 ## JVM调优
 #### 概述
 虽然jvm调优成熟的工具已经有很多：jconsole、大名鼎鼎的VisualVM，IBM的Memory Analyzer等等。但生产环境出现问题时，一是受环境所限，二是所有工具几乎都是依赖JDK的接口和底层连接命令，所以研究JDK的这些命令有助我们进一步了解JDK的构成和特性。
