@@ -6,7 +6,7 @@
   <link href="http://cmeng-cm.github.io/atom.xml" rel="self"/>
   
   <link href="http://cmeng-cm.github.io/"/>
-  <updated>2022-11-26T13:00:30.958Z</updated>
+  <updated>2023-02-14T05:38:02.263Z</updated>
   <id>http://cmeng-cm.github.io/</id>
   
   <author>
@@ -15,6 +15,109 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IO模型</title>
+    <link href="http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/io-model/"/>
+    <id>http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/io-model/</id>
+    <published>2023-02-17T08:13:12.000Z</published>
+    <updated>2023-02-14T05:38:02.263Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;I-O&quot;&gt;&lt;a href=&quot;#I-O&quot; class=&quot;headerlink&quot; title=&quot;I/O&quot;&gt;&lt;/a&gt;I/O&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="http://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    <category term="IO" scheme="http://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/IO/"/>
+    
+    
+    <category term="IO,IO模型" scheme="http://cmeng-cm.github.io/tags/IO-IO%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用户态、内核态</title>
+    <link href="http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/virtual-memory/"/>
+    <id>http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/virtual-memory/</id>
+    <published>2023-02-17T08:13:12.000Z</published>
+    <updated>2023-02-17T02:08:49.989Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、虚拟内存定义&quot;&gt;&lt;a href=&quot;#一、虚拟内存定义&quot; class=&quot;headerlink&quot; title=&quot;一、虚拟内存定义&quot;&gt;&lt;/a&gt;一、虚拟内存定义&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;虚拟内存&lt;/strong&gt;：在多任务系统系统中，多任务并行，大大提升了</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="http://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    <category term="内存" scheme="http://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%86%85%E5%AD%98/"/>
+    
+    
+    <category term="虚拟空间,用户态,内核态" scheme="http://cmeng-cm.github.io/tags/%E8%99%9A%E6%8B%9F%E7%A9%BA%E9%97%B4-%E7%94%A8%E6%88%B7%E6%80%81-%E5%86%85%E6%A0%B8%E6%80%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM启动参数</title>
+    <link href="http://cmeng-cm.github.io/2023/01/18/java/jvm/jvm-params/"/>
+    <id>http://cmeng-cm.github.io/2023/01/18/java/jvm/jvm-params/</id>
+    <published>2023-01-18T08:13:12.000Z</published>
+    <updated>2023-02-07T08:40:43.309Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html&quot;&gt;​JAVA8虚拟机参数官方文档​&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;一、-X：显示所有可用-X选项的帮助。&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="http://cmeng-cm.github.io/categories/java/"/>
+    
+    <category term="JVM" scheme="http://cmeng-cm.github.io/categories/java/JVM/"/>
+    
+    
+    <category term="JVM" scheme="http://cmeng-cm.github.io/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shell脚本相关笔记</title>
+    <link href="http://cmeng-cm.github.io/2022/11/27/syntax-format/shell-syntax/"/>
+    <id>http://cmeng-cm.github.io/2022/11/27/syntax-format/shell-syntax/</id>
+    <published>2022-11-27T14:17:48.238Z</published>
+    <updated>2022-11-28T02:04:36.811Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;a到-z的含义&quot;&gt;&lt;a href=&quot;#a到-z的含义&quot; class=&quot;headerlink&quot; title=&quot;-a到-z的含义&quot;&gt;&lt;/a&gt;-a到-z的含义&lt;/h3&gt;&lt;p&gt;变量    含义&lt;br&gt;[ -a FILE ]    如果 FILE 存在则为真&lt;br&gt;[</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>MQ原理和技术选型</title>
@@ -42,11 +145,38 @@
   </entry>
   
   <entry>
+    <title>RocketMQ——《1、启动脚本》</title>
+    <link href="http://cmeng-cm.github.io/2022/11/13/message-queue/rocketmq/"/>
+    <id>http://cmeng-cm.github.io/2022/11/13/message-queue/rocketmq/</id>
+    <published>2022-11-13T08:13:12.000Z</published>
+    <updated>2023-02-14T02:37:43.295Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;RocketMQ使用记录&quot;&gt;&lt;a href=&quot;#RocketMQ使用记录&quot; class=&quot;headerlink&quot; title=&quot;RocketMQ使用记录&quot;&gt;&lt;/a&gt;RocketMQ使用记录&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;RocketMQ&lt;/strong&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="MQ" scheme="http://cmeng-cm.github.io/categories/MQ/"/>
+    
+    <category term="RocketMQ" scheme="http://cmeng-cm.github.io/categories/MQ/RocketMQ/"/>
+    
+    
+    <category term="RocketMQ" scheme="http://cmeng-cm.github.io/tags/RocketMQ/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Markdowm语法</title>
     <link href="http://cmeng-cm.github.io/2022/11/13/syntax-format/markdown-yu-fa/"/>
     <id>http://cmeng-cm.github.io/2022/11/13/syntax-format/markdown-yu-fa/</id>
     <published>2022-11-13T08:13:12.000Z</published>
-    <updated>2022-11-22T01:44:51.617Z</updated>
+    <updated>2022-11-27T13:44:34.016Z</updated>
     
     
       
@@ -111,7 +241,7 @@
     <link href="http://cmeng-cm.github.io/2022/07/17/theoretical-knowledge/concurrency-model/"/>
     <id>http://cmeng-cm.github.io/2022/07/17/theoretical-knowledge/concurrency-model/</id>
     <published>2022-07-17T08:13:12.000Z</published>
-    <updated>2022-08-03T14:23:06.545Z</updated>
+    <updated>2023-02-15T08:38:21.768Z</updated>
     
     
       
@@ -380,136 +510,6 @@
     
     
     <category term="二分查找法" scheme="http://cmeng-cm.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>双指针</title>
-    <link href="http://cmeng-cm.github.io/2020/08/17/algorithm/dual-pointers/"/>
-    <id>http://cmeng-cm.github.io/2020/08/17/algorithm/dual-pointers/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2022-03-30T09:15:00.854Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;双指针&quot;&gt;&lt;a href=&quot;#双指针&quot; class=&quot;headerlink&quot; title=&quot;双指针&quot;&gt;&lt;/a&gt;双指针&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="http://cmeng-cm.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="双指针" scheme="http://cmeng-cm.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>算法-时间复杂度</title>
-    <link href="http://cmeng-cm.github.io/2020/08/17/algorithm/shi-jian-fu-za-du/"/>
-    <id>http://cmeng-cm.github.io/2020/08/17/algorithm/shi-jian-fu-za-du/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2020-08-18T09:00:25.116Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;算法-时间复杂度&quot;&gt;&lt;a href=&quot;#算法-时间复杂度&quot; class=&quot;headerlink&quot; title=&quot;算法-时间复杂度&quot;&gt;&lt;/a&gt;算法-时间复杂度&lt;/h2&gt;&lt;h3 id=&quot;1、数据结构-算法&quot;&gt;&lt;a href=&quot;#1、数据结构-算法&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="http://cmeng-cm.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="算法" scheme="http://cmeng-cm.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浅析最好、最坏、平均、均摊时间复杂度</title>
-    <link href="http://cmeng-cm.github.io/2020/08/17/algorithm/qian-xi-zui-hao-zui-pi-ping-jun-jun-tan-shi-jian-fu-za-du/"/>
-    <id>http://cmeng-cm.github.io/2020/08/17/algorithm/qian-xi-zui-hao-zui-pi-ping-jun-jun-tan-shi-jian-fu-za-du/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2022-03-17T01:09:04.898Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;对大O复杂度分析有一定基础的情况，可以进一步了解 &lt;strong&gt;最好情况时间复杂度&lt;/strong&gt;（best case time complexity）、 &lt;strong&gt;最坏情况时间复杂度&lt;/strong&gt;（worst case time complexity）、</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="http://cmeng-cm.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="算法" scheme="http://cmeng-cm.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分布式CAP</title>
-    <link href="http://cmeng-cm.github.io/2020/08/17/microservice/cap/"/>
-    <id>http://cmeng-cm.github.io/2020/08/17/microservice/cap/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2022-08-03T14:34:23.186Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;以下引用至维基百科：  &lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;在理论计算机科学中，CAP定理（CAP</summary>
-        
-      
-    
-    
-    
-    <category term="CAP" scheme="http://cmeng-cm.github.io/categories/CAP/"/>
-    
-    
-    <category term="CAP" scheme="http://cmeng-cm.github.io/tags/CAP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Zookeeper之Watcher机制</title>
-    <link href="http://cmeng-cm.github.io/2020/08/17/zookeeper/zk-watcher/"/>
-    <id>http://cmeng-cm.github.io/2020/08/17/zookeeper/zk-watcher/</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2021-03-25T03:42:29.374Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;font size=&quot;7&quot;&gt;Zookeeper之Watcher&lt;/font&gt;
-
-&lt;p&gt;watcher机制是zookeeper的三大特性之一，它是很多应用场景的前提，比如：集群配置、管理，发布、订阅，资源抢占协调等等。&lt;/p&gt;
-&lt;h2 id=&quot;watcher原理&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="zookeeper" scheme="http://cmeng-cm.github.io/categories/zookeeper/"/>
-    
-    
-    <category term="zookeeper" scheme="http://cmeng-cm.github.io/tags/zookeeper/"/>
     
   </entry>
   

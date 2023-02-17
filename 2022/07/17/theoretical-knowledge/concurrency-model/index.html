@@ -481,7 +481,7 @@
 </li>
 <li><p><strong>协作式(Cooperative)</strong>。<br>协作式调度也叫非抢占式调度，是指当前运行的进程通过自身代码逻辑出让CPU控制权。与抢占式调度的区别在于进程运行不会被中断信号打断，除非其主动出让控制权给其他进程。  </p>
 </li>
-<li><p>结构示意图<br><img src="/image/theoretical_knowledge/线程调度方式.png" alt="调度方式"></p>
+<li><p>结构示意图<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/线程调度方式.png" alt="调度方式"></p>
 </li>
 </ol>
 <h3 id="1-4、协程-Coroutines-Cooperative-User-Level-Threads"><a href="#1-4、协程-Coroutines-Cooperative-User-Level-Threads" class="headerlink" title="1.4、协程(Coroutines - Cooperative User-Level Threads)"></a>1.4、协程(Coroutines - Cooperative User-Level Threads)</h3><p><strong>协程：</strong> 又称微线程，纤程。英文名Coroutine。是应用程序通过线程库自行实现的 <strong>协作式调度</strong> 的运行在用户空间的用户线程，是编译器级别的。<strong>系统的并发是时间片的轮转</strong> ，单处理器交互执行不同的执行流，营造不同线程同时执行的感觉；而 <strong>协程的并发，是单线程内控制权的轮转</strong> 。相比抢占式调度，协程是主动让权，实现协作。</p>
@@ -489,10 +489,10 @@
 <h3 id="2-2、模型：多进程（Multiprocessing）"><a href="#2-2、模型：多进程（Multiprocessing）" class="headerlink" title="2.2、模型：多进程（Multiprocessing）"></a>2.2、模型：多进程（Multiprocessing）</h3><p>主进程监听和管理连接，当有客户请求的时候，<strong>fork</strong> 一个子进程来处理连接，父进程继续等待其他客户的请求。</p>
 <p><strong>优点</strong>：<strong>好处是隔离性</strong>，子进程万一 crash 并不会影响到父进程。<br><strong>缺点</strong>：<strong>缺点就是对系统的负担过重</strong>。  </p>
 <p>典型的是 <strong>Apache Web Server</strong>，每个用户请求接入的时候都会创建一个进程，这样应用就可以同时支持多个用户。</p>
-<p><img src="/image/theoretical_knowledge/Apache-Web-Server-Thread.jpeg" alt="Apache-Web-Server-Thread"></p>
+<p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/Apache-Web-Server-Thread.jpeg" alt="Apache-Web-Server-Thread"></p>
 <p>在图中M1、M2与M3都代表内存资源，在多进程中如果不同进程想共享内存中的数据必须通过 <strong>进程间通信</strong>的方式来实现。</p>
 <h3 id="2-3、模型：多线程（Multithreaded）"><a href="#2-3、模型：多线程（Multithreaded）" class="headerlink" title="2.3、模型：多线程（Multithreaded）"></a>2.3、模型：多线程（Multithreaded）</h3><p>在操作系统的视角看，比如Linux中，在进程中创建线程是通过 <strong>clone()</strong> 系统调用来实现，这和创建子进程的区别不大。线程与进程的区别在于同一个进程内的线程共享着进程分配的资源，线程不被分配资源，只是操作系统调度执行任务的抽象的最小单元。</p>
-<p>比如下图中，PID为10的进程P0通过clone()系统调用创建了3个线程，这些线程都可以访问进程分配的内存资源M0。<br><img src="/image/theoretical_knowledge/多线程模型.jpeg" alt="多线程模型"></p>
+<p>比如下图中，PID为10的进程P0通过clone()系统调用创建了3个线程，这些线程都可以访问进程分配的内存资源M0。<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/多线程模型.jpeg" alt="多线程模型"></p>
 <h4 id="2-3-1、多线程：通信方式——共享内存通信-Shared-memory-communication"><a href="#2-3-1、多线程：通信方式——共享内存通信-Shared-memory-communication" class="headerlink" title="2.3.1、多线程：通信方式——共享内存通信(Shared memory communication)"></a>2.3.1、多线程：通信方式——共享内存通信(Shared memory communication)</h4><p><strong>共享内存通信(Shared memory communication)</strong> ：不同线程间可以访问同一内存地址空间，并可修改此地址空间的数据。</p>
 <h5 id="同步-Synchronize-访问"><a href="#同步-Synchronize-访问" class="headerlink" title="同步(Synchronize)访问"></a>同步(Synchronize)访问</h5><p>因为线程间共享内存资源，所以在访问临界区域时会出现数据竞争。解决竞态条件的方式是对数据进行 <strong>同步(Synchronize)访问</strong> 。要实现同步访问常见的方式有：</p>
 <pre><code>* **锁(Lock)** ：通过锁定临界区域来实现同步访问。
@@ -969,7 +969,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2022</span>
+                <span id="year">2018-2023</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -977,7 +977,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">55.5k</span>
+                        class="white-color">59.6k</span>
             
             
             
