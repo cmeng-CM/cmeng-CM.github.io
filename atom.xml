@@ -6,7 +6,7 @@
   <link href="http://cmeng-cm.github.io/atom.xml" rel="self"/>
   
   <link href="http://cmeng-cm.github.io/"/>
-  <updated>2023-02-14T05:38:02.263Z</updated>
+  <updated>2023-02-20T14:45:29.198Z</updated>
   <id>http://cmeng-cm.github.io/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/io-model/"/>
     <id>http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/io-model/</id>
     <published>2023-02-17T08:13:12.000Z</published>
-    <updated>2023-02-14T05:38:02.263Z</updated>
+    <updated>2023-02-20T14:45:29.198Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;I-O&quot;&gt;&lt;a href=&quot;#I-O&quot; class=&quot;headerlink&quot; title=&quot;I/O&quot;&gt;&lt;/a&gt;I/O&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;一、I-O概述&quot;&gt;&lt;a href=&quot;#一、I-O概述&quot; class=&quot;headerlink&quot; title=&quot;一、I/O概述&quot;&gt;&lt;/a&gt;一、I/O概述&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
         
       
     
@@ -44,11 +44,11 @@
   </entry>
   
   <entry>
-    <title>用户态、内核态</title>
+    <title>用户空间、内核空间</title>
     <link href="http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/virtual-memory/"/>
     <id>http://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/virtual-memory/</id>
     <published>2023-02-17T08:13:12.000Z</published>
-    <updated>2023-02-17T02:08:49.989Z</updated>
+    <updated>2023-02-17T07:38:39.360Z</updated>
     
     
       
@@ -356,6 +356,33 @@
   </entry>
   
   <entry>
+    <title>JVM调优之jps jinfo jstat jmap jhat</title>
+    <link href="http://cmeng-cm.github.io/2020/11/18/java/jvm/jvm-optimization/"/>
+    <id>http://cmeng-cm.github.io/2020/11/18/java/jvm/jvm-optimization/</id>
+    <published>2020-11-18T08:13:12.000Z</published>
+    <updated>2023-02-17T02:30:14.466Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;JVM调优&quot;&gt;&lt;a href=&quot;#JVM调优&quot; class=&quot;headerlink&quot; title=&quot;JVM调优&quot;&gt;&lt;/a&gt;JVM调优&lt;/h2&gt;&lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="http://cmeng-cm.github.io/categories/java/"/>
+    
+    <category term="JVM" scheme="http://cmeng-cm.github.io/categories/java/JVM/"/>
+    
+    
+    <category term="JVM" scheme="http://cmeng-cm.github.io/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Docker之MySQL安装</title>
     <link href="http://cmeng-cm.github.io/2020/08/18/docker/mysql/"/>
     <id>http://cmeng-cm.github.io/2020/08/18/docker/mysql/</id>
@@ -433,33 +460,6 @@
     
     
     <category term="Database" scheme="http://cmeng-cm.github.io/tags/Database/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM调优之jps jinfo jstat jmap jhat</title>
-    <link href="http://cmeng-cm.github.io/2020/08/18/java/jvm/jvm-optimization/"/>
-    <id>http://cmeng-cm.github.io/2020/08/18/java/jvm/jvm-optimization/</id>
-    <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2023-02-17T02:25:19.705Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;JVM调优&quot;&gt;&lt;a href=&quot;#JVM调优&quot; class=&quot;headerlink&quot; title=&quot;JVM调优&quot;&gt;&lt;/a&gt;JVM调优&lt;/h2&gt;&lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="java" scheme="http://cmeng-cm.github.io/categories/java/"/>
-    
-    <category term="JVM" scheme="http://cmeng-cm.github.io/categories/java/JVM/"/>
-    
-    
-    <category term="JVM" scheme="http://cmeng-cm.github.io/tags/JVM/"/>
     
   </entry>
   
