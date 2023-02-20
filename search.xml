@@ -503,31 +503,6 @@
     
     
     <entry>
-      <title>双指针</title>
-      <link href="/2020/08/17/algorithm/dual-pointers/"/>
-      <url>/2020/08/17/algorithm/dual-pointers/</url>
-      
-        <content type="html"><![CDATA[<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p>双指针是一种简单而又灵活的技巧和思想，单独使用可以轻松解决一些特定问题，和其他算法结合也能发挥多样的用处。<br>双指针顾名思义，就是同时使用两个指针，在数组、序列、链表结构上指向的是位置，在树、图结构中指向的是节点，通过或同向移动，或相向移动来维护、统计信息。  </p><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a><strong>实例</strong></h3><p><strong>1. 实例1</strong><br><a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/">leetcode-167. 两数之和 II - 输入有序数组</a><br>给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列  ，请你从数组中找出满足相加之和等于目标数 target 的两个数。如果设这两个数分别是 numbers[index1] 和 numbers[index2] ，则 1 &lt;= index1 &lt; index2 &lt;= numbers.length 。</p><p>以长度为 2 的整数数组 [index1, index2] 的形式返回这两个整数的下标 index1 和 index2。</p><p>你可以假设每个输入 只对应唯一的答案 ，而且你 不可以 重复使用相同的元素。</p><p>你所设计的解决方案必须只使用常量级的额外空间。</p><p>示例1  </p><blockquote><p>输入：numbers = [2,7,11,15], target = 9<br>输出：[1,2]<br>解释：2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。</p></blockquote><p>给出数组为升序排序，所以双指针一头一尾，根据二者之和与目标值的大小比较来判断指针移动方向。</p><p><strong>代码</strong><br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public int[] twoSum(int[] numbers, int target) {    int[] ans = new int[2];    int n= numbers.length;    for(int i =0,j=n-1;i&lt;j;){        int sum = numbers[i]+numbers[j];        if(sum==target){            ans[0] = i+1;            ans[1] = j+1;            return ans;        }        if(sum&gt;target){            --j;        }else if (sum&lt;target){            ++i;        }    }    return ans;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p><p><strong>2. 实例2</strong><br><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">leetcode-19. 删除链表的倒数第 N 个结点</a><br>给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。  </p><p>示例 1:<br><img src="/image/algorithm/双指针1.jpg" alt="">  </p><blockquote><p>输入：head = [1,2,3,4,5], n = 2<br>输出：[1,2,3,5]</p></blockquote><p>双指针形式，当快慢两个指针之差为n时，二者保持同时移动，当快到达最后节点，慢指针正好符合删除的节点要求。</p><p><strong>代码</strong><br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public ListNode removeNthFromEnd(ListNode head, int n) {    ListNode zero = new ListNode(0, head);    ListNode slow = zero;    ListNode fast= head;    for(int i=0;i&lt;n;i++){        fast = fast.next;    }    while(fast!=null){        slow = slow.next;        fast =fast.next;    }    slow.next = slow.next.next;    return zero.next;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 算法 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 双指针 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>算法-时间复杂度</title>
       <link href="/2020/08/17/algorithm/shi-jian-fu-za-du/"/>
       <url>/2020/08/17/algorithm/shi-jian-fu-za-du/</url>
@@ -545,6 +520,31 @@
         <tags>
             
             <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>双指针</title>
+      <link href="/2020/08/17/algorithm/dual-pointers/"/>
+      <url>/2020/08/17/algorithm/dual-pointers/</url>
+      
+        <content type="html"><![CDATA[<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p>双指针是一种简单而又灵活的技巧和思想，单独使用可以轻松解决一些特定问题，和其他算法结合也能发挥多样的用处。<br>双指针顾名思义，就是同时使用两个指针，在数组、序列、链表结构上指向的是位置，在树、图结构中指向的是节点，通过或同向移动，或相向移动来维护、统计信息。  </p><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a><strong>实例</strong></h3><p><strong>1. 实例1</strong><br><a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/">leetcode-167. 两数之和 II - 输入有序数组</a><br>给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列  ，请你从数组中找出满足相加之和等于目标数 target 的两个数。如果设这两个数分别是 numbers[index1] 和 numbers[index2] ，则 1 &lt;= index1 &lt; index2 &lt;= numbers.length 。</p><p>以长度为 2 的整数数组 [index1, index2] 的形式返回这两个整数的下标 index1 和 index2。</p><p>你可以假设每个输入 只对应唯一的答案 ，而且你 不可以 重复使用相同的元素。</p><p>你所设计的解决方案必须只使用常量级的额外空间。</p><p>示例1  </p><blockquote><p>输入：numbers = [2,7,11,15], target = 9<br>输出：[1,2]<br>解释：2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。</p></blockquote><p>给出数组为升序排序，所以双指针一头一尾，根据二者之和与目标值的大小比较来判断指针移动方向。</p><p><strong>代码</strong><br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public int[] twoSum(int[] numbers, int target) {    int[] ans = new int[2];    int n= numbers.length;    for(int i =0,j=n-1;i&lt;j;){        int sum = numbers[i]+numbers[j];        if(sum==target){            ans[0] = i+1;            ans[1] = j+1;            return ans;        }        if(sum&gt;target){            --j;        }else if (sum&lt;target){            ++i;        }    }    return ans;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p><p><strong>2. 实例2</strong><br><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">leetcode-19. 删除链表的倒数第 N 个结点</a><br>给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。  </p><p>示例 1:<br><img src="/image/algorithm/双指针1.jpg" alt="">  </p><blockquote><p>输入：head = [1,2,3,4,5], n = 2<br>输出：[1,2,3,5]</p></blockquote><p>双指针形式，当快慢两个指针之差为n时，二者保持同时移动，当快到达最后节点，慢指针正好符合删除的节点要求。</p><p><strong>代码</strong><br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public ListNode removeNthFromEnd(ListNode head, int n) {    ListNode zero = new ListNode(0, head);    ListNode slow = zero;    ListNode fast= head;    for(int i=0;i&lt;n;i++){        fast = fast.next;    }    while(fast!=null){        slow = slow.next;        fast =fast.next;    }    slow.next = slow.next.next;    return zero.next;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 双指针 </tag>
             
         </tags>
       
