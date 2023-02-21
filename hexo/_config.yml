@@ -91,7 +91,7 @@ deploy:
   repo: git@github.com:cmeng-CM/cmeng-CM.github.io.git
   branch: master
   message: 'web updata: {{now("YYYY-MM-DD HH/mm/ss")}}'
-- type: baidu_url_submit
+- type: baidu_url_submitter
 
 swiftype_key: your-swiftype-key 
 
@@ -145,8 +145,8 @@ abbrlink:
 # 百度推送
 # 主动推送百度，被百度收录
 baidu_url_submit:
-  count: 10 # 提交最新的10个链接
-  host: https://cmeng-cm.github.io/ # 百度站长平台中注册的域名
+  count: 200 # 提交最新的10个链接
+  host: cmeng-cm.github.io/ # 百度站长平台中注册的域名
   token: jJtHpzuZfR1ELrzc # 秘钥，百度站长平台 > 普通收录 > 推送接口 > 接口调用地址中token字段
   path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里，不用改
 

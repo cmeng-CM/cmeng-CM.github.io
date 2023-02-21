@@ -729,3 +729,9 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
   version: "latest" # default v7.1.2
   options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
     #startOnload: true  // default true
+
+
+git_talk:
+  enabled: true
+  clientID: d56d7092708e7694062b
+  clientSecret: 74ec8d83d1508d517e1dc07741c4833ad28b39f0
