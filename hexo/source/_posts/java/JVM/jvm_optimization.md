@@ -1,9 +1,12 @@
 ---
 title: JVM调优之jps jinfo jstat jmap jhat
-date: 2020-11-18 16:13:12
 tags: JVM
-categories: [java,JVM]
+categories:
+  - java
+  - JVM
 top: true
+abbrlink: 10c0b7f2
+date: 2020-11-18 16:13:12
 ---
 
 

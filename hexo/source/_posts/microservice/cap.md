@@ -1,8 +1,9 @@
 ---
 title: 分布式CAP
-date: 2020-08-17 16:13:12
 tags: CAP
 categories: CAP
+abbrlink: 97c733b2
+date: 2020-08-17 16:13:12
 ---
  
 

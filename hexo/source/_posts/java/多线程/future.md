@@ -1,10 +1,13 @@
 ---
 title: java的future体系
-date: 2020-08-18 16:13:12
 tags: JVM
-categories: [java,多线程]
+categories:
+  - java
+  - 多线程
 top: true
 keywords: Future
+abbrlink: 9fca4482
+date: 2020-08-18 16:13:12
 ---
 
 ## 一、Future概念

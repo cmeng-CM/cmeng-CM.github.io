@@ -1,9 +1,12 @@
 ---
 title: 用户空间、内核空间
-date: 2023-02-17 16:13:12
-tags: 虚拟空间,用户态,内核态
-categories: [理论知识,内存]
+tags: '虚拟空间,用户态,内核态'
+categories:
+  - 理论知识
+  - 内存
 mathjax: true
+abbrlink: a46eba31
+date: 2023-02-17 16:13:12
 ---
 
 ## 一、虚拟内存定义

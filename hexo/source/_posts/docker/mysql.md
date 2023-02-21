@@ -1,8 +1,11 @@
 ---
 title: Docker之MySQL安装
-date: 2020-08-18 16:13:12
 tags: MySQL
-categories: [docker,mysql]
+categories:
+  - docker
+  - mysql
+abbrlink: bd5c77e2
+date: 2020-08-18 16:13:12
 ---
 
 # docker 安装 mysql

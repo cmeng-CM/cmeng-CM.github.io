@@ -1,10 +1,13 @@
 ---
 title: IO模型
-date: 2023-02-17 16:13:12
-tags: IO,IO模型
-categories: [理论知识,IO]
+tags: 'IO,IO模型'
+categories:
+  - 理论知识
+  - IO
 mathjax: true
 top: true
+abbrlink: aeafbee0
+date: 2023-02-17 16:13:12
 ---
 
 ## 一、I/O概述

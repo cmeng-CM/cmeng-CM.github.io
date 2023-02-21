@@ -1,9 +1,10 @@
 ---
 title: 双指针
-date: 2020-08-17 16:13:12
 tags: 双指针
 categories: 算法
 mathjax: true
+abbrlink: 91a7e4d1
+date: 2020-08-17 16:13:12
 ---
 
 ## 双指针

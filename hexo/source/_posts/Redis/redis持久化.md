@@ -1,9 +1,9 @@
 ---
 title: redis持久化
-date: 2019-08-12 15:25:11
 tags: Redis
 categories: Redis
-
+abbrlink: dcfaa904
+date: 2019-08-12 15:25:11
 ---
 # Redis
 - Redis作为一个键值对内存数据库(Nosql)，它的强大性能很大程度上是因为所有数据都存储在内存当中，很显然

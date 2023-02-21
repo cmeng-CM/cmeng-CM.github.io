@@ -1,9 +1,12 @@
 ---
 title: JVM内存模型
-date: 2021-08-17 16:13:12
 tags: JVM
-categories: [java,JVM]
+categories:
+  - java
+  - JVM
 top: true
+abbrlink: c2d38e6e
+date: 2021-08-17 16:13:12
 ---
 
 

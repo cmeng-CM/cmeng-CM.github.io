@@ -1,6 +1,7 @@
 ---
 title: shell脚本相关笔记
 hide: true
+abbrlink: 206f81a4
 ---
 
 ### -a到-z的含义

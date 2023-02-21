@@ -1,9 +1,12 @@
 ---
 title: RocketMQ——《1、启动脚本》
-date: 2022-11-13 16:13:12
 tags: RocketMQ
-categories: [MQ,RocketMQ]
+categories:
+  - MQ
+  - RocketMQ
 keywords: 源码、原理、RocketMQ
+abbrlink: 10a565f9
+date: 2022-11-13 16:13:12
 ---
 
 # RocketMQ使用记录

@@ -1,9 +1,12 @@
 ---
 title: 并发模型比较
-date: 2022-07-17 16:13:12
 tags: 并发
-categories: [理论知识,并发相关]
+categories:
+  - 理论知识
+  - 并发相关
 mathjax: true
+abbrlink: 36a7b9af
+date: 2022-07-17 16:13:12
 ---
 
 ## 一、进程、线程、协程

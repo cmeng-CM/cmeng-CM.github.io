@@ -1,9 +1,10 @@
 ---
 title: 二分查找法
-date: 2020-08-17 16:13:12
 tags: 二分查找法
 categories: 算法
 mathjax: true
+abbrlink: aee0601b
+date: 2020-08-17 16:13:12
 ---
 
 ## 二分查找法

@@ -1,9 +1,10 @@
 ---
 title: rust基础信息
-date: 2020-08-17 16:13:12
 tags: rust
 categories: rust
 mathjax: true
+abbrlink: fd45b18c
+date: 2020-08-17 16:13:12
 ---
 
 

@@ -1,8 +1,11 @@
 ---
 title: MySQL主从、主主、主备模式
-date: 2020-08-18 16:13:12
 tags: Database
-categories: [MySQL,同步]
+categories:
+  - MySQL
+  - 同步
+abbrlink: 30e0af
+date: 2020-08-18 16:13:12
 ---
 
 ## 一、主从、主主、主备模式介绍

@@ -1,9 +1,12 @@
 ---
 title: JVM启动参数
-date: 2023-01-18 16:13:12
 tags: JVM
-categories: [java,JVM]
+categories:
+  - java
+  - JVM
 top: true
+abbrlink: 9074d23e
+date: 2023-01-18 16:13:12
 ---
 
 [​JAVA8虚拟机参数官方文档​](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html)

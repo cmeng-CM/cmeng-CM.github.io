@@ -13,9 +13,9 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://cmeng-CM.github.io
+url: https://cmeng-CM.github.io
 root: /
-permalink: :year/:month/:day/:title/
+permalink: posts/:abbrlink.html
 permalink_defaults:
 
 # Directory
@@ -87,10 +87,11 @@ theme: hexo-theme-matery
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: git@github.com:cmeng-CM/cmeng-CM.github.io.git
   branch: master
   message: 'web updata: {{now("YYYY-MM-DD HH/mm/ss")}}'
+- type: baidu_url_submitter
 
 swiftype_key: your-swiftype-key 
 
@@ -130,4 +131,22 @@ sitemap:
 
 baidusitemap:
   path: baidusitemap.xml
+
+Plugins:
+- hexo-generator-baidu-sitemap
+- hexo-generator-sitemap
+
+# abbrlink config
+abbrlink:
+  alg: crc32      # support crc16(default) and crc32
+  rep: hex        # support dec(default) and hex
+# 不用添加其它代码
+
+# 百度推送
+# 主动推送百度，被百度收录
+baidu_url_submit:
+  count: 10 # 提交最新的10个链接
+  host: https://cmeng-cm.github.io/ # 百度站长平台中注册的域名
+  token: jJtHpzuZfR1ELrzc # 秘钥，百度站长平台 > 普通收录 > 推送接口 > 接口调用地址中token字段
+  path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里，不用改
 

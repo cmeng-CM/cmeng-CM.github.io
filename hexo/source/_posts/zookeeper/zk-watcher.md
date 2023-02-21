@@ -1,8 +1,9 @@
 ---
 title: Zookeeper之Watcher机制
-date: 2020-08-17 16:13:12
 tags: zookeeper
 categories: zookeeper
+abbrlink: f91292b9
+date: 2020-08-17 16:13:12
 ---
 
 
