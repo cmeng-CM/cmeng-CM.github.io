@@ -377,14 +377,14 @@
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/tags/MySQL/</loc>
+    <loc>http://cmeng-cm.github.io/tags/command/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/tags/command/</loc>
+    <loc>http://cmeng-cm.github.io/tags/MySQL/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -447,14 +447,14 @@
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/tags/%E5%8C%96%E9%AA%8C-%E9%AA%8C%E8%A1%80/</loc>
+    <loc>http://cmeng-cm.github.io/tags/vscode/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/tags/vscode/</loc>
+    <loc>http://cmeng-cm.github.io/tags/%E5%8C%96%E9%AA%8C-%E9%AA%8C%E8%A1%80/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -505,14 +505,14 @@
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/categories/docker/</loc>
+    <loc>http://cmeng-cm.github.io/categories/Docker/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/categories/Docker/</loc>
+    <loc>http://cmeng-cm.github.io/categories/docker/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -547,14 +547,14 @@
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/categories/docker/mysql/</loc>
+    <loc>http://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/</loc>
+    <loc>http://cmeng-cm.github.io/categories/docker/mysql/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -568,14 +568,14 @@
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/categories/%E5%8C%96%E9%AA%8C/</loc>
+    <loc>http://cmeng-cm.github.io/categories/vscode/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://cmeng-cm.github.io/categories/vscode/</loc>
+    <loc>http://cmeng-cm.github.io/categories/%E5%8C%96%E9%AA%8C/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
