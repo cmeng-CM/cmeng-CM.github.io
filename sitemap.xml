@@ -575,7 +575,21 @@
   </url>
   
   <url>
+    <loc>https://cmeng-cm.github.io/categories/vscode/</loc>
+    <lastmod>2023-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://cmeng-cm.github.io/categories/MQ/RocketMQ/</loc>
+    <lastmod>2023-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://cmeng-cm.github.io/categories/java/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -603,14 +617,7 @@
   </url>
   
   <url>
-    <loc>https://cmeng-cm.github.io/categories/vscode/</loc>
-    <lastmod>2023-02-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cmeng-cm.github.io/categories/java/</loc>
+    <loc>https://cmeng-cm.github.io/categories/java/JVM/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -625,13 +632,6 @@
   
   <url>
     <loc>https://cmeng-cm.github.io/categories/springboot/</loc>
-    <lastmod>2023-02-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://cmeng-cm.github.io/categories/java/JVM/</loc>
     <lastmod>2023-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
