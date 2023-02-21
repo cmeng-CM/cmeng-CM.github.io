@@ -91,7 +91,7 @@ deploy:
   repo: git@github.com:cmeng-CM/cmeng-CM.github.io.git
   branch: master
   message: 'web updata: {{now("YYYY-MM-DD HH/mm/ss")}}'
-- type: baidu_url_submitter
+- type: baidu_url_submit
 
 swiftype_key: your-swiftype-key 
 
