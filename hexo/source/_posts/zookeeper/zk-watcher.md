@@ -15,7 +15,7 @@ watcher机制是zookeeper的三大特性之一，它是很多应用场景的前�
 
 ## watcher原理
 原理框架图：  
-![zookeeper原理框架](/image/zookeeper/zookeeper-watcher原理框架.jpeg)   
+![zookeeper原理框架](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper-watcher原理框架.jpeg)   
 
 ## 注册和通知
 zookeeper的watcher机制主要由client、server和watcherManager组成，包含注册和通知两个阶段。  
@@ -117,7 +117,7 @@ public class WatchManager {
 ##### 客户端注册流程
 
 zookeeper客户端watcher注册流程:
-![zookeeper客户端watcher注册流程](/image/zookeeper/zookeeper客户端watcher注册流程.jpeg)
+![zookeeper客户端watcher注册流程](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper客户端watcher注册流程.jpeg)
 
 几种客户端注册的流程大致相同,我们以exists为例。源码：
 
@@ -144,7 +144,7 @@ public Stat exists(final String path, Watcher watcher)
 
 ##### 服务端注册流程
 server端接收到请求后的处理流程：
-![zookeeper原理框架](/image/zookeeper/zookeeper注册server端流程.jpeg)   
+![zookeeper原理框架](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper注册server端流程.jpeg)   
 
 *FinalRequestProcessor*：为服务端统一处理类，客户端所有操作及请求最终都会在此进行相应流程处理
 ```Java

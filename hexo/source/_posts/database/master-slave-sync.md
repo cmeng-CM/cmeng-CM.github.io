@@ -9,7 +9,7 @@ date: 2020-08-18 16:13:12
 ---
 
 ## 一、主从、主主、主备模式介绍
-![主从、主主、主备模式](/image/mysql/MySQL主主、主从、主备、单点模型.png)  
+![主从、主主、主备模式](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/mysql/MySQL主主、主从、主备、单点模型.png)  
 
 主从、主主、主备的基层逻辑都是数据的同步，而主从则将相关的数据同步机制全涉及，所以数据同步逻辑以解析主从逻辑为主。
 
@@ -35,7 +35,7 @@ MySQL 复制功能使用三个主线程实现，一个在源服务器上，两�
 * **复制 SQL 线程（Replication SQL thread）**。  副本创建一个 SQL 线程来读取由复制 I/O 线程写入的中继日志并执行其中包含的事务。
 
 #### 2.1.2、主从复制流程图
-![主从复制流程图](/image/mysql/主从同步流程图.jpeg) 
+![主从复制流程图](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/mysql/主从同步流程图.jpeg) 
 
 
 
@@ -509,7 +509,7 @@ WHERE
 ```
 
 **结果：**
-![安装的插件信息](/image/mysql/查看插件信息.png)
+![安装的插件信息](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/mysql/查看插件信息.png)
 
 ##### 3、配置
 半同步相关的配置项主要使用以下几项：

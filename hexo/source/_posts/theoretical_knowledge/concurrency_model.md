@@ -149,5 +149,5 @@ STM是用软件的方式去实现事务内存(Transactional memory)，而事务�
 高并发的关键在于实现异步非阻塞，更加高效地利用 CPU，涉及的两大安全难题则是**线程安全**与**内存安全**。多线程可以达到非阻塞，但占用资源多，切换开销大。协程用栈的动态增长、用户态的调度来避免多线程的两个问题。事件驱动用单线程的方式，避免了占用太多系统资源，不需要关心线程安全，但无法利用多核。具体要采用哪种模型，还是要看需求。
 
 ## 参考文献
-https://gobomb.github.io/post/high-concurrency-model/  
-https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/  
+[high-concurrency-model](https://gobomb.github.io/post/high-concurrency-model/)
+[concurrency-model](https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/)

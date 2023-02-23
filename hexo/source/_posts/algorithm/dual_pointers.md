@@ -59,7 +59,7 @@ public int[] twoSum(int[] numbers, int target) {
 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。  
 
 示例 1:  
-![](/image/algorithm/双指针1.jpg)  
+![](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/algorithm/双指针1.jpg)  
 >输入：head = [1,2,3,4,5], n = 2
 >输出：[1,2,3,5]
 

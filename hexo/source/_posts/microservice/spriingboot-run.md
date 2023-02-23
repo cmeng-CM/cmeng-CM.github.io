@@ -543,7 +543,7 @@ void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, Configur
 	}
 ```
 向监听器发送环境准备事件。此处的代码就比较熟悉了，和启动监听事件[starting()]方法逻辑基本一致。此处主要用来解析配置文件的监听器为：EnvironmentPostProcessorApplicationListener。
-![springboot配置读取调用层次关系](/image/springboot/springboot-yml读取过程.png)  
+![springboot配置读取调用层次关系](https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/springboot/springboot-yml读取过程.png)  
 
 ##### 5、DefaultPropertiesPropertySource.moveToEnd(environment)
 判断是否存在defaultProperties的属性源，存在则移动最后一位
