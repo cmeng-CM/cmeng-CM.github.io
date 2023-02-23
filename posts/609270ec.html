@@ -875,7 +875,7 @@ public static void attach(Environment environment) {
 		doWithListeners("spring.boot.application.environment-prepared",
 				(listener) -&gt; listener.environmentPrepared(bootstrapContext, environment));
 	}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>向监听器发送环境准备事件。此处的代码就比较熟悉了，和启动监听事件[starting()]方法逻辑基本一致。此处主要用来解析配置文件的监听器为：EnvironmentPostProcessorApplicationListener。<br><img src="/image/springboot/springboot-yml读取过程.png" alt="springboot配置读取调用层次关系">  </p>
+<p>向监听器发送环境准备事件。此处的代码就比较熟悉了，和启动监听事件[starting()]方法逻辑基本一致。此处主要用来解析配置文件的监听器为：EnvironmentPostProcessorApplicationListener。<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/springboot/springboot-yml读取过程.png" alt="springboot配置读取调用层次关系">  </p>
 <h5 id="5、DefaultPropertiesPropertySource-moveToEnd-environment"><a href="#5、DefaultPropertiesPropertySource-moveToEnd-environment" class="headerlink" title="5、DefaultPropertiesPropertySource.moveToEnd(environment)"></a>5、DefaultPropertiesPropertySource.moveToEnd(environment)</h5><p>判断是否存在defaultProperties的属性源，存在则移动最后一位</p>
 <h5 id="6、configureAdditionalProfiles-environment"><a href="#6、configureAdditionalProfiles-environment" class="headerlink" title="6、configureAdditionalProfiles(environment);"></a>6、configureAdditionalProfiles(environment);</h5><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">private void configureAdditionalProfiles(ConfigurableEnvironment environment) {
 		if (!CollectionUtils.isEmpty(this.additionalProfiles)) {

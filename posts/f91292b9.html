@@ -451,7 +451,7 @@ watcher原理原理框架图：
                 <font size="7">Zookeeper之Watcher</font>
 
 <p>watcher机制是zookeeper的三大特性之一，它是很多应用场景的前提，比如：集群配置、管理，发布、订阅，资源抢占协调等等。</p>
-<h2 id="watcher原理"><a href="#watcher原理" class="headerlink" title="watcher原理"></a>watcher原理</h2><p>原理框架图：<br><img src="/image/zookeeper/zookeeper-watcher原理框架.jpeg" alt="zookeeper原理框架">   </p>
+<h2 id="watcher原理"><a href="#watcher原理" class="headerlink" title="watcher原理"></a>watcher原理</h2><p>原理框架图：<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper-watcher原理框架.jpeg" alt="zookeeper原理框架">   </p>
 <h2 id="注册和通知"><a href="#注册和通知" class="headerlink" title="注册和通知"></a>注册和通知</h2><p>zookeeper的watcher机制主要由client、server和watcherManager组成，包含注册和通知两个阶段。  </p>
 <h3 id="注册表"><a href="#注册表" class="headerlink" title="注册表"></a>注册表</h3><h4 id="客户端注册表"><a href="#客户端注册表" class="headerlink" title="客户端注册表"></a>客户端注册表</h4><p>在 client 端注册表为 ZkWatchManager，ZkWatchManager的存储机制为三种</p>
 <ul>
@@ -532,7 +532,7 @@ public class WatchManager {
 <li>exists(String path, Watcher watcher)   </li>
 </ul>
 <p>其中Boolean watch表示是否使用上下文中默认的watcher，即创建zk实例时设置的watcher. getData 和 exists 请求可以注册服务端注册表-dataWatches，getChilden 可以注册服务端注册表-childWatches。<br>每个客户端都会维护 2 个线程，SendThread 负责处理客户端与服务端的请求通信，比如发送 getDataRequest，而 EventThread 则负责处理服务端的事件通知，即 watcher 的事件。</p>
-<h4 id="注册流程"><a href="#注册流程" class="headerlink" title="注册流程"></a>注册流程</h4><h5 id="客户端注册流程"><a href="#客户端注册流程" class="headerlink" title="客户端注册流程"></a>客户端注册流程</h5><p>zookeeper客户端watcher注册流程:<br><img src="/image/zookeeper/zookeeper客户端watcher注册流程.jpeg" alt="zookeeper客户端watcher注册流程"></p>
+<h4 id="注册流程"><a href="#注册流程" class="headerlink" title="注册流程"></a>注册流程</h4><h5 id="客户端注册流程"><a href="#客户端注册流程" class="headerlink" title="客户端注册流程"></a>客户端注册流程</h5><p>zookeeper客户端watcher注册流程:<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper客户端watcher注册流程.jpeg" alt="zookeeper客户端watcher注册流程"></p>
 <p>几种客户端注册的流程大致相同,我们以exists为例。源码：</p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public Stat exists(final String path, Watcher watcher)
         throws KeeperException, InterruptedException
@@ -550,7 +550,7 @@ public class WatchManager {
         ......
     }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>总的来说就是针对不同API进行类似的请求标记，watcher封装，然后将请求放入队列等待(SendThread)调度后发送到服务端。</p>
-<h5 id="服务端注册流程"><a href="#服务端注册流程" class="headerlink" title="服务端注册流程"></a>服务端注册流程</h5><p>server端接收到请求后的处理流程：<br><img src="/image/zookeeper/zookeeper注册server端流程.jpeg" alt="zookeeper原理框架">   </p>
+<h5 id="服务端注册流程"><a href="#服务端注册流程" class="headerlink" title="服务端注册流程"></a>服务端注册流程</h5><p>server端接收到请求后的处理流程：<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper注册server端流程.jpeg" alt="zookeeper原理框架">   </p>
 <p><em>FinalRequestProcessor</em>：为服务端统一处理类，客户端所有操作及请求最终都会在此进行相应流程处理<br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">/**
  * This Request processor actually applies any transaction associated with a
  * request and services any queries. It is always at the end of a

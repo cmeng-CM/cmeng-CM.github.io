@@ -569,7 +569,7 @@
 <li>不支持分布式内存模型，只解决了进程内的并发同步；</li>
 </ul>
 <h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>高并发的关键在于实现异步非阻塞，更加高效地利用 CPU，涉及的两大安全难题则是<strong>线程安全</strong>与<strong>内存安全</strong>。多线程可以达到非阻塞，但占用资源多，切换开销大。协程用栈的动态增长、用户态的调度来避免多线程的两个问题。事件驱动用单线程的方式，避免了占用太多系统资源，不需要关心线程安全，但无法利用多核。具体要采用哪种模型，还是要看需求。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a target="_blank" rel="noopener" href="https://gobomb.github.io/post/high-concurrency-model/">https://gobomb.github.io/post/high-concurrency-model/</a><br><a target="_blank" rel="noopener" href="https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/">https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/</a>  </p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a target="_blank" rel="noopener" href="https://gobomb.github.io/post/high-concurrency-model/">high-concurrency-model</a><br><a target="_blank" rel="noopener" href="https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/">concurrency-model</a></p>
 
                 
             </div>

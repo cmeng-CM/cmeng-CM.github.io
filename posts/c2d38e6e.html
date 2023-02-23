@@ -452,7 +452,7 @@
                 <h1 id="JVM内存"><a href="#JVM内存" class="headerlink" title="JVM内存"></a>JVM内存</h1><h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 概述"></a>一 概述</h3><p><strong>内存</strong> 是硬盘和CPU的中间仓库及桥梁，承载着操作系统和应用程序的实时运行。JVM内存布局规定了Java在运行过程中内存申请、分配、管理的策略，保证了JVM的高效稳定运行.</p>
 <p>在JVM自动内存管理机制，开发人员不需要去考虑内存的delete/free操作，不容易出现内存溢出和泄露问题。</p>
 <h3 id="二-运行时数据区域-内存布局"><a href="#二-运行时数据区域-内存布局" class="headerlink" title="二 运行时数据区域/内存布局"></a>二 运行时数据区域/内存布局</h3><p>1.8之前和之后略有区别，主要体现在为1.8之前存在方法区(Method Area)，1.8之后去掉方法区，增加元空间(MetaSpace)</p>
-<p><img src="/image/JVM/Java虚拟机运行时数据区_水印.jpg" alt="Java内存布局"></p>
+<p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/JVM/Java虚拟机运行时数据区_水印.jpg" alt="Java内存布局"></p>
 <h4 id="2-1-虚拟机栈"><a href="#2-1-虚拟机栈" class="headerlink" title="2.1 虚拟机栈"></a>2.1 虚拟机栈</h4><ol>
 <li><p>Java 虚拟机栈（Java Virtual Machine Stacks）也就是我们平时所说的 <strong>栈内存</strong>，或者指的就是虚拟机栈中的 <strong>局部变量表</strong> 部分。<br>虚拟机栈描述的是Java方法的内存模型：即每个方法在执行的同时都会创建一个 <strong>栈帧</strong>，用于存储局部变量表、操作数栈、动态链接、方法出口等信息。所以虚拟机栈是线程私有的，生命周期与线程相同。  </p>
 </li>
@@ -478,7 +478,7 @@
 <h4 id="2-4-堆"><a href="#2-4-堆" class="headerlink" title="2.4 堆"></a>2.4 堆</h4><ol>
 <li><p>堆（Heap）是JVM最重要的也是最大的一块内存，在虚拟机启动时创建。对于堆来说，它可以位于物理上不连续而逻辑上连续的内存空间中。在实际情况下也可以通过调整虚拟机参数的方式对堆进行扩展，即通过 -Xmx 和 -Xms 控制。</p>
 </li>
-<li><p>该区域的主要作用: <strong>为对象实例及数组分配内存</strong>，几乎存储了所有对象实例。同时也是垃圾回收器管理的主要区域，因此也被称作GC 堆（Garbage Collected Heap）。 <br><br><br>Java堆还可以细分为：新生代和老年代。再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。具体如下图：<br><img src="/image/JVM/Heap.jpg" alt="堆Heap详细分布">1.8后去除永生代，用元空间替代。<br><br><br>查看虚拟机默认配置命令：</p>
+<li><p>该区域的主要作用: <strong>为对象实例及数组分配内存</strong>，几乎存储了所有对象实例。同时也是垃圾回收器管理的主要区域，因此也被称作GC 堆（Garbage Collected Heap）。 <br><br><br>Java堆还可以细分为：新生代和老年代。再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。具体如下图：<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/JVM/Heap.jpg" alt="堆Heap详细分布">1.8后去除永生代，用元空间替代。<br><br><br>查看虚拟机默认配置命令：</p>
 <pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">java -XX:+PrintFlagsFinal -version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 </ol>
