@@ -150,4 +150,4 @@ STM是用软件的方式去实现事务内存(Transactional memory)，而事务�
 
 ## 参考文献
 [high-concurrency-model](https://gobomb.github.io/post/high-concurrency-model/)
-[concurrency-model](https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/)
+[](https://www.bmpi.dev/dev/deep-in-program-language/how-to-implement-concurrency/concurrency-model/)

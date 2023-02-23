@@ -1,9 +1,9 @@
 ---
 title: MySQL主从、主主、主备模式
-tags: Database
-categories:
+tags: 
   - MySQL
   - 同步
+categories: Mysql
 abbrlink: 30e0af
 date: 2020-08-18 16:13:12
 ---
