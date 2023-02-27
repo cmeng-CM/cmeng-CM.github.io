@@ -1,5 +1,5 @@
 ---
-title: netty第一弹————netty概述、演变
+title: netty第一弹————netty概述、Reactor
 tags:
   - java
   - netty
@@ -26,4 +26,33 @@ netty系列的IO逻辑基于 **I/O模型** 架构基础进行讲解，不会再�
 > [官网](https://netty.io/)
 
 ## 二、JAVA的IO模型
+**Netty** 本质上是一个 **NIO** 客户端服务器框架。它极大地简化和流线化了网络编程，例如 **TCP和UDP** 套接字服务器。
+
+所以学习 **Netty** 要先了解下 **JAVA** 本身的 **IO模型理念**。
+
+### 1.1、JAVA的BIO、NIO、AIO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
