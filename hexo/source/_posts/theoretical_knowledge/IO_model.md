@@ -64,7 +64,7 @@ IO调用则由应用程序发起，发起后则等待系统内核完成实际IO�
 
 **I/O 多路复用技术**：Linux下的 **select、poll和epoll** 就是干这个的。将用户socket对应的fd（[文件描述](https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6)）注册进epoll，然后epoll帮你监听哪些socket上有消息到达，这样就避免了大量的无用操作同时提升了CPU效率。此时的socket应该采用非阻塞模式。
 
-![IO多路复用][IO多路复用]
+![IO多路复用]
 
 
 **select()：** 用 **long** 组成的数据结构 **fd_set** 来存储文件句柄，每一个数组元素都能与一打开的文件句柄建立联系。当调用select()时，由内核根据IO状态修改 **fd_set** 的内容，由此来通知执行了 **select()** 的进程哪一Socket或文件可读。不过其监视的文件句柄通常最大为 **1024**

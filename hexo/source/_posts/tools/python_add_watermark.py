@@ -76,7 +76,7 @@ if __name__=="__main__":
     # 水印图片
     watermarkPath = '/Users/workerspace/github/cmeng001.github.io/hexo/source/image/watermark/watermark_tm.jpeg'
     # 原文件地址
-    imgPath = '/Users/workerspace/github/image-hosting/img/theoretical_knowledge/异步IO.jpg'
+    imgPath = '/Users/workerspace/github/image-hosting/img/java/netty/Reactor.jpg'
     outPath = '/Users/workerspace/github/image-hosting/img/theoretical_knowledge/'
 
     add_img_watermark(imgPath,watermarkPath,outPath)
