@@ -306,7 +306,7 @@ fn main() {
 * 字符类型，char。
 * 元组，当且仅当其包含的类型也都实现 Copy 的时候。比如，(i32, i32) 实现了 Copy，但 (i32, String) 就没有。
 
-3. ***所有权与函数*
+3. **所有权与函数**
 ```rust
 fn main() {
     let s1 = gives_ownership();         // gives_ownership 将返回值
