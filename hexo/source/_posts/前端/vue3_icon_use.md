@@ -126,24 +126,40 @@ pnpm install vite-plugin-svg-icons -D
     export default () => {
     return {
         plugins: [
-        createSvgIconsPlugin({
-            // 指定需要缓存的图标文件夹
-            iconDirs: [path.resolve(process.cwd(), 'src/icons')],
-            // 指定symbolId格式
-            symbolId: 'icon-[dir]-[name]',
+            createSvgIconsPlugin({
+                // 指定需要缓存的图标文件夹
+                iconDirs: [path.resolve(process.cwd(), 'src/icons')],
+                // 指定symbolId格式
+                symbolId: 'icon-[dir]-[name]',
 
-            /**
-             * 自定义插入位置
-             * @default: body-last
-             */
-            inject?: 'body-last' | 'body-first'
+                /**
+                 * 自定义插入位置
+                * @default: body-last
+                */
+                inject?: 'body-last' | 'body-first'
 
-            /**
-             * custom dom id
-             * @default: __svg__icons__dom__
-             */
-            customDomId: '__svg__icons__dom__',
-        }),
+                /**
+                 * custom dom id
+                * @default: __svg__icons__dom__
+                */
+                customDomId: '__svg__icons__dom__',
+                
+                /**
+                 * 颜色修改生效需增加以下配置 【此配置需每次引用SvgIcon时都需要设置颜色，否则svg颜色将全部置灰】
+                 */
+                svgoOptions: {
+                    full: true,
+                    plugins: [
+                    {
+                    name: "removeAttrs",
+                    params: {
+                        attrs: "fill"
+                        }
+                    }
+                    ]
+                },
+
+            }),
         ],
     }
     }
