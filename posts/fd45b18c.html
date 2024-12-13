@@ -704,7 +704,7 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 <li>元组，当且仅当其包含的类型也都实现 Copy 的时候。比如，(i32, i32) 实现了 Copy，但 (i32, String) 就没有。</li>
 </ul>
 <ol>
-<li><em>**所有权与函数</em><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<li><strong>所有权与函数</strong><pre class="line-numbers language-rust" data-language="rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">let</span> s1 <span class="token operator">=</span> <span class="token function">gives_ownership</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// gives_ownership 将返回值</span>
                                         <span class="token comment">// 转移给 s1</span>
 
@@ -1887,13 +1887,13 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/609270ec.html">
+                <a href="/posts/880fa53b.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="SpringBoot 启动 —— 源码解析">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="浅析最好、最坏、平均、均摊时间复杂度">
                         
-                        <span class="card-title">SpringBoot 启动 —— 源码解析</span>
+                        <span class="card-title">浅析最好、最坏、平均、均摊时间复杂度</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1910,8 +1910,8 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/springboot/" class="post-category">
-                                    springboot
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -1921,8 +1921,8 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/springboot/">
-                        <span class="chip bg-color">springboot</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -1936,13 +1936,13 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/dcfaa904.html">
+                <a href="/posts/97c733b2.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis持久化">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="分布式CAP">
                         
-                        <span class="card-title">redis持久化</span>
+                        <span class="card-title">分布式CAP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1953,14 +1953,14 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-17
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Redis/" class="post-category">
-                                    Redis
+                            <a href="/categories/CAP/" class="post-category">
+                                    CAP
                                 </a>
                             
                             
@@ -1970,8 +1970,8 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/CAP/">
+                        <span class="chip bg-color">CAP</span>
                     </a>
                     
                 </div>
@@ -2159,7 +2159,7 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2023</span>
+                <span id="year">2018-2024</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -2167,7 +2167,7 @@ cd hello_cargo<span aria-hidden="true" class="line-numbers-rows"><span></span><s
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">61.5k</span>
+                        class="white-color">71.6k</span>
             
             
             
@@ -2419,6 +2419,14 @@ $(function () {
     <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
     <script src="/js/matery.js"></script>
 
+    
+        <!-- <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script> -->
+        <script src='/libs/mermaid/mermaid.min.js'></script>
+        <script>
+          if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+          }
+        </script>
     
 
     

@@ -6,7 +6,7 @@
   <link href="https://cmeng-cm.github.io/atom.xml" rel="self"/>
   
   <link href="https://cmeng-cm.github.io/"/>
-  <updated>2023-02-21T03:23:38.267Z</updated>
+  <updated>2024-12-13T09:52:48.143Z</updated>
   <id>https://cmeng-cm.github.io/</id>
   
   <author>
@@ -17,11 +17,235 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>服务端接口鉴权机制——HMAC</title>
+    <link href="https://cmeng-cm.github.io/posts/fb55061.html"/>
+    <id>https://cmeng-cm.github.io/posts/fb55061.html</id>
+    <published>2024-08-17T08:13:12.000Z</published>
+    <updated>2024-12-13T09:52:48.143Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;符合AES加密要求的字符串作为密钥，并且这个字符串可以直接用于加密和解密操作，那么我们需要确保这个字符串具有正确的长度（16字节/AES-128, 24字节/AES-192,</summary>
+        
+      
+    
+    
+    
+    <category term="HMAC" scheme="https://cmeng-cm.github.io/categories/HMAC/"/>
+    
+    
+    <category term="HMAC" scheme="https://cmeng-cm.github.io/tags/HMAC/"/>
+    
+    <category term="ASE" scheme="https://cmeng-cm.github.io/tags/ASE/"/>
+    
+    <category term="后端" scheme="https://cmeng-cm.github.io/tags/%E5%90%8E%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://cmeng-cm.github.io/posts/0.html"/>
+    <id>https://cmeng-cm.github.io/posts/0.html</id>
+    <published>2024-08-12T08:18:45.783Z</published>
+    <updated>2024-12-13T09:52:48.137Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;当你与 AI 团队合作时， 你可能会听到他们指的是他们用来构建这些 AI 系统的工具。 在本视频中，我想与您分享一些 最常用的 AI 工具的细节和名称 ，以便您能够更好地了解这些 AI 工程师在做什么。 我们很幸运，当今的人工智能世界非常开放，</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://cmeng-cm.github.io/posts/0.html"/>
+    <id>https://cmeng-cm.github.io/posts/0.html</id>
+    <published>2024-05-13T07:38:38.795Z</published>
+    <updated>2024-12-13T09:52:48.152Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;信创：&lt;br&gt;1、迁移工具的问题，目前无法解决&lt;/p&gt;
+</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>vue3中icon的使用</title>
+    <link href="https://cmeng-cm.github.io/posts/6918a5b5.html"/>
+    <id>https://cmeng-cm.github.io/posts/6918a5b5.html</id>
+    <published>2024-03-17T08:13:12.000Z</published>
+    <updated>2024-12-13T09:52:48.145Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;vue3中icon的使用&quot;&gt;&lt;a href=&quot;#vue3中icon的使用&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="vue3" scheme="https://cmeng-cm.github.io/categories/vue3/"/>
+    
+    
+    <category term="vue3" scheme="https://cmeng-cm.github.io/tags/vue3/"/>
+    
+    <category term="icon" scheme="https://cmeng-cm.github.io/tags/icon/"/>
+    
+    <category term="前端" scheme="https://cmeng-cm.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://cmeng-cm.github.io/posts/0.html"/>
+    <id>https://cmeng-cm.github.io/posts/0.html</id>
+    <published>2024-03-01T01:24:52.507Z</published>
+    <updated>2024-12-13T09:52:48.154Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;LLM程序员的学习路线&quot;&gt;&lt;a href=&quot;#LLM程序员的学习路线&quot; class=&quot;headerlink&quot; title=&quot;LLM程序员的学习路线&quot;&gt;&lt;/a&gt;LLM程序员的学习路线&lt;/h3&gt;&lt;p&gt;LLM（Legal Language</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>软考——基础知识</title>
+    <link href="https://cmeng-cm.github.io/posts/3aeb7313.html"/>
+    <id>https://cmeng-cm.github.io/posts/3aeb7313.html</id>
+    <published>2023-10-09T08:13:12.000Z</published>
+    <updated>2024-12-13T09:52:48.148Z</updated>
+    
+    
+    
+    
+    <category term="软考" scheme="https://cmeng-cm.github.io/categories/%E8%BD%AF%E8%80%83/"/>
+    
+    
+    <category term="软考" scheme="https://cmeng-cm.github.io/tags/%E8%BD%AF%E8%80%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>node相关命令</title>
+    <link href="https://cmeng-cm.github.io/posts/7908e8cd.html"/>
+    <id>https://cmeng-cm.github.io/posts/7908e8cd.html</id>
+    <published>2023-04-17T08:13:12.000Z</published>
+    <updated>2024-12-13T09:52:48.157Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;npm命令&quot;&gt;&lt;a href=&quot;#npm命令&quot; class=&quot;headerlink&quot; title=&quot;npm命令&quot;&gt;&lt;/a&gt;npm命令&lt;/h3&gt;&lt;div class=&quot;table-container&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th</summary>
+        
+      
+    
+    
+    
+    <category term="node" scheme="https://cmeng-cm.github.io/categories/node/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>netty第二弹——Reactor模式</title>
+    <link href="https://cmeng-cm.github.io/posts/ad72082d.html"/>
+    <id>https://cmeng-cm.github.io/posts/ad72082d.html</id>
+    <published>2023-03-20T08:13:12.000Z</published>
+    <updated>2023-06-01T10:01:59.197Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、Netty和Reactor&quot;&gt;&lt;a href=&quot;#一、Netty和Reactor&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="https://cmeng-cm.github.io/categories/java/"/>
+    
+    <category term="netty" scheme="https://cmeng-cm.github.io/categories/java/netty/"/>
+    
+    
+    <category term="java" scheme="https://cmeng-cm.github.io/tags/java/"/>
+    
+    <category term="netty" scheme="https://cmeng-cm.github.io/tags/netty/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>netty第一弹——JAVA的IO</title>
+    <link href="https://cmeng-cm.github.io/posts/ad72082d.html"/>
+    <id>https://cmeng-cm.github.io/posts/ad72082d.html</id>
+    <published>2023-02-23T08:13:12.000Z</published>
+    <updated>2023-03-20T09:10:49.306Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;netty系列的IO逻辑基于 &lt;strong&gt;I/O模型&lt;/strong&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="https://cmeng-cm.github.io/categories/java/"/>
+    
+    <category term="netty" scheme="https://cmeng-cm.github.io/categories/java/netty/"/>
+    
+    
+    <category term="java" scheme="https://cmeng-cm.github.io/tags/java/"/>
+    
+    <category term="netty" scheme="https://cmeng-cm.github.io/tags/netty/"/>
+    
+  </entry>
+  
+  <entry>
     <title>IO模型</title>
     <link href="https://cmeng-cm.github.io/posts/aeafbee0.html"/>
     <id>https://cmeng-cm.github.io/posts/aeafbee0.html</id>
     <published>2023-02-17T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.267Z</updated>
+    <updated>2023-03-20T09:09:35.905Z</updated>
     
     
       
@@ -237,11 +461,38 @@
   </entry>
   
   <entry>
+    <title>SpringBoot 启动 —— 源码解析</title>
+    <link href="https://cmeng-cm.github.io/posts/609270ec.html"/>
+    <id>https://cmeng-cm.github.io/posts/609270ec.html</id>
+    <published>2022-08-17T08:13:12.000Z</published>
+    <updated>2024-12-10T08:09:05.292Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;font size=&quot;7&quot;&gt;SpringBoot 启动 —— 源码解析&lt;/font&gt;
+
+&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="springboot" scheme="https://cmeng-cm.github.io/categories/springboot/"/>
+    
+    
+    <category term="springboot" scheme="https://cmeng-cm.github.io/tags/springboot/"/>
+    
+  </entry>
+  
+  <entry>
     <title>并发模型比较</title>
     <link href="https://cmeng-cm.github.io/posts/36a7b9af.html"/>
     <id>https://cmeng-cm.github.io/posts/36a7b9af.html</id>
     <published>2022-07-17T08:13:12.000Z</published>
-    <updated>2023-02-22T02:39:56.763Z</updated>
+    <updated>2023-02-23T03:25:32.474Z</updated>
     
     
       
@@ -260,258 +511,6 @@
     
     
     <category term="并发" scheme="https://cmeng-cm.github.io/tags/%E5%B9%B6%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分库分表</title>
-    <link href="https://cmeng-cm.github.io/posts/a3a0c28e.html"/>
-    <id>https://cmeng-cm.github.io/posts/a3a0c28e.html</id>
-    <published>2021-08-18T08:13:12.000Z</published>
-    <updated>2023-02-23T01:26:21.942Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot; title=&quot;一、概述&quot;&gt;&lt;/a&gt;一、概述&lt;/h2&gt;&lt;h3 id=&quot;1-1、为什么分库？&quot;&gt;&lt;a href=&quot;#1-1、为什么分库？&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="分库分表" scheme="https://cmeng-cm.github.io/categories/%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/"/>
-    
-    <category term="ShardingSphere" scheme="https://cmeng-cm.github.io/categories/%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8/ShardingSphere/"/>
-    
-    
-    <category term="Database" scheme="https://cmeng-cm.github.io/tags/Database/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM内存模型</title>
-    <link href="https://cmeng-cm.github.io/posts/c2d38e6e.html"/>
-    <id>https://cmeng-cm.github.io/posts/c2d38e6e.html</id>
-    <published>2021-08-17T08:13:12.000Z</published>
-    <updated>2023-02-23T01:26:21.923Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;JVM内存&quot;&gt;&lt;a href=&quot;#JVM内存&quot; class=&quot;headerlink&quot; title=&quot;JVM内存&quot;&gt;&lt;/a&gt;JVM内存&lt;/h1&gt;&lt;h3 id=&quot;一-概述&quot;&gt;&lt;a href=&quot;#一-概述&quot; class=&quot;headerlink&quot; title=&quot;一</summary>
-        
-      
-    
-    
-    
-    <category term="java" scheme="https://cmeng-cm.github.io/categories/java/"/>
-    
-    <category term="JVM" scheme="https://cmeng-cm.github.io/categories/java/JVM/"/>
-    
-    
-    <category term="JVM" scheme="https://cmeng-cm.github.io/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>血常规/血分析</title>
-    <link href="https://cmeng-cm.github.io/posts/9e7d6171.html"/>
-    <id>https://cmeng-cm.github.io/posts/9e7d6171.html</id>
-    <published>2021-08-01T15:13:12.000Z</published>
-    <updated>2023-02-23T01:26:21.942Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;血常规相关指标解读&quot;&gt;&lt;a href=&quot;#血常规相关指标解读&quot; class=&quot;headerlink&quot; title=&quot;血常规相关指标解读&quot;&gt;&lt;/a&gt;血常规相关指标解读&lt;/h2&gt;&lt;p&gt; </summary>
-        
-      
-    
-    
-    
-    <category term="化验" scheme="https://cmeng-cm.github.io/categories/%E5%8C%96%E9%AA%8C/"/>
-    
-    
-    <category term="化验-验血" scheme="https://cmeng-cm.github.io/tags/%E5%8C%96%E9%AA%8C-%E9%AA%8C%E8%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://cmeng-cm.github.io/posts/0.html"/>
-    <id>https://cmeng-cm.github.io/posts/0.html</id>
-    <published>2021-04-15T10:05:10.596Z</published>
-    <updated>2023-02-21T03:23:38.231Z</updated>
-    
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JVM调优之jps jinfo jstat jmap jhat</title>
-    <link href="https://cmeng-cm.github.io/posts/10c0b7f2.html"/>
-    <id>https://cmeng-cm.github.io/posts/10c0b7f2.html</id>
-    <published>2020-11-18T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.282Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;JVM调优&quot;&gt;&lt;a href=&quot;#JVM调优&quot; class=&quot;headerlink&quot; title=&quot;JVM调优&quot;&gt;&lt;/a&gt;JVM调优&lt;/h2&gt;&lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="java" scheme="https://cmeng-cm.github.io/categories/java/"/>
-    
-    <category term="JVM" scheme="https://cmeng-cm.github.io/categories/java/JVM/"/>
-    
-    
-    <category term="JVM" scheme="https://cmeng-cm.github.io/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker之MySQL安装</title>
-    <link href="https://cmeng-cm.github.io/posts/bd5c77e2.html"/>
-    <id>https://cmeng-cm.github.io/posts/bd5c77e2.html</id>
-    <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.233Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;docker-安装-mysql&quot;&gt;&lt;a href=&quot;#docker-安装-mysql&quot; class=&quot;headerlink&quot; title=&quot;docker 安装 mysql&quot;&gt;&lt;/a&gt;docker 安装 mysql&lt;/h1&gt;&lt;h2 id=&quot;一、下载镜像&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="docker" scheme="https://cmeng-cm.github.io/categories/docker/"/>
-    
-    <category term="mysql" scheme="https://cmeng-cm.github.io/categories/docker/mysql/"/>
-    
-    
-    <category term="MySQL" scheme="https://cmeng-cm.github.io/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>docker日常命令</title>
-    <link href="https://cmeng-cm.github.io/posts/23c1b730.html"/>
-    <id>https://cmeng-cm.github.io/posts/23c1b730.html</id>
-    <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.235Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;容器挂载文件相关&quot;&gt;&lt;a href=&quot;#容器挂载文件相关&quot; class=&quot;headerlink&quot; title=&quot;容器挂载文件相关&quot;&gt;&lt;/a&gt;容器挂载文件相关&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;查看容器挂的文件信息：&lt;ul&gt;
-&lt;li&gt;命令：docker inspect</summary>
-        
-      
-    
-    
-    
-    <category term="Docker" scheme="https://cmeng-cm.github.io/categories/Docker/"/>
-    
-    
-    <category term="command" scheme="https://cmeng-cm.github.io/tags/command/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL主从、主主、主备模式</title>
-    <link href="https://cmeng-cm.github.io/posts/30e0af.html"/>
-    <id>https://cmeng-cm.github.io/posts/30e0af.html</id>
-    <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2023-02-23T01:26:21.948Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;a href=&quot;#一、主从、主主、主备模式介绍&quot; class=&quot;headerlink&quot; title=&quot;一、主从、主主、主备模式介绍&quot;&gt;&lt;/a&gt;一、主从、主主、主备模式介绍&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    <category term="MySQL" scheme="https://cmeng-cm.github.io/categories/MySQL/"/>
-    
-    <category term="同步" scheme="https://cmeng-cm.github.io/categories/MySQL/%E5%90%8C%E6%AD%A5/"/>
-    
-    
-    <category term="Database" scheme="https://cmeng-cm.github.io/tags/Database/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java的future体系</title>
-    <link href="https://cmeng-cm.github.io/posts/9fca4482.html"/>
-    <id>https://cmeng-cm.github.io/posts/9fca4482.html</id>
-    <published>2020-08-18T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.284Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、Future概念&quot;&gt;&lt;a href=&quot;#一、Future概念&quot; class=&quot;headerlink&quot; title=&quot;一、Future概念&quot;&gt;&lt;/a&gt;一、Future概念&lt;/h2&gt;&lt;h3 id=&quot;1-1、概念&quot;&gt;&lt;a href=&quot;#1-1、概念&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="java" scheme="https://cmeng-cm.github.io/categories/java/"/>
-    
-    <category term="多线程" scheme="https://cmeng-cm.github.io/categories/java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    
-    <category term="JVM" scheme="https://cmeng-cm.github.io/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>回溯</title>
-    <link href="https://cmeng-cm.github.io/posts/f92eff5d.html"/>
-    <id>https://cmeng-cm.github.io/posts/f92eff5d.html</id>
-    <published>2020-08-17T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.217Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;回溯&quot;&gt;&lt;a href=&quot;#回溯&quot; class=&quot;headerlink&quot; title=&quot;回溯&quot;&gt;&lt;/a&gt;回溯&lt;/h2&gt;&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="算法" scheme="https://cmeng-cm.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="回溯" scheme="https://cmeng-cm.github.io/tags/%E5%9B%9E%E6%BA%AF/"/>
     
   </entry>
   
