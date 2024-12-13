@@ -1,3 +1,15 @@
+---
+title: 服务端接口鉴权机制——HMAC
+tags: 
+  - HMAC
+  - ASE
+  - 后端
+categories: HMAC
+mathjax: true
+date: 2024-08-17 16:13:12
+---
+
+
 符合AES加密要求的字符串作为密钥，并且这个字符串可以直接用于加密和解密操作，那么我们需要确保这个字符串具有正确的长度（16字节/AES-128, 24字节/AES-192, 或32字节/AES-256）。下面是一个具体的例子，使用一个32字符长的字符串作为AES-256的密钥。
 
 ### 直接使用的密钥字符串
@@ -29,7 +41,7 @@ public class ClientSignatureExample {
     private static final byte[] sharedSecretBytes = Constants.SHARED_SECRET.getBytes("UTF-8");
 
     public static void main(String[] args) throws Exception {
-        URL url = new URL("https://api.example.com/endpoint");
+        URL url = new URL("https://api.cmeng.com/list");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
 
