@@ -1,11 +1,12 @@
 ---
 title: 服务端接口鉴权机制——HMAC
-tags: 
+tags:
   - HMAC
   - ASE
   - 后端
 categories: HMAC
 mathjax: true
+abbrlink: fb55061
 date: 2024-08-17 16:13:12
 ---
 

@@ -1,11 +1,12 @@
 ---
 title: vue3中icon的使用
-tags: 
+tags:
   - vue3
   - icon
   - 前端
 categories: vue3
 mathjax: true
+abbrlink: 6918a5b5
 date: 2024-03-17 16:13:12
 ---
 
