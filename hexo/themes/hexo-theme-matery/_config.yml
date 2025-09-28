@@ -19,9 +19,12 @@ menu:
   Contact:
     url: /contact
     icon: fas fa-comments
-  Friends:
-    url: /friends
-    icon: fas fa-address-book
+  newsletter:
+    url: /newsletter
+    icon: fas fa-newspaper
+  # Friends:
+  #   url: /friends
+  #   icon: fas fa-address-book
 
 
 
