@@ -6,7 +6,7 @@
   <link href="https://cmeng-cm.github.io/atom.xml" rel="self"/>
   
   <link href="https://cmeng-cm.github.io/"/>
-  <updated>2024-12-13T09:52:48.143Z</updated>
+  <updated>2025-09-26T08:34:24.851Z</updated>
   <id>https://cmeng-cm.github.io/</id>
   
   <author>
@@ -15,6 +15,125 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://cmeng-cm.github.io/posts/0.html"/>
+    <id>https://cmeng-cm.github.io/posts/0.html</id>
+    <published>2025-09-11T01:36:54.841Z</published>
+    <updated>2025-09-26T08:34:24.851Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Ollama 命令行工具 (&lt;code&gt;ollama&lt;/code&gt;) 的主要实现代码，使用 Go 语言编写。它定义了 &lt;code&gt;ollama&lt;/code&gt; 命令及其所有子命令（如 &lt;code&gt;run&lt;/code&gt;, &lt;code&gt;pull&lt;/code&gt;,</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Rust 异步机制的详细讲解</title>
+    <link href="https://cmeng-cm.github.io/posts/4ee2f4d7.html"/>
+    <id>https://cmeng-cm.github.io/posts/4ee2f4d7.html</id>
+    <published>2025-09-03T02:00:00.000Z</published>
+    <updated>2025-09-26T08:34:24.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Rust-异步机制的详细讲解（原理、流程、系统级概念）&quot;&gt;&lt;a href=&quot;#Rust-异步机制的详细讲解（原理、流程、系统级概念）&quot; class=&quot;headerlink&quot; title=&quot;Rust 异步机制的详细讲解（原理、流程、系统级概念）&quot;&gt;&lt;/a&gt;Rust</summary>
+        
+      
+    
+    
+    
+    <category term="Rust" scheme="https://cmeng-cm.github.io/categories/Rust/"/>
+    
+    
+    <category term="Rust" scheme="https://cmeng-cm.github.io/tags/Rust/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Poetry在Mac上构建项目的全流程指南</title>
+    <link href="https://cmeng-cm.github.io/posts/6821884a.html"/>
+    <id>https://cmeng-cm.github.io/posts/6821884a.html</id>
+    <published>2025-09-03T02:00:00.000Z</published>
+    <updated>2025-09-03T02:06:11.711Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Poetry在Mac上构建项目的全流程指南&quot;&gt;&lt;a href=&quot;#Poetry在Mac上构建项目的全流程指南&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Poetry" scheme="https://cmeng-cm.github.io/categories/Poetry/"/>
+    
+    
+    <category term="Poetry" scheme="https://cmeng-cm.github.io/tags/Poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://cmeng-cm.github.io/posts/0.html"/>
+    <id>https://cmeng-cm.github.io/posts/0.html</id>
+    <published>2025-01-02T05:19:07.357Z</published>
+    <updated>2025-09-26T08:34:24.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;SpotBugs-文档&quot;&gt;&lt;a href=&quot;#SpotBugs-文档&quot; class=&quot;headerlink&quot; title=&quot;SpotBugs 文档&quot;&gt;&lt;/a&gt;SpotBugs 文档&lt;/h3&gt;&lt;h4 id=&quot;1-SpotBugs-介绍&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Common Table Expressions (CTE)</title>
+    <link href="https://cmeng-cm.github.io/posts/3691c40f.html"/>
+    <id>https://cmeng-cm.github.io/posts/3691c40f.html</id>
+    <published>2024-12-18T13:13:12.000Z</published>
+    <updated>2025-09-26T08:34:24.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Common-Table-Expressions-CTE-的详细描述&quot;&gt;&lt;a href=&quot;#Common-Table-Expressions-CTE-的详细描述&quot; class=&quot;headerlink&quot; title=&quot;Common Table</summary>
+        
+      
+    
+    
+    
+    <category term="Mysql" scheme="https://cmeng-cm.github.io/categories/Mysql/"/>
+    
+    
+    <category term="CTE" scheme="https://cmeng-cm.github.io/tags/CTE/"/>
+    
+    <category term="Mysql" scheme="https://cmeng-cm.github.io/tags/Mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>服务端接口鉴权机制——HMAC</title>
@@ -46,54 +165,11 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://cmeng-cm.github.io/posts/0.html"/>
-    <id>https://cmeng-cm.github.io/posts/0.html</id>
-    <published>2024-08-12T08:18:45.783Z</published>
-    <updated>2024-12-13T09:52:48.137Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;当你与 AI 团队合作时， 你可能会听到他们指的是他们用来构建这些 AI 系统的工具。 在本视频中，我想与您分享一些 最常用的 AI 工具的细节和名称 ，以便您能够更好地了解这些 AI 工程师在做什么。 我们很幸运，当今的人工智能世界非常开放，</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://cmeng-cm.github.io/posts/0.html"/>
-    <id>https://cmeng-cm.github.io/posts/0.html</id>
-    <published>2024-05-13T07:38:38.795Z</published>
-    <updated>2024-12-13T09:52:48.152Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;信创：&lt;br&gt;1、迁移工具的问题，目前无法解决&lt;/p&gt;
-</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>vue3中icon的使用</title>
     <link href="https://cmeng-cm.github.io/posts/6918a5b5.html"/>
     <id>https://cmeng-cm.github.io/posts/6918a5b5.html</id>
     <published>2024-03-17T08:13:12.000Z</published>
-    <updated>2024-12-13T09:52:48.145Z</updated>
+    <updated>2025-09-11T01:36:04.697Z</updated>
     
     
       
@@ -135,23 +211,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>软考——基础知识</title>
-    <link href="https://cmeng-cm.github.io/posts/3aeb7313.html"/>
-    <id>https://cmeng-cm.github.io/posts/3aeb7313.html</id>
-    <published>2023-10-09T08:13:12.000Z</published>
-    <updated>2024-12-13T09:52:48.148Z</updated>
-    
-    
-    
-    
-    <category term="软考" scheme="https://cmeng-cm.github.io/categories/%E8%BD%AF%E8%80%83/"/>
-    
-    
-    <category term="软考" scheme="https://cmeng-cm.github.io/tags/%E8%BD%AF%E8%80%83/"/>
     
   </entry>
   
@@ -457,60 +516,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot 启动 —— 源码解析</title>
-    <link href="https://cmeng-cm.github.io/posts/609270ec.html"/>
-    <id>https://cmeng-cm.github.io/posts/609270ec.html</id>
-    <published>2022-08-17T08:13:12.000Z</published>
-    <updated>2024-12-10T08:09:05.292Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;font size=&quot;7&quot;&gt;SpringBoot 启动 —— 源码解析&lt;/font&gt;
-
-&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="springboot" scheme="https://cmeng-cm.github.io/categories/springboot/"/>
-    
-    
-    <category term="springboot" scheme="https://cmeng-cm.github.io/tags/springboot/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>并发模型比较</title>
-    <link href="https://cmeng-cm.github.io/posts/36a7b9af.html"/>
-    <id>https://cmeng-cm.github.io/posts/36a7b9af.html</id>
-    <published>2022-07-17T08:13:12.000Z</published>
-    <updated>2023-02-23T03:25:32.474Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、进程、线程、协程&quot;&gt;&lt;a href=&quot;#一、进程、线程、协程&quot; class=&quot;headerlink&quot; title=&quot;一、进程、线程、协程&quot;&gt;&lt;/a&gt;一、进程、线程、协程&lt;/h2&gt;&lt;h3 id=&quot;1-1、进程&quot;&gt;&lt;a href=&quot;#1-1、进程&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
-    
-    <category term="并发相关" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%B9%B6%E5%8F%91%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="并发" scheme="https://cmeng-cm.github.io/tags/%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   

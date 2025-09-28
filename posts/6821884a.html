@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="软考">
-    <meta name="description" content="">
+    <meta name="keywords" content="Poetry">
+    <meta name="description" content="Poetry在Mac上构建项目的全流程指南一、安装Poetry在Mac上有几种安装Poetry的方法：
+方法1：使用Homebrew（推荐）12345# 安装Homebrew（如果尚未安装）/bin/bash -c &#34;$(curl -fsS">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +31,7 @@
 </script>
 
 
-    <title>软考——基础知识 | c萌怪谈</title>
+    <title>Poetry在Mac上构建项目的全流程指南 | c萌怪谈</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -351,12 +352,12 @@
     
     
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">软考——基础知识</h1>
+                    <h1 class="description center-align post-title">Poetry在Mac上构建项目的全流程指南</h1>
                 </div>
             </div>
         </div>
@@ -380,8 +381,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%BD%AF%E8%80%83/">
-                                <span class="chip bg-color">软考</span>
+                            <a href="/tags/Poetry/">
+                                <span class="chip bg-color">Poetry</span>
                             </a>
                         
                     </div>
@@ -392,8 +393,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%BD%AF%E8%80%83/" class="post-category">
-                                软考
+                            <a href="/categories/Poetry/" class="post-category">
+                                Poetry
                             </a>
                         
                     </div>
@@ -405,7 +406,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-10-09
+                    2025-09-03
                 </div>
                 
 
@@ -414,14 +415,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    940
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -436,15 +437,94 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="Poetry在Mac上构建项目的全流程指南"><a href="#Poetry在Mac上构建项目的全流程指南" class="headerlink" title="Poetry在Mac上构建项目的全流程指南"></a>Poetry在Mac上构建项目的全流程指南</h1><h2 id="一、安装Poetry"><a href="#一、安装Poetry" class="headerlink" title="一、安装Poetry"></a>一、安装Poetry</h2><p>在Mac上有几种安装Poetry的方法：</p>
+<h3 id="方法1：使用Homebrew（推荐）"><a href="#方法1：使用Homebrew（推荐）" class="headerlink" title="方法1：使用Homebrew（推荐）"></a>方法1：使用Homebrew（推荐）</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Homebrew（如果尚未安装）</span></span><br><span class="line">/bin/bash -c <span class="string">"<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用Homebrew安装Poetry</span></span><br><span class="line">brew install poetry</span><br></pre></td></tr></tbody></table></figure>
+<p>Homebrew是macOS的包管理器，通过它安装Poetry最为便捷。</p>
+<h3 id="方法2：使用官方安装脚本"><a href="#方法2：使用官方安装脚本" class="headerlink" title="方法2：使用官方安装脚本"></a>方法2：使用官方安装脚本</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://install.python-poetry.org | python3 -</span><br></pre></td></tr></tbody></table></figure>
+<p>此命令会下载并运行官方安装脚本。</p>
+<h3 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry --version</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="配置环境变量（如果需要）"><a href="#配置环境变量（如果需要）" class="headerlink" title="配置环境变量（如果需要）"></a>配置环境变量（如果需要）</h3><p>如果使用官方脚本安装，可能需要将Poetry添加到PATH：<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对于Zsh用户</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH="$HOME/.local/bin:$PATH"'</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></tbody></table></figure><br>这将把Poetry添加到你的shell配置中。<p></p>
+<h2 id="二、创建新项目"><a href="#二、创建新项目" class="headerlink" title="二、创建新项目"></a>二、创建新项目</h2><h3 id="1-创建新项目"><a href="#1-创建新项目" class="headerlink" title="1. 创建新项目"></a>1. 创建新项目</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">poetry new my-project</span><br><span class="line"><span class="built_in">cd</span> my-project</span><br></pre></td></tr></tbody></table></figure>
+<p>这会创建一个包含基本项目结构的目录，包括pyproject.toml文件和src目录。</p>
+<h3 id="2-项目结构说明"><a href="#2-项目结构说明" class="headerlink" title="2. 项目结构说明"></a>2. 项目结构说明</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">my-project/</span><br><span class="line">├── pyproject.toml  # 项目配置文件</span><br><span class="line">├── README.md</span><br><span class="line">├── my_project/     # 源代码目录</span><br><span class="line">│   └── __init__.py</span><br><span class="line">└── tests/          # 测试目录</span><br><span class="line">    ├── __init__.py</span><br><span class="line">    └── test_my_project.py</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="三、配置项目"><a href="#三、配置项目" class="headerlink" title="三、配置项目"></a>三、配置项目</h2><h3 id="1-编辑pyproject-toml"><a href="#1-编辑pyproject-toml" class="headerlink" title="1. 编辑pyproject.toml"></a>1. 编辑pyproject.toml</h3><p>打开pyproject.toml文件，配置项目信息：<br></p><figure class="highlight toml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[tool.poetry]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">"my-project"</span></span><br><span class="line"><span class="attr">version</span> = <span class="string">"0.1.0"</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">"一个示例项目"</span></span><br><span class="line"><span class="attr">authors</span> = [<span class="string">"Your Name &lt;your.email@example.com&gt;"</span>]</span><br><span class="line"><span class="attr">readme</span> = <span class="string">"README.md"</span></span><br><span class="line"></span><br><span class="line"><span class="section">[tool.poetry.dependencies]</span></span><br><span class="line"><span class="attr">python</span> = <span class="string">"^3.8"</span></span><br><span class="line"></span><br><span class="line"><span class="section">[build-system]</span></span><br><span class="line"><span class="attr">requires</span> = [<span class="string">"poetry-core"</span>]</span><br><span class="line"><span class="attr">build-backend</span> = <span class="string">"poetry.core.masonry.api"</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="2-配置虚拟环境（可选但推荐）"><a href="#2-配置虚拟环境（可选但推荐）" class="headerlink" title="2. 配置虚拟环境（可选但推荐）"></a>2. 配置虚拟环境（可选但推荐）</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry config virtualenvs.in-project <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+<p>这会将虚拟环境创建在项目目录中（.venv文件夹），便于团队协作。</p>
+<h2 id="四、添加依赖"><a href="#四、添加依赖" class="headerlink" title="四、添加依赖"></a>四、添加依赖</h2><h3 id="1-添加主依赖"><a href="#1-添加主依赖" class="headerlink" title="1. 添加主依赖"></a>1. 添加主依赖</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add requests</span><br></pre></td></tr></tbody></table></figure>
+<p>这会安装requests库并自动更新pyproject.toml和poetry.lock文件。</p>
+<h3 id="2-添加开发依赖（如测试框架）"><a href="#2-添加开发依赖（如测试框架）" class="headerlink" title="2. 添加开发依赖（如测试框架）"></a>2. 添加开发依赖（如测试框架）</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add --group dev pytest black</span><br></pre></td></tr></tbody></table></figure>
+<p>使用<code>--group dev</code>参数添加仅用于开发的依赖。</p>
+<h2 id="五、开发环境设置"><a href="#五、开发环境设置" class="headerlink" title="五、开发环境设置"></a>五、开发环境设置</h2><h3 id="1-安装项目依赖"><a href="#1-安装项目依赖" class="headerlink" title="1. 安装项目依赖"></a>1. 安装项目依赖</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry install</span><br></pre></td></tr></tbody></table></figure>
+<p>此命令会根据pyproject.toml安装所有依赖，并创建虚拟环境（如果尚未创建）。</p>
+<h3 id="2-激活虚拟环境"><a href="#2-激活虚拟环境" class="headerlink" title="2. 激活虚拟环境"></a>2. 激活虚拟环境</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></tbody></table></figure>
+<p>这会启动一个新的shell会话，其中已激活项目的虚拟环境。</p>
+<p>或者，不激活环境直接运行命令：<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry run python your_script.py</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="六、编写代码"><a href="#六、编写代码" class="headerlink" title="六、编写代码"></a>六、编写代码</h2><ol>
+<li>在<code>src/my_project/</code>目录下编写你的Python代码</li>
+<li>在<code>tests/</code>目录下编写测试代码</li>
+</ol>
+<p>示例：编辑<code>src/my_project/__init__.py</code><br></p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">name: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f"Hello, <span class="subst">{name}</span>!"</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="七、运行测试"><a href="#七、运行测试" class="headerlink" title="七、运行测试"></a>七、运行测试</h2><ol>
+<li><p>编写测试文件<code>tests/test_my_project.py</code>：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> my_project <span class="keyword">import</span> greet</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_greet</span>():</span><br><span class="line">    <span class="keyword">assert</span> greet(<span class="string">"World"</span>) == <span class="string">"Hello, World!"</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>运行测试：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></tbody></table></figure>
+<p>这会使用项目虚拟环境中的pytest运行测试。</p>
+</li>
+</ol>
+<h2 id="八、构建和发布项目"><a href="#八、构建和发布项目" class="headerlink" title="八、构建和发布项目"></a>八、构建和发布项目</h2><h3 id="1-构建项目"><a href="#1-构建项目" class="headerlink" title="1. 构建项目"></a>1. 构建项目</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry build</span><br></pre></td></tr></tbody></table></figure>
+<p>这会生成dist目录，包含wheel和源码分发包。</p>
+<h3 id="2-发布到PyPI（可选）"><a href="#2-发布到PyPI（可选）" class="headerlink" title="2. 发布到PyPI（可选）"></a>2. 发布到PyPI（可选）</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先配置PyPI令牌</span></span><br><span class="line">poetry config pypi-token.pypi your-api-token</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后发布</span></span><br><span class="line">poetry publish</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="九、常用命令总结"><a href="#九、常用命令总结" class="headerlink" title="九、常用命令总结"></a>九、常用命令总结</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>poetry init</code></td>
+<td>交互式创建新项目（现有目录）</td>
+</tr>
+<tr>
+<td><code>poetry add package</code></td>
+<td>添加依赖</td>
+</tr>
+<tr>
+<td><code>poetry remove package</code></td>
+<td>移除依赖</td>
+</tr>
+<tr>
+<td><code>poetry update</code></td>
+<td>更新所有依赖</td>
+</tr>
+<tr>
+<td><code>poetry show --tree</code></td>
+<td>查看依赖树</td>
+</tr>
+<tr>
+<td><code>poetry env info</code></td>
+<td>查看虚拟环境信息</td>
+</tr>
+<tr>
+<td><code>poetry run command</code></td>
+<td>在虚拟环境中运行命令</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Poetry会自动管理项目环境隔离，确保工作始终与全局Python安装隔离。</p>
+<h2 id="十、完整工作流程示例"><a href="#十、完整工作流程示例" class="headerlink" title="十、完整工作流程示例"></a>十、完整工作流程示例</h2><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建并进入项目目录</span></span><br><span class="line"><span class="built_in">mkdir</span> myapp &amp;&amp; <span class="built_in">cd</span> myapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 初始化项目</span></span><br><span class="line">poetry init  <span class="comment"># 交互式创建</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 配置虚拟环境在项目内</span></span><br><span class="line">poetry config virtualenvs.in-project <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 添加依赖</span></span><br><span class="line">poetry add flask</span><br><span class="line">poetry add --group dev pytest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 创建源代码目录和文件</span></span><br><span class="line"><span class="built_in">mkdir</span> -p src/myapp</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'def hello(): return "Hello World!"'</span> &gt; src/myapp/__init__.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. 创建测试</span></span><br><span class="line"><span class="built_in">mkdir</span> tests</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'from myapp import hello; def test_hello(): assert hello() == "Hello World!"'</span> &gt; tests/test_app.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7. 运行测试</span></span><br><span class="line">poetry run pytest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8. 构建项目</span></span><br><span class="line">poetry build</span><br></pre></td></tr></tbody></table></figure>
+<p>通过以上步骤，你可以在Mac上使用Poetry完整地创建、开发和构建Python项目。</p>
+
                 
             </div>
             <hr/>
@@ -470,7 +550,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://cmeng-CM.github.io/posts/3aeb7313.html">https://cmeng-CM.github.io/posts/3aeb7313.html</a>
+                    <a href="https://cmeng-CM.github.io/posts/6821884a.html">https://cmeng-CM.github.io/posts/6821884a.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -508,8 +588,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%BD%AF%E8%80%83/">
-                                    <span class="chip bg-color">软考</span>
+                                <a href="/tags/Poetry/">
+                                    <span class="chip bg-color">Poetry</span>
                                 </a>
                             
                         </div>
@@ -592,6 +672,55 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/posts/4ee2f4d7.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Rust 异步机制的详细讲解">
+                        
+                        <span class="card-title">Rust 异步机制的详细讲解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-09-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Rust/" class="post-category">
+                                    Rust
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Rust/">
+                        <span class="chip bg-color">Rust</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/posts/0.html">
                     <div class="card-image">
                         
@@ -608,54 +737,13 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
                             cmeng
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/posts/7908e8cd.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="node相关命令">
-                        
-                        <span class="card-title">node相关命令</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-17
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/node/" class="post-category">
-                                    node
-                                </a>
-                            
                             
                         </span>
                     </div>
@@ -674,9 +762,6 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -844,7 +929,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -852,7 +937,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

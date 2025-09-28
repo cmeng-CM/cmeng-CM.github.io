@@ -442,9 +442,6 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
@@ -495,9 +492,7 @@
 <p>其实所有涉及系统资源管理的操作都是在 <strong>内核空间</strong> 内完成的，比如读写磁盘文件，分配回收内存，从网络接口读写数据等等。程序是无法直接访问的，这就涉及到了 <strong>用户态</strong> 和 <strong>内核态</strong> 的通讯机制。通常我们在调用系统提供的接口操作系统资源时都属于这种通讯机制。</p>
 <p>从用户空间和内核空间及通讯角度来看：</p>
 <p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/虚拟内存结构2.png" alt="虚拟内存结构（ps：图片来源于网络）"></p>
-<p><br><font size="5">用户态主动切换至内核态</font><br>粗略根据代码流程看下用户切换到内核态的流水，<strong>用户态 &lt;—&gt; 内核态</strong> 状态切换流程（大致示意）：<br></p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//读取文件</span>
-<span class="token class-name">File</span> file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"/demo.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">long</span> length <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/file_read.jpg" alt="用户态主动切换到内核态"><p></p>
+<p><br><font size="5">用户态主动切换至内核态</font><br>粗略根据代码流程看下用户切换到内核态的流水，<strong>用户态 &lt;—&gt; 内核态</strong> 状态切换流程（大致示意）：<br></p><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取文件</span></span><br><span class="line"><span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">"/demo.txt"</span>);</span><br><span class="line"><span class="type">long</span> <span class="variable">length</span> <span class="operator">=</span> file.length();</span><br></pre></td></tr></tbody></table></figure><br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/file_read.jpg" alt="用户态主动切换到内核态"><p></p>
 <p>上图为文件读取过程程序的用户态和内核态之前的切换，可以看到程序无法直接访问系统资源，如果涉及系统资源的访问都需要通过 <strong>内核空间</strong> ，切换为 <strong>内核态</strong> 才可以。</p>
 <p><br><font size="5"> 用户态切换到内核态的 3 种方式</font>：</p>
 <ul>
@@ -770,9 +765,6 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
-
 
 <!-- 代码语言 -->
 
@@ -939,7 +931,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -947,7 +939,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Docker之MySQL安装, c萌怪谈">
-    <meta name="description" content="docker 安装 mysql一、下载镜像以最新版为例：docker pull mysql下载后通过 docker images 查看：
+    <meta name="description" content="docker 安装 mysql一、下载镜像以最新版为例：1docker pull mysql下载后通过 docker images 查看：
 
-REPOSITORY              TAG       IMAGE ID       C">
+REPOSITORY              TAG       IMAGE ID       ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -420,7 +420,7 @@ REPOSITORY              TAG       IMAGE ID       C">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    542
+                    544
                 </div>
                 
 
@@ -442,23 +442,16 @@ REPOSITORY              TAG       IMAGE ID       C">
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="docker-安装-mysql"><a href="#docker-安装-mysql" class="headerlink" title="docker 安装 mysql"></a>docker 安装 mysql</h1><h2 id="一、下载镜像"><a href="#一、下载镜像" class="headerlink" title="一、下载镜像"></a>一、下载镜像</h2><p>以最新版为例：<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>下载后通过 <strong>docker images</strong> 查看：<p></p>
+                <h1 id="docker-安装-mysql"><a href="#docker-安装-mysql" class="headerlink" title="docker 安装 mysql"></a>docker 安装 mysql</h1><h2 id="一、下载镜像"><a href="#一、下载镜像" class="headerlink" title="一、下载镜像"></a>一、下载镜像</h2><p>以最新版为例：<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql</span><br></pre></td></tr></tbody></table></figure><br>下载后通过 <strong>docker images</strong> 查看：<p></p>
 <blockquote>
 <p>REPOSITORY              TAG       IMAGE ID       CREATED        SIZE<br>mysql                   latest    7b94cda7ffc7   2 weeks ago    446MB<br>redis                   latest    7614ae9453d1   8 months ago   113MB</p>
 </blockquote>
-<h2 id="二、启动mysql容器"><a href="#二、启动mysql容器" class="headerlink" title="二、启动mysql容器"></a>二、启动mysql容器</h2><h3 id="2-1、启动"><a href="#2-1、启动" class="headerlink" title="2.1、启动"></a>2.1、启动</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token punctuation">\</span>
-<span class="token parameter variable">--name</span> mysql-2 <span class="token punctuation">\</span>
-<span class="token parameter variable">-p</span> <span class="token number">9000</span>:3306 <span class="token punctuation">\</span>
-<span class="token parameter variable">-e</span> <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">123456</span> <span class="token punctuation">\</span>
-mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="二、启动mysql容器"><a href="#二、启动mysql容器" class="headerlink" title="二、启动mysql容器"></a>二、启动mysql容器</h2><h3 id="2-1、启动"><a href="#2-1、启动" class="headerlink" title="2.1、启动"></a>2.1、启动</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--name mysql-2 \</span><br><span class="line">-p 9000:3306 \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456 \</span><br><span class="line">mysql:latest</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><strong>-d</strong>：后台运行</li>
 <li><strong>—name</strong>：设置容器名称</li>
@@ -466,27 +459,17 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <li><strong>-e</strong>：设置root用户密码</li>
 <li><strong>mysql:latest</strong>：指定镜像和版本</li>
 </ul>
-<h3 id="2-2、数据用户密码加密机制"><a href="#2-2、数据用户密码加密机制" class="headerlink" title="2.2、数据用户密码加密机制"></a>2.2、数据用户密码加密机制</h3><p><strong>mysql8及以上</strong>，需要使用navicat链接的话需要修改用户密码的加密方式，该版本有修改：<br></p><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>修改后可查看 mysql库下的user表：<p></p>
+<h3 id="2-2、数据用户密码加密机制"><a href="#2-2、数据用户密码加密机制" class="headerlink" title="2.2、数据用户密码加密机制"></a>2.2、数据用户密码加密机制</h3><p><strong>mysql8及以上</strong>，需要使用navicat链接的话需要修改用户密码的加密方式，该版本有修改：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';</span><br></pre></td></tr></tbody></table></figure><br>修改后可查看 mysql库下的user表：<p></p>
 <blockquote>
 <p>mysql&gt; select host,user,plugin from user;<br>+—————-+—————————+———————————-+<br>| host      | user             | plugin                |<br>+—————-+—————————+———————————-+<br>| %         | root             | mysql_native_password |<br>| localhost | mysql.infoschema | caching_sha2_password |<br>| localhost | mysql.session    | caching_sha2_password |<br>| localhost | mysql.sys        | caching_sha2_password |<br>+—————-+—————————+———————————-+<br>4 rows in set (0.01 sec)</p>
 </blockquote>
-<h2 id="三、文件挂载"><a href="#三、文件挂载" class="headerlink" title="三、文件挂载"></a>三、文件挂载</h2><p>以为启动容器，但文件及配置信息均在容器内部，为了防止数据丢失可将容器内文件挂在到宿主机上，命令如下：<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将容器中的 mysql 配置文件复制到宿主机中指定路径下，路径你可以根据需要，自行修改</span>
-<span class="token function">docker</span> <span class="token function">cp</span> mysql:/etc/mysql/mysql.conf.d/mysqld.cnf /usr/local/docker/mysql/config
-<span class="token comment"># 将容器中的 mysql 存储目录复制到宿主机中</span>
-<span class="token function">docker</span> <span class="token function">cp</span> mysql:/var/lib/mysql/ /usr/local/docker/mysql/data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
-<p>总和挂在一起创建及启动容器的命令如下：<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token punctuation">\</span>
-<span class="token parameter variable">--name</span> mysql <span class="token punctuation">\</span>
-<span class="token parameter variable">-p</span> <span class="token number">3306</span>:3306 <span class="token punctuation">\</span>
-<span class="token parameter variable">-v</span> /usr/local/docker/mysql/config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf <span class="token punctuation">\</span>
-<span class="token parameter variable">-v</span> /usr/local/docker/mysql/data/mysql:/var/lib/mysql <span class="token punctuation">\</span>
-<span class="token parameter variable">-e</span> <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">123456</span> <span class="token punctuation">\</span>
-mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>其余命令不变，多了两个 <strong>-v</strong> 参数用于文件挂载。<br>后续即可直接使用数据库。<p></p>
+<h2 id="三、文件挂载"><a href="#三、文件挂载" class="headerlink" title="三、文件挂载"></a>三、文件挂载</h2><p>以为启动容器，但文件及配置信息均在容器内部，为了防止数据丢失可将容器内文件挂在到宿主机上，命令如下：<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将容器中的 mysql 配置文件复制到宿主机中指定路径下，路径你可以根据需要，自行修改</span></span><br><span class="line">docker <span class="built_in">cp</span> mysql:/etc/mysql/mysql.conf.d/mysqld.cnf /usr/local/docker/mysql/config</span><br><span class="line"><span class="comment"># 将容器中的 mysql 存储目录复制到宿主机中</span></span><br><span class="line">docker <span class="built_in">cp</span> mysql:/var/lib/mysql/ /usr/local/docker/mysql/data</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>总和挂在一起创建及启动容器的命令如下：<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--name mysql \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-v /usr/local/docker/mysql/config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf \</span><br><span class="line">-v /usr/local/docker/mysql/data/mysql:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456 \</span><br><span class="line">mysql:latest</span><br></pre></td></tr></tbody></table></figure><br>其余命令不变，多了两个 <strong>-v</strong> 参数用于文件挂载。<br>后续即可直接使用数据库。<p></p>
 <h2 id="MySQL配置文件"><a href="#MySQL配置文件" class="headerlink" title="MySQL配置文件"></a>MySQL配置文件</h2><p>通过 <strong>mysql —help</strong> 可以获得以下描述：</p>
 <blockquote>
 <p>Default options are read from the following files in the given order:<br>/etc/my.cnf /etc/mysql/my.cnf /usr/etc/my.cnf ~/.my.cnf</p>
 </blockquote>
-<p><strong>/etc/my.cnf</strong> 文件结尾处：<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">!</span>includedir /etc/mysql/conf.d/
-<span class="token operator">!</span>includedir /etc/mysql/mysql.conf.d/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
+<p><strong>/etc/my.cnf</strong> 文件结尾处：<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!includedir /etc/mysql/conf.d/</span><br><span class="line">!includedir /etc/mysql/mysql.conf.d/</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>所以几处的配置文件按照顺序都会加载到mysql中，所以只需求一处即可，因此本文挂载文件为：<strong>/etc/mysql/mysql.conf.d/mysqld.cnf</strong></p>
 
                 
@@ -640,59 +623,6 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/10c0b7f2.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="JVM调优之jps jinfo jstat jmap jhat">
-                        
-                        <span class="card-title">JVM调优之jps jinfo jstat jmap jhat</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-18
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/java/" class="post-category">
-                                    java
-                                </a>
-                            
-                            <a href="/categories/java/JVM/" class="post-category">
-                                    JVM
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/JVM/">
-                        <span class="chip bg-color">JVM</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/posts/23c1b730.html">
                     <div class="card-image">
                         
@@ -709,9 +639,9 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -736,6 +666,59 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
             </div>
         </div>
         
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/30e0af.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MySQL主从、主主、主备模式">
+                        
+                        <span class="card-title">MySQL主从、主主、主备模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%90%8C%E6%AD%A5/">
+                        <span class="chip bg-color">同步</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
     </div>
 </article>
 
@@ -746,9 +729,6 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -916,7 +896,7 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -924,7 +904,7 @@ mysql:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

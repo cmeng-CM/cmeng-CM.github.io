@@ -440,9 +440,6 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
@@ -452,19 +449,16 @@
 <h4 id="调优原则"><a href="#调优原则" class="headerlink" title="调优原则"></a>调优原则</h4><p>多数应用在服务器不需要怎么进行GC优化，多数导致GC问题的应用，主要问题并不在于GC的参数上，而更多的在代码上面。如：全局变量对象创建过多等。GC是最后不得已下的手段而已。所以通过GC情况分析并优化代码比GC调优要更多。</p>
 <p>本文基于JDK8，相关监控和处理故障的命令有：jps、jinfo、jstat、jmap、jhat。</p>
 <h2 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h2><p>jps（JVM Process Status Tool）：显示指定系统内所有Hotspot虚拟机进程</p>
-<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jps [options] [hostid]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>options参数：  <p></p>
+<p>命令格式：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [options] [hostid]</span><br></pre></td></tr></tbody></table></figure><br>options参数：  <p></p>
 <ul>
 <li>-l：输入主类的全名或路径  </li>
 <li>-q：输出LVMID  </li>
 <li>-m：输出JVM启动时传递给main()的参数  </li>
 <li>-v：输出JVM启动时显示指定的参数    </li>
 </ul>
-<p>示例：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jps -l
-39392 org.jetbrains.jps.cmdline.Launcher
-77060 sun.tools.jps.Jps
-115404 org.jetbrains.idea.maven.server.RemoteMavenServer<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>示例：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">λ jps -l</span><br><span class="line">39392 org.jetbrains.jps.cmdline.Launcher</span><br><span class="line">77060 sun.tools.jps.Jps</span><br><span class="line">115404 org.jetbrains.idea.maven.server.RemoteMavenServer</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h2 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h2><p>jinfo(JVM Configuration info)：生成指定进程的JVM配置信息。</p>
-<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jinfo -&lt;options&gt; vmid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<p>命令格式：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -&lt;options&gt; vmid</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h3 id="options参数"><a href="#options参数" class="headerlink" title="options参数"></a>options参数</h3><ul>
 <li>-flag <name>：打印指定参数的名称和值。</name></li>
 <li>-flag [+|-]name：启用或禁用指定的布尔命令标志。</li>
@@ -472,10 +466,9 @@
 <li>-flags：输出所有JVM参数。</li>
 <li>-sysprops：以key-value形式，输出Java系统属性。</li>
 </ul>
-<p>示例：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jinfo -flag MaxNewSize 75052
-  -XX:MaxNewSize=1418723328<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
+<p>示例：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">λ jinfo -flag MaxNewSize 75052</span><br><span class="line">  -XX:MaxNewSize=1418723328</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h2 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h2><p>jstat（JVM Statistics Monitoring）：监视虚拟机运行时状态信息的命令，它可显示JVM的类加载、内存、垃圾收集、JIT编译等运行数据等。</p>
-<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jstat -&lt;option&gt; [-t] [-h&lt;lines&gt;] &lt;vmid&gt; [&lt;interval&gt; [&lt;count&gt;]]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<p>命令格式：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -&lt;option&gt; [-t] [-h&lt;lines&gt;] &lt;vmid&gt; [&lt;interval&gt; [&lt;count&gt;]]</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>option：操作参数</li>
 <li>-t ：将时间戳列显示为输出的第一列。时间戳是自目标JVM启动时间以来的时间。</li>
@@ -557,9 +550,7 @@
 </tbody>
 </table>
 </div>
-<h4 id="options参数详解"><a href="#options参数详解" class="headerlink" title="options参数详解"></a>options参数详解</h4><h5 id="class"><a href="#class" class="headerlink" title="-class"></a>-class</h5><p>Class loader statistics.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -class 62044
-  Loaded  Bytes    Unloaded  Bytes     Time
-  6152    12149.8     0       0.0       8.72<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h4 id="options参数详解"><a href="#options参数详解" class="headerlink" title="options参数详解"></a>options参数详解</h4><h5 id="class"><a href="#class" class="headerlink" title="-class"></a>-class</h5><p>Class loader statistics.<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -class 62044</span><br><span class="line">  Loaded  Bytes    Unloaded  Bytes     Time</span><br><span class="line">  6152    12149.8     0       0.0       8.72</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>Loaded：加载class数量。  </li>
 <li>Bytes：加载的class字节大小（KB）。</li>
@@ -567,9 +558,7 @@
 <li>Bytes：未加载calss字节大小（KB）。</li>
 <li>Time：执行类加载和卸载的总时间。</li>
 </ul>
-<h5 id="compiler"><a href="#compiler" class="headerlink" title="-compiler"></a>-compiler</h5><p>Java HotSpot VM Just-in-Time compiler statistics.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -compiler 62044
-  Compiled Failed Invalid   Time   FailedType FailedMethod
-      8306      2       0    34.24          1 com/alibaba/druid/pool/DruidDataSource shrink<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="compiler"><a href="#compiler" class="headerlink" title="-compiler"></a>-compiler</h5><p>Java HotSpot VM Just-in-Time compiler statistics.<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -compiler 62044</span><br><span class="line">  Compiled Failed Invalid   Time   FailedType FailedMethod</span><br><span class="line">      8306      2       0    34.24          1 com/alibaba/druid/pool/DruidDataSource shrink</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>Compilerd：编译数量</li>
 <li>Failed：编译失败的数量</li>
@@ -578,9 +567,7 @@
 <li>FailedType : 失败类型</li>
 <li>FailedMethod : 失败方法的全限定名</li>
 </ul>
-<h5 id="gc"><a href="#gc" class="headerlink" title="-gc"></a>-gc</h5><p>Garbage collected heap statistics.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gc 62044
- S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT
-512.0  512.0   0.0    96.0  27648.0   6616.5   67584.0    55474.4   42112.0 41055.1 4736.0 4522.8  50299   94.002  12      0.677   94.679<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>C：Capacity，即总容量，容量单位为KB；U：Used，即已使用容量。  <p></p>
+<h5 id="gc"><a href="#gc" class="headerlink" title="-gc"></a>-gc</h5><p>Garbage collected heap statistics.<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gc 62044</span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">512.0  512.0   0.0    96.0  27648.0   6616.5   67584.0    55474.4   42112.0 41055.1 4736.0 4522.8  50299   94.002  12      0.677   94.679</span><br></pre></td></tr></tbody></table></figure><br>C：Capacity，即总容量，容量单位为KB；U：Used，即已使用容量。  <p></p>
 <ul>
 <li>S0C：survivor0总容量  </li>
 <li>S1C：survivor1总容量  </li>
@@ -600,9 +587,7 @@
 <li>FGCT：老年代垃圾回收时间</li>
 <li>GCT：垃圾回收总耗时</li>
 </ul>
-<h5 id="gccapacity"><a href="#gccapacity" class="headerlink" title="-gccapacity"></a>-gccapacity</h5><p>Memory pool generation and space capacities.<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jstat -gccapacity 62044
- NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC
- 86528.0 1385472.0  32256.0  512.0  512.0  30720.0   173568.0  2771968.0    83968.0    83968.0      0.0 1085440.0  39936.0      0.0 1048576.0   4608.0   1306     2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gccapacity"><a href="#gccapacity" class="headerlink" title="-gccapacity"></a>-gccapacity</h5><p>Memory pool generation and space capacities.<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jstat -gccapacity 62044</span><br><span class="line"> NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC</span><br><span class="line"> 86528.0 1385472.0  32256.0  512.0  512.0  30720.0   173568.0  2771968.0    83968.0    83968.0      0.0 1085440.0  39936.0      0.0 1048576.0   4608.0   1306     2</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>NGCMN：新生代最小容量</li>
 <li>NGCMX：新生代最大容量</li>
@@ -623,16 +608,12 @@
 <li>YGC：年轻的GC次数</li>
 <li>FGC：老年代GC次数</li>
 </ul>
-<h5 id="gccause"><a href="#gccause" class="headerlink" title="-gccause"></a>-gccause</h5><p>垃圾收集器统计概述(同gcutil)，及最近两次垃圾回收原因。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gccause 62044
-  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC
- 25.00   0.00  49.19  37.97  97.21  96.06   2360    4.765     2    0.099    4.865 Allocation Failure   No GC<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gccause"><a href="#gccause" class="headerlink" title="-gccause"></a>-gccause</h5><p>垃圾收集器统计概述(同gcutil)，及最近两次垃圾回收原因。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gccause 62044</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC</span><br><span class="line"> 25.00   0.00  49.19  37.97  97.21  96.06   2360    4.765     2    0.099    4.865 Allocation Failure   No GC</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>LGCC：上次垃圾回收原因</li>
 <li>GCC：当前垃圾回收原因</li>
 </ul>
-<h5 id="gcnew"><a href="#gcnew" class="headerlink" title="-gcnew"></a>-gcnew</h5><p>新生代代行为统计<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcnew 62044
- S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT
- 512.0  512.0    0.0   96.0 15  15  512.0  30720.0   6082.8   2557    5.169<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gcnew"><a href="#gcnew" class="headerlink" title="-gcnew"></a>-gcnew</h5><p>新生代代行为统计<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcnew 62044</span><br><span class="line"> S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT</span><br><span class="line"> 512.0  512.0    0.0   96.0 15  15  512.0  30720.0   6082.8   2557    5.169</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>S0C：survivor0总容量  </li>
 <li>S1C：survivor1总容量  </li>
@@ -646,9 +627,7 @@
 <li>YGC：新生代垃圾回收次数</li>
 <li>YGCT：新生代垃圾回收时间</li>
 </ul>
-<h4 id="gcnewcapacity"><a href="#gcnewcapacity" class="headerlink" title="-gcnewcapacity"></a>-gcnewcapacity</h4><p>新生代与其相应的内存空间统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcnewcapacity 105308
-  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC
-   86528.0  1385472.0    64512.0 461824.0   9728.0 461824.0    512.0  1384448.0    45056.0    25     2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h4 id="gcnewcapacity"><a href="#gcnewcapacity" class="headerlink" title="-gcnewcapacity"></a>-gcnewcapacity</h4><p>新生代与其相应的内存空间统计。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcnewcapacity 105308</span><br><span class="line">  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC</span><br><span class="line">   86528.0  1385472.0    64512.0 461824.0   9728.0 461824.0    512.0  1384448.0    45056.0    25     2</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>NGCMN：新生代最小容量</li>
 <li>NGCMX：新生代最大容量</li>
@@ -660,9 +639,7 @@
 <li>YGC：新生代垃圾回收次数</li>
 <li>FGC：老年代GC次数</li>
 </ul>
-<h5 id="gcold"><a href="#gcold" class="headerlink" title="-gcold"></a>-gcold</h5><p>老年代和元空间的行为统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcold 105308
-   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT
- 39680.0  38773.6   4608.0   4422.3     80896.0     22094.7    313     2    0.098    0.805<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gcold"><a href="#gcold" class="headerlink" title="-gcold"></a>-gcold</h5><p>老年代和元空间的行为统计。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcold 105308</span><br><span class="line">   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT</span><br><span class="line"> 39680.0  38773.6   4608.0   4422.3     80896.0     22094.7    313     2    0.098    0.805</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>MC：元空间承诺大小</li>
 <li>MU：元空间已使用容量</li>
@@ -675,9 +652,7 @@
 <li>FGCT：老年代垃圾回收时间</li>
 <li>GCT：垃圾回收总耗时</li>
 </ul>
-<h5 id="gcoldcapacity"><a href="#gcoldcapacity" class="headerlink" title="-gcoldcapacity"></a>-gcoldcapacity</h5><p>老年代大小统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcoldcapacity 105308
-   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT
-   173568.0   2771968.0     80896.0     80896.0   740     2    0.098    1.668<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gcoldcapacity"><a href="#gcoldcapacity" class="headerlink" title="-gcoldcapacity"></a>-gcoldcapacity</h5><p>老年代大小统计。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcoldcapacity 105308</span><br><span class="line">   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT</span><br><span class="line">   173568.0   2771968.0     80896.0     80896.0   740     2    0.098    1.668</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>OGCMN：老年代最小容量</li>
 <li>OGCMX：老年代最大容量</li>
@@ -688,9 +663,7 @@
 <li>FGCT：老年代垃圾回收时间</li>
 <li>GCT：垃圾回收总耗时</li>
 </ul>
-<h5 id="gcmetacapacity"><a href="#gcmetacapacity" class="headerlink" title="-gcmetacapacity"></a>-gcmetacapacity</h5><p>元空间大小统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcmetacapacity 105308
-   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT
-       0.0  1085440.0    40448.0        0.0  1048576.0     4608.0   848     2    0.098    1.885<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gcmetacapacity"><a href="#gcmetacapacity" class="headerlink" title="-gcmetacapacity"></a>-gcmetacapacity</h5><p>元空间大小统计。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcmetacapacity 105308</span><br><span class="line">   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT</span><br><span class="line">       0.0  1085440.0    40448.0        0.0  1048576.0     4608.0   848     2    0.098    1.885</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>MCMN：元空间最小容量</li>
 <li>MCMX：元空间最大容量</li>
@@ -703,33 +676,18 @@
 <li>FGCT：老年代垃圾回收时间</li>
 <li>GCT：垃圾回收总耗时</li>
 </ul>
-<h5 id="gcutil"><a href="#gcutil" class="headerlink" title="-gcutil"></a>-gcutil</h5><p>垃圾收集器统计概述。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcutil 105308
-  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
-  0.00  31.25  57.06  30.97  97.41  96.00    959    2.047     2    0.098    2.145<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="gcutil"><a href="#gcutil" class="headerlink" title="-gcutil"></a>-gcutil</h5><p>垃圾收集器统计概述。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcutil 105308</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">  0.00  31.25  57.06  30.97  97.41  96.00    959    2.047     2    0.098    2.145</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>S0、S1、E、O、M、CCS分别为对应内存空间已使用容量占总容量的百分比。</li>
 </ul>
-<h4 id="printcompilation"><a href="#printcompilation" class="headerlink" title="-printcompilation"></a>-printcompilation</h4><p>HotSpot编译方法统计。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -printcompilation 105308
-Compiled  Size  Type Method
-    7351     30    1 org/apache/http/message/TokenParser isWhitespace<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<h4 id="printcompilation"><a href="#printcompilation" class="headerlink" title="-printcompilation"></a>-printcompilation</h4><p>HotSpot编译方法统计。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -printcompilation 105308</span><br><span class="line">Compiled  Size  Type Method</span><br><span class="line">    7351     30    1 org/apache/http/message/TokenParser isWhitespace</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>Compiled：被执行的编译任务的数量</li>
 <li>Size：方法字节码的字节数</li>
 <li>Type：编译类型</li>
 <li>Method：编译方法的类名和方法名。类名使用”/“ 代替 “.” 作为空间分隔符. 方法名是给出类的方法名. 格式是一致于HotSpot - XX:+PrintComplation 选项</li>
 </ul>
-<h3 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h3><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jstat -gcutil 105308 200 10
-  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
- 31.25   0.00  69.70  41.31  97.43  96.12   3050    6.466     2    0.098    6.564
-  0.00  25.00  25.65  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
-  0.00  25.00  38.43  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
-  0.00  25.00  50.31  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
-  0.00  25.00  63.75  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
-  0.00  25.00  73.27  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
-  0.00  25.00  84.72  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
-  0.00  25.00  99.04  41.31  97.43  96.12   3051    6.468     2    0.098    6.566
- 31.25   0.00  11.40  41.31  97.43  96.12   3052    6.469     2    0.098    6.567
- 31.25   0.00  20.88  41.31  97.43  96.12   3052    6.469     2    0.098    6.567<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">λ jstat -gcutil 105308 200 10</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line"> 31.25   0.00  69.70  41.31  97.43  96.12   3050    6.466     2    0.098    6.564</span><br><span class="line">  0.00  25.00  25.65  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  38.43  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  50.31  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  63.75  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  73.27  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  84.72  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line">  0.00  25.00  99.04  41.31  97.43  96.12   3051    6.468     2    0.098    6.566</span><br><span class="line"> 31.25   0.00  11.40  41.31  97.43  96.12   3052    6.469     2    0.098    6.567</span><br><span class="line"> 31.25   0.00  20.88  41.31  97.43  96.12   3052    6.469     2    0.098    6.567</span><br></pre></td></tr></tbody></table></figure>
 <p>示例中vmid为105308，指令含义为输出垃圾收集统计概述，输出策略为每200毫秒一次共输出10次<br>根据结果可得出以下结果：</p>
 <ol>
 <li>10次内进行两次新生代GC</li>
@@ -739,7 +697,7 @@ Compiled  Size  Type Method
 <li>元空间没有变化，但元空间使用程度已经极高，到了96.12%，这个时候就可以考虑下元空间调优的问题了。</li>
 </ol>
 <h2 id="jmap-print-details-of-a-specified-process"><a href="#jmap-print-details-of-a-specified-process" class="headerlink" title="jmap - print details of a specified process"></a>jmap - print details of a specified process</h2><p>jmap(JVM Memory Map)：用于生成heap dump文件，还可以查询finalize执行队列、Java堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。<br>可以使用XX:+HeapDumpOnOutOfMemoryError参数来让虚拟机出现OOM的时候·自动生成dump文件。</p>
-<p>命令格式：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">jmap -&lt;options&gt; &lt;vmid&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<p>命令格式：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -&lt;options&gt; &lt;vmid&gt;</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h3 id="options参数-2"><a href="#options参数-2" class="headerlink" title="options参数"></a>options参数</h3><h4 id="总览-1"><a href="#总览-1" class="headerlink" title="总览"></a>总览</h4><div class="table-container">
 <table>
 <thead>
@@ -772,63 +730,7 @@ Compiled  Size  Type Method
 </tbody>
 </table>
 </div>
-<h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><h5 id="clstats"><a href="#clstats" class="headerlink" title="-clstats"></a>-clstats</h5><p>连接正在运行的进程，打印类加载器的统计信息<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -clstats 75052
-Attaching to process ID 75052, please wait...
-Debugger attached successfully.
-Server compiler detected.
-JVM version is 25.131-b11
-finding class loader instances ..done.
-computing per loader stat ..done.
-please wait.. computing liveness.liveness analysis may be inaccurate ...
-class_loader    classes bytes   parent_loader   alive?  type
-
-&lt;bootstrap&gt;     3735    6715263   null          live    &lt;internal&gt;
-0x00000006c24851c8      1       889     0x00000006c24853f0      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c3220ba0      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c3820380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c383c380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2cea748      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf8178      1       1472      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c337c6f0      1       1483    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2485100      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2418f08      2749    5382011 0x00000006c2418f68      dead    sun/misc/Launcher$AppClassLoader@0x00000007c000f6a0
-0x00000006c3220c68      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2cea680      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c337c838      1       1473    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c3908b40      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2ceab58      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c3908c08      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c28bafd0      0       0       0x00000006c2418f08      dead    java/util/ResourceBundle$RBClassLoader@0x00000007c0089950
-0x00000006c2ceaa90      1       1472    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf87a0      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf89a0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2485328      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c39089b0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c3222ec0      1       880     0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c37cced8      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bd2298      40      93710   0x00000006c2418f08      dead    com/alibaba/fastjson/util/ASMClassLoader@0x00000007c02af098
-0x00000006c2cea428      1       1474      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf86d8      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c337d290      1       1485    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c3908a78      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2418f68      124     266033    null          dead    sun/misc/Launcher$ExtClassLoader@0x00000007c000fa48
-0x00000006c3222f88      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c37cce10      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2cea360      1       1485      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf8610      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2485038      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2cea5b8      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf8308      1       1471    0x00000006c2418f68      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf8548      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c337cf80      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2484ef0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c24853f0      12      37276   0x00000006c2418f08      dead    sun/reflect/misc/MethodUtil@0x00000007c0116af8
-0x00000006c2cea4f0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c2bf8240      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c337d048      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-0x00000006c37fe380      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8
-
-total = 45      6699    12545217            N/A         alive=1, dead=44            N/A<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><h5 id="clstats"><a href="#clstats" class="headerlink" title="-clstats"></a>-clstats</h5><p>连接正在运行的进程，打印类加载器的统计信息<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -clstats 75052</span><br><span class="line">Attaching to process ID 75052, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.131-b11</span><br><span class="line">finding class loader instances ..done.</span><br><span class="line">computing per loader stat ..done.</span><br><span class="line">please wait.. computing liveness.liveness analysis may be inaccurate ...</span><br><span class="line">class_loader    classes bytes   parent_loader   alive?  type</span><br><span class="line"></span><br><span class="line">&lt;bootstrap&gt;     3735    6715263   null          live    &lt;internal&gt;</span><br><span class="line">0x00000006c24851c8      1       889     0x00000006c24853f0      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3220ba0      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3820380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c383c380      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea748      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8178      1       1472      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337c6f0      1       1483    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2485100      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2418f08      2749    5382011 0x00000006c2418f68      dead    sun/misc/Launcher$AppClassLoader@0x00000007c000f6a0</span><br><span class="line">0x00000006c3220c68      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea680      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337c838      1       1473    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3908b40      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2ceab58      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3908c08      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c28bafd0      0       0       0x00000006c2418f08      dead    java/util/ResourceBundle$RBClassLoader@0x00000007c0089950</span><br><span class="line">0x00000006c2ceaa90      1       1472    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf87a0      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf89a0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2485328      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c39089b0      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3222ec0      1       880     0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c37cced8      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bd2298      40      93710   0x00000006c2418f08      dead    com/alibaba/fastjson/util/ASMClassLoader@0x00000007c02af098</span><br><span class="line">0x00000006c2cea428      1       1474      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf86d8      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337d290      1       1485    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c3908a78      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2418f68      124     266033    null          dead    sun/misc/Launcher$ExtClassLoader@0x00000007c000fa48</span><br><span class="line">0x00000006c3222f88      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c37cce10      1       1471    0x00000006c2418f08      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea360      1       1485      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8610      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2485038      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2cea5b8      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8308      1       1471    0x00000006c2418f68      dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8548      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337cf80      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2484ef0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c24853f0      12      37276   0x00000006c2418f08      dead    sun/reflect/misc/MethodUtil@0x00000007c0116af8</span><br><span class="line">0x00000006c2cea4f0      1       880       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c2bf8240      1       1473      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c337d048      1       878       null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line">0x00000006c37fe380      1       1471      null          dead    sun/reflect/DelegatingClassLoader@0x00000007c0009df8</span><br><span class="line"></span><br><span class="line">total = 45      6699    12545217            N/A         alive=1, dead=44            N/A</span><br></pre></td></tr></tbody></table></figure><p></p>
 <ul>
 <li>class_loader：类加载器</li>
 <li>classes：加载的class数</li>
@@ -837,30 +739,8 @@ total = 45      6699    12545217            N/A         alive=1, dead=44        
 <li>live：存活状态</li>
 <li>type：加载器类型</li>
 </ul>
-<h5 id="finalizerinfo"><a href="#finalizerinfo" class="headerlink" title="-finalizerinfo"></a>-finalizerinfo</h5><p>打印等待结束的对象信息<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -finalizerinfo 75052
-  Attaching to process ID 75052, please wait...
-  Debugger attached successfully.
-  Server compiler detected.
-  JVM version is 25.131-b11
-  Number of objects pending for finalization: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可以看出来，目前没有等待结束的对象<p></p>
-<h5 id="histo"><a href="#histo" class="headerlink" title="-histo"></a>-histo</h5><p>打印堆的对象统计，包括对象数量，大小等。也可以单独指定子项：live，只打印存活对象。<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -histo:live 75052|more
-
- num     #instances         #bytes  class name
-----------------------------------------------
-   1:          4071        5668128  [I
-   2:         52491        4982384  [C
-   3:          3629        1511648  [B
-   4:         51380        1233120  java.lang.String
-   5:          6620         751480  java.lang.Class
-   6:         16354         523328  java.util.concurrent.ConcurrentHashMap$Node
-   7:         15464         494848  java.util.HashMap$Node
-   8:          6599         409624  [Ljava.lang.Object;
-   9:          2787         245256  java.lang.reflect.Method
-  10:          1363         200728  [Ljava.util.HashMap$Node;
-  11:          8237         197688  sun.font.TrueTypeFont$DirectoryEntry
-  12:          6121         195872  java.util.Hashtable$Entry
-  13:           209         143976  [J
--- More  --<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>因histo统计对象的类型很多，带上more后，可根据命令窗口大小进行部分展示，可回车后继续展示。<br>其中class name为对象类型的，部分为简写，含义如下：<p></p>
+<h5 id="finalizerinfo"><a href="#finalizerinfo" class="headerlink" title="-finalizerinfo"></a>-finalizerinfo</h5><p>打印等待结束的对象信息<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -finalizerinfo 75052</span><br><span class="line">  Attaching to process ID 75052, please wait...</span><br><span class="line">  Debugger attached successfully.</span><br><span class="line">  Server compiler detected.</span><br><span class="line">  JVM version is 25.131-b11</span><br><span class="line">  Number of objects pending for finalization: 0</span><br></pre></td></tr></tbody></table></figure><br>可以看出来，目前没有等待结束的对象<p></p>
+<h5 id="histo"><a href="#histo" class="headerlink" title="-histo"></a>-histo</h5><p>打印堆的对象统计，包括对象数量，大小等。也可以单独指定子项：live，只打印存活对象。<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -histo:live 75052|more</span><br><span class="line"></span><br><span class="line"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span><br><span class="line">   1:          4071        5668128  [I</span><br><span class="line">   2:         52491        4982384  [C</span><br><span class="line">   3:          3629        1511648  [B</span><br><span class="line">   4:         51380        1233120  java.lang.String</span><br><span class="line">   5:          6620         751480  java.lang.Class</span><br><span class="line">   6:         16354         523328  java.util.concurrent.ConcurrentHashMap$Node</span><br><span class="line">   7:         15464         494848  java.util.HashMap$Node</span><br><span class="line">   8:          6599         409624  [Ljava.lang.Object;</span><br><span class="line">   9:          2787         245256  java.lang.reflect.Method</span><br><span class="line">  10:          1363         200728  [Ljava.util.HashMap$Node;</span><br><span class="line">  11:          8237         197688  sun.font.TrueTypeFont$DirectoryEntry</span><br><span class="line">  12:          6121         195872  java.util.Hashtable$Entry</span><br><span class="line">  13:           209         143976  [J</span><br><span class="line">-- More  --</span><br></pre></td></tr></tbody></table></figure><br>因histo统计对象的类型很多，带上more后，可根据命令窗口大小进行部分展示，可回车后继续展示。<br>其中class name为对象类型的，部分为简写，含义如下：<p></p>
 <ul>
 <li>B  byte</li>
 <li>C  char</li>
@@ -878,82 +758,16 @@ total = 45      6699    12545217            N/A         alive=1, dead=44        
 <li>format=b：转储格式，以hprof二进制格式转储Java堆</li>
 <li>file=filename：转储文件名  </li>
 </ul>
-<pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -dump:live,format=b,file=heap 75052
-  Dumping heap to C:\Users\Y\heap1 ...
-  Heap dump file created<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -dump:live,format=b,file=heap 75052</span><br><span class="line">  Dumping heap to C:\Users\Y\heap1 ...</span><br><span class="line">  Heap dump file created</span><br></pre></td></tr></tbody></table></figure>
 <p>示例中转储文件会生成在C:\Users\Y\目录下，后续dump文件分析可以根据文件大小进行选择。<br>分析工具：</p>
 <ul>
 <li>JDK自带程序jvisiualvm.exe</li>
 <li>jhat命令</li>
 <li>Eclipse Memory Analyzer(MAT)</li>
 </ul>
-<h5 id="heap"><a href="#heap" class="headerlink" title="-heap"></a>-heap</h5><p>输出java堆概览<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">λ jmap -heap 75052
-Attaching to process ID 75052, please wait...
-Debugger attached successfully.
-Server compiler detected.
-JVM version is 25.131-b11
-
-using thread-local object allocation.
-Parallel GC with 4 thread(s)  //GC方式，并行
-
-Heap Configuration:			//堆初始配置，可以通过 -XX:*(eg:NewSize) 进行对应参数设置
-   MinHeapFreeRatio         = 0		//最小空闲比率
-   MaxHeapFreeRatio         = 100		//最大空闲比率
-   MaxHeapSize              = 4257218560 (4060.0MB)		//最大堆内存
-   NewSize                  = 88604672 (84.5MB)		//新生代内存容量
-   MaxNewSize               = 1418723328 (1353.0MB)		//最大新生代内存容量
-   OldSize                  = 177733632 (169.5MB)		//老年代内存容量
-   NewRatio                 = 2		//新生代和老年代大小比例
-   SurvivorRatio            = 8		//Eden区与Survivor区的大小比值
-   MetaspaceSize            = 21807104 (20.796875MB)		//元空内存容量
-   CompressedClassSpaceSize = 1073741824 (1024.0MB)		//压缩类空间内存容量
-   MaxMetaspaceSize         = 17592186044415 MB		//最大元空间内存
-   G1HeapRegionSize         = 0 (0.0MB)		//G1垃圾回收器中指定分区大小(1MB~32MB，且必须是2的幂)，默认将整堆划分为2048个分区
-
-Heap Usage:
-PS Young Generation
-Eden Space:		//Eden区使用情况：总容量、已使用、空闲、使用比例
-   capacity = 31981568 (30.5MB)
-   used     = 5003392 (4.7716064453125MB)
-   free     = 26978176 (25.7283935546875MB)
-   15.644611296106557% used
-From Space:		//survivor0使用情况
-   capacity = 524288 (0.5MB)
-   used     = 131072 (0.125MB)
-   free     = 393216 (0.375MB)
-   25.0% used
-To Space:		//survivor1使用情况
-   capacity = 524288 (0.5MB)
-   used     = 0 (0.0MB)
-   free     = 524288 (0.5MB)
-   0.0% used
-PS Old Generation		//老年代使用情况
-   capacity = 88604672 (84.5MB)
-   used     = 22120552 (21.095802307128906MB)
-   free     = 66484120 (63.404197692871094MB)
-   24.965446517312316% used
-
-21409 interned Strings occupying 2142768 bytes.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h5 id="heap"><a href="#heap" class="headerlink" title="-heap"></a>-heap</h5><p>输出java堆概览<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">λ jmap -heap 75052</span><br><span class="line">Attaching to process ID 75052, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.131-b11</span><br><span class="line"></span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Parallel GC with 4 thread(s)  //GC方式，并行</span><br><span class="line"></span><br><span class="line">Heap Configuration:			//堆初始配置，可以通过 -XX:*(eg:NewSize) 进行对应参数设置</span><br><span class="line">   MinHeapFreeRatio         = 0		//最小空闲比率</span><br><span class="line">   MaxHeapFreeRatio         = 100		//最大空闲比率</span><br><span class="line">   MaxHeapSize              = 4257218560 (4060.0MB)		//最大堆内存</span><br><span class="line">   NewSize                  = 88604672 (84.5MB)		//新生代内存容量</span><br><span class="line">   MaxNewSize               = 1418723328 (1353.0MB)		//最大新生代内存容量</span><br><span class="line">   OldSize                  = 177733632 (169.5MB)		//老年代内存容量</span><br><span class="line">   NewRatio                 = 2		//新生代和老年代大小比例</span><br><span class="line">   SurvivorRatio            = 8		//Eden区与Survivor区的大小比值</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)		//元空内存容量</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)		//压缩类空间内存容量</span><br><span class="line">   MaxMetaspaceSize         = 17592186044415 MB		//最大元空间内存</span><br><span class="line">   G1HeapRegionSize         = 0 (0.0MB)		//G1垃圾回收器中指定分区大小(1MB~32MB，且必须是2的幂)，默认将整堆划分为2048个分区</span><br><span class="line"></span><br><span class="line">Heap Usage:</span><br><span class="line">PS Young Generation</span><br><span class="line">Eden Space:		//Eden区使用情况：总容量、已使用、空闲、使用比例</span><br><span class="line">   capacity = 31981568 (30.5MB)</span><br><span class="line">   used     = 5003392 (4.7716064453125MB)</span><br><span class="line">   free     = 26978176 (25.7283935546875MB)</span><br><span class="line">   15.644611296106557% used</span><br><span class="line">From Space:		//survivor0使用情况</span><br><span class="line">   capacity = 524288 (0.5MB)</span><br><span class="line">   used     = 131072 (0.125MB)</span><br><span class="line">   free     = 393216 (0.375MB)</span><br><span class="line">   25.0% used</span><br><span class="line">To Space:		//survivor1使用情况</span><br><span class="line">   capacity = 524288 (0.5MB)</span><br><span class="line">   used     = 0 (0.0MB)</span><br><span class="line">   free     = 524288 (0.5MB)</span><br><span class="line">   0.0% used</span><br><span class="line">PS Old Generation		//老年代使用情况</span><br><span class="line">   capacity = 88604672 (84.5MB)</span><br><span class="line">   used     = 22120552 (21.095802307128906MB)</span><br><span class="line">   free     = 66484120 (63.404197692871094MB)</span><br><span class="line">   24.965446517312316% used</span><br><span class="line"></span><br><span class="line">21409 interned Strings occupying 2142768 bytes.</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h2 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h2><p>jhat(JVM Heap Analysis Tool)与jmap结合使用，用来分析dump文件。jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看.<br>本文基于JDK8来分析使用相关命令，所以依旧存在jhat命令。从JDK9的时候已经删除了（JEP 241: Remove the jhat Tool）。现在Oracle官方推荐的分析工具是Eclipse Memory Analyzer Tool (MAT) 和 VisualVM(jvisualvm.exe)。</p>
-<p>相关操作参数,有兴趣的可以深入了解一下：<br></p><pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">Usage:  jhat [-stack &lt;bool&gt;] [-refs &lt;bool&gt;] [-port &lt;port&gt;] [-baseline &lt;file&gt;] [-debug &lt;int&gt;] [-version] [-h|-help] &lt;file&gt;
-
-        -J&lt;flag&gt;          Pass &lt;flag&gt; directly to the runtime system. For
-                          example, -J-mx512m to use a maximum heap size of 512MB
-        -stack false:     Turn off tracking object allocation call stack.
-        -refs false:      Turn off tracking of references to objects
-        -port &lt;port&gt;:     Set the port for the HTTP server.  Defaults to 7000
-        -exclude &lt;file&gt;:  Specify a file that lists data members that should
-                          be excluded from the reachableFrom query.
-        -baseline &lt;file&gt;: Specify a baseline object dump.  Objects in
-                          both heap dumps with the same ID and same class will
-                          be marked as not being "new".
-        -debug &lt;int&gt;:     Set debug level.
-                            0:  No debug output
-                            1:  Debug hprof file parsing
-                            2:  Debug hprof file parsing, no server
-        -version          Report version number
-        -h|-help          Print this help and exit
-        &lt;file&gt;            The file to read<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>相关操作参数,有兴趣的可以深入了解一下：<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Usage:  jhat [-stack &lt;bool&gt;] [-refs &lt;bool&gt;] [-port &lt;port&gt;] [-baseline &lt;file&gt;] [-debug &lt;int&gt;] [-version] [-h|-help] &lt;file&gt;</span><br><span class="line"></span><br><span class="line">        -J&lt;flag&gt;          Pass &lt;flag&gt; directly to the runtime system. For</span><br><span class="line">                          example, -J-mx512m to use a maximum heap size of 512MB</span><br><span class="line">        -stack false:     Turn off tracking object allocation call stack.</span><br><span class="line">        -refs false:      Turn off tracking of references to objects</span><br><span class="line">        -port &lt;port&gt;:     Set the port for the HTTP server.  Defaults to 7000</span><br><span class="line">        -exclude &lt;file&gt;:  Specify a file that lists data members that should</span><br><span class="line">                          be excluded from the reachableFrom query.</span><br><span class="line">        -baseline &lt;file&gt;: Specify a baseline object dump.  Objects in</span><br><span class="line">                          both heap dumps with the same ID and same class will</span><br><span class="line">                          be marked as not being "new".</span><br><span class="line">        -debug &lt;int&gt;:     Set debug level.</span><br><span class="line">                            0:  No debug output</span><br><span class="line">                            1:  Debug hprof file parsing</span><br><span class="line">                            2:  Debug hprof file parsing, no server</span><br><span class="line">        -version          Report version number</span><br><span class="line">        -h|-help          Print this help and exit</span><br><span class="line">        &lt;file&gt;            The file to read</span><br></pre></td></tr></tbody></table></figure><p></p>
 
                 
             </div>
@@ -1139,13 +953,13 @@ PS Old Generation		//老年代使用情况
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/bd5c77e2.html">
+                <a href="/posts/23c1b730.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Docker之MySQL安装">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="docker日常命令">
                         
-                        <span class="card-title">Docker之MySQL安装</span>
+                        <span class="card-title">docker日常命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1162,8 +976,8 @@ PS Old Generation		//老年代使用情况
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Mysql/" class="post-category">
-                                    Mysql
+                            <a href="/categories/Docker/" class="post-category">
+                                    Docker
                                 </a>
                             
                             
@@ -1173,12 +987,8 @@ PS Old Generation		//老年代使用情况
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/docker/">
-                        <span class="chip bg-color">docker</span>
-                    </a>
-                    
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/command/">
+                        <span class="chip bg-color">command</span>
                     </a>
                     
                 </div>
@@ -1196,9 +1006,6 @@ PS Old Generation		//老年代使用情况
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -1366,7 +1173,7 @@ PS Old Generation		//老年代使用情况
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1374,7 +1181,7 @@ PS Old Generation		//老年代使用情况
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

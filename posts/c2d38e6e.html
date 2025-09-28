@@ -441,9 +441,6 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
@@ -479,7 +476,7 @@
 <li><p>堆（Heap）是JVM最重要的也是最大的一块内存，在虚拟机启动时创建。对于堆来说，它可以位于物理上不连续而逻辑上连续的内存空间中。在实际情况下也可以通过调整虚拟机参数的方式对堆进行扩展，即通过 -Xmx 和 -Xms 控制。</p>
 </li>
 <li><p>该区域的主要作用: <strong>为对象实例及数组分配内存</strong>，几乎存储了所有对象实例。同时也是垃圾回收器管理的主要区域，因此也被称作GC 堆（Garbage Collected Heap）。 <br><br><br>Java堆还可以细分为：新生代和老年代。再细致一点的有Eden空间、From Survivor空间、To Survivor空间等。具体如下图：<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/JVM/Heap.jpg" alt="堆Heap详细分布">1.8后去除永生代，用元空间替代。<br><br><br>查看虚拟机默认配置命令：</p>
-<pre class="line-numbers language-xshell" data-language="xshell"><code class="language-xshell">java -XX:+PrintFlagsFinal -version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:+PrintFlagsFinal -version</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 <h4 id="2-5-方法区-Method-Area"><a href="#2-5-方法区-Method-Area" class="headerlink" title="2.5 方法区(Method Area)"></a>2.5 方法区(Method Area)</h4><ol>
@@ -791,9 +788,6 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
-
 
 <!-- 代码语言 -->
 
@@ -960,7 +954,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -968,7 +962,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

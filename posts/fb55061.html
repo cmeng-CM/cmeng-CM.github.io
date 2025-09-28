@@ -444,115 +444,19 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>符合AES加密要求的字符串作为密钥，并且这个字符串可以直接用于加密和解密操作，那么我们需要确保这个字符串具有正确的长度（16字节/AES-128, 24字节/AES-192, 或32字节/AES-256）。下面是一个具体的例子，使用一个32字符长的字符串作为AES-256的密钥。</p>
-<h3 id="直接使用的密钥字符串"><a href="#直接使用的密钥字符串" class="headerlink" title="直接使用的密钥字符串"></a>直接使用的密钥字符串</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Constants</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 32 字符长的字符串，适用于 AES-256</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SHARED_SECRET</span> <span class="token operator">=</span> <span class="token string">"your32characterlongsecretkey"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="直接使用的密钥字符串"><a href="#直接使用的密钥字符串" class="headerlink" title="直接使用的密钥字符串"></a>直接使用的密钥字符串</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Constants</span> {</span><br><span class="line">    <span class="comment">// 32 字符长的字符串，适用于 AES-256</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">SHARED_SECRET</span> <span class="operator">=</span> <span class="string">"your32characterlongsecretkey"</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="完整实现示例"><a href="#完整实现示例" class="headerlink" title="完整实现示例"></a>完整实现示例</h3><h4 id="1-签名与验证"><a href="#1-签名与验证" class="headerlink" title="1. 签名与验证"></a>1. <strong>签名与验证</strong></h4><h5 id="客户端签名请求"><a href="#客户端签名请求" class="headerlink" title="客户端签名请求"></a>客户端签名请求</h5><p>客户端在发送请求之前，使用共享密钥对特定的请求头字段（例如时间戳和nonce）进行签名，并将签名结果附加到请求头中。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>crypto<span class="token punctuation">.</span></span><span class="token class-name">Mac</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>crypto<span class="token punctuation">.</span>spec<span class="token punctuation">.</span></span><span class="token class-name">SecretKeySpec</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span><span class="token class-name">HttpURLConnection</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span><span class="token class-name">URL</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Base64</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">UUID</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ClientSignatureExample</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sharedSecretBytes <span class="token operator">=</span> <span class="token class-name">Constants</span><span class="token punctuation">.</span><span class="token constant">SHARED_SECRET</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
-        <span class="token class-name">URL</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span><span class="token string">"https://api.cmeng.com/list"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">HttpURLConnection</span> conn <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">HttpURLConnection</span><span class="token punctuation">)</span> url<span class="token punctuation">.</span><span class="token function">openConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        conn<span class="token punctuation">.</span><span class="token function">setRequestMethod</span><span class="token punctuation">(</span><span class="token string">"POST"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// 创建唯一的时间戳和随机数</span>
-        <span class="token class-name">String</span> timestamp <span class="token operator">=</span> <span class="token class-name">Long</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">String</span> nonce <span class="token operator">=</span> <span class="token constant">UUID</span><span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// 对时间戳和随机数进行签名</span>
-        <span class="token class-name">String</span> dataToSign <span class="token operator">=</span> timestamp <span class="token operator">+</span> nonce<span class="token punctuation">;</span>
-        <span class="token class-name">String</span> signature <span class="token operator">=</span> <span class="token function">signData</span><span class="token punctuation">(</span>dataToSign<span class="token punctuation">,</span> sharedSecretBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// 设置请求头</span>
-        conn<span class="token punctuation">.</span><span class="token function">setRequestProperty</span><span class="token punctuation">(</span><span class="token string">"Timestamp"</span><span class="token punctuation">,</span> timestamp<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        conn<span class="token punctuation">.</span><span class="token function">setRequestProperty</span><span class="token punctuation">(</span><span class="token string">"Nonce"</span><span class="token punctuation">,</span> nonce<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        conn<span class="token punctuation">.</span><span class="token function">setRequestProperty</span><span class="token punctuation">(</span><span class="token string">"Authorization"</span><span class="token punctuation">,</span> <span class="token string">"HMAC "</span> <span class="token operator">+</span> signature<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">int</span> responseCode <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">getResponseCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Response Code: "</span> <span class="token operator">+</span> responseCode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">signData</span><span class="token punctuation">(</span><span class="token class-name">String</span> data<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> secretKey<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
-        <span class="token class-name">Mac</span> mac <span class="token operator">=</span> <span class="token class-name">Mac</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token string">"HmacSHA256"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mac<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SecretKeySpec</span><span class="token punctuation">(</span>secretKey<span class="token punctuation">,</span> <span class="token string">"HmacSHA256"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> signedData <span class="token operator">=</span> mac<span class="token punctuation">.</span><span class="token function">doFinal</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token class-name">Base64</span><span class="token punctuation">.</span><span class="token function">getEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encodeToString</span><span class="token punctuation">(</span>signedData<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.crypto.Mac;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.util.Base64;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClientSignatureExample</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] sharedSecretBytes = Constants.SHARED_SECRET.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(<span class="string">"https://api.cmeng.com/list"</span>);</span><br><span class="line">        <span class="type">HttpURLConnection</span> <span class="variable">conn</span> <span class="operator">=</span> (HttpURLConnection) url.openConnection();</span><br><span class="line">        conn.setRequestMethod(<span class="string">"POST"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建唯一的时间戳和随机数</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> Long.toString(System.currentTimeMillis());</span><br><span class="line">        <span class="type">String</span> <span class="variable">nonce</span> <span class="operator">=</span> UUID.randomUUID().toString();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对时间戳和随机数进行签名</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">dataToSign</span> <span class="operator">=</span> timestamp + nonce;</span><br><span class="line">        <span class="type">String</span> <span class="variable">signature</span> <span class="operator">=</span> signData(dataToSign, sharedSecretBytes);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置请求头</span></span><br><span class="line">        conn.setRequestProperty(<span class="string">"Timestamp"</span>, timestamp);</span><br><span class="line">        conn.setRequestProperty(<span class="string">"Nonce"</span>, nonce);</span><br><span class="line">        conn.setRequestProperty(<span class="string">"Authorization"</span>, <span class="string">"HMAC "</span> + signature);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">responseCode</span> <span class="operator">=</span> conn.getResponseCode();</span><br><span class="line">        System.out.println(<span class="string">"Response Code: "</span> + responseCode);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">signData</span><span class="params">(String data, <span class="type">byte</span>[] secretKey)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="type">Mac</span> <span class="variable">mac</span> <span class="operator">=</span> Mac.getInstance(<span class="string">"HmacSHA256"</span>);</span><br><span class="line">        mac.init(<span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(secretKey, <span class="string">"HmacSHA256"</span>));</span><br><span class="line">        <span class="type">byte</span>[] signedData = mac.doFinal(data.getBytes(<span class="string">"UTF-8"</span>));</span><br><span class="line">        <span class="keyword">return</span> Base64.getEncoder().encodeToString(signedData);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h5 id="服务端验证签名"><a href="#服务端验证签名" class="headerlink" title="服务端验证签名"></a>服务端验证签名</h5><p>服务端接收到请求后，使用相同的共享密钥对签名进行验证，以确保请求来自合法客户端，并且未被篡改。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpServletRequest</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>security<span class="token punctuation">.</span></span><span class="token class-name">MessageDigest</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Base64</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ServerSignatureVerification</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sharedSecretBytes <span class="token operator">=</span> <span class="token class-name">Constants</span><span class="token punctuation">.</span><span class="token constant">SHARED_SECRET</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">verifyRequest</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
-        <span class="token class-name">String</span> timestamp <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"Timestamp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">String</span> nonce <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"Nonce"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">String</span> authorizationHeader <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"Authorization"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>timestamp <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> nonce <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> authorizationHeader <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token class-name">String</span> receivedSignature <span class="token operator">=</span> authorizationHeader<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"HMAC "</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">String</span> dataToVerify <span class="token operator">=</span> timestamp <span class="token operator">+</span> nonce<span class="token punctuation">;</span>
-
-        <span class="token comment">// 验证签名</span>
-        <span class="token class-name">String</span> calculatedSignature <span class="token operator">=</span> <span class="token function">signData</span><span class="token punctuation">(</span>dataToVerify<span class="token punctuation">,</span> sharedSecretBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token class-name">MessageDigest</span><span class="token punctuation">.</span><span class="token function">isEqual</span><span class="token punctuation">(</span>
-            <span class="token class-name">Base64</span><span class="token punctuation">.</span><span class="token function">getDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span>receivedSignature<span class="token punctuation">)</span><span class="token punctuation">,</span>
-            <span class="token class-name">Base64</span><span class="token punctuation">.</span><span class="token function">getDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span>calculatedSignature<span class="token punctuation">)</span>
-        <span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">String</span> <span class="token function">signData</span><span class="token punctuation">(</span><span class="token class-name">String</span> data<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> secretKey<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
-        <span class="token class-name">Mac</span> mac <span class="token operator">=</span> <span class="token class-name">Mac</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token string">"HmacSHA256"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        mac<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SecretKeySpec</span><span class="token punctuation">(</span>secretKey<span class="token punctuation">,</span> <span class="token string">"HmacSHA256"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> signedData <span class="token operator">=</span> mac<span class="token punctuation">.</span><span class="token function">doFinal</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token class-name">Base64</span><span class="token punctuation">.</span><span class="token function">getEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encodeToString</span><span class="token punctuation">(</span>signedData<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.security.MessageDigest;</span><br><span class="line"><span class="keyword">import</span> java.util.Base64;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServerSignatureVerification</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] sharedSecretBytes = Constants.SHARED_SECRET.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">verifyRequest</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> request.getHeader(<span class="string">"Timestamp"</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">nonce</span> <span class="operator">=</span> request.getHeader(<span class="string">"Nonce"</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">authorizationHeader</span> <span class="operator">=</span> request.getHeader(<span class="string">"Authorization"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (timestamp == <span class="literal">null</span> || nonce == <span class="literal">null</span> || authorizationHeader == <span class="literal">null</span>) {</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">receivedSignature</span> <span class="operator">=</span> authorizationHeader.replace(<span class="string">"HMAC "</span>, <span class="string">""</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">dataToVerify</span> <span class="operator">=</span> timestamp + nonce;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 验证签名</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">calculatedSignature</span> <span class="operator">=</span> signData(dataToVerify, sharedSecretBytes);</span><br><span class="line">        <span class="keyword">return</span> MessageDigest.isEqual(</span><br><span class="line">            Base64.getDecoder().decode(receivedSignature),</span><br><span class="line">            Base64.getDecoder().decode(calculatedSignature)</span><br><span class="line">        );</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">signData</span><span class="params">(String data, <span class="type">byte</span>[] secretKey)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="type">Mac</span> <span class="variable">mac</span> <span class="operator">=</span> Mac.getInstance(<span class="string">"HmacSHA256"</span>);</span><br><span class="line">        mac.init(<span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(secretKey, <span class="string">"HmacSHA256"</span>));</span><br><span class="line">        <span class="type">byte</span>[] signedData = mac.doFinal(data.getBytes(<span class="string">"UTF-8"</span>));</span><br><span class="line">        <span class="keyword">return</span> Base64.getEncoder().encodeToString(signedData);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h4 id="2-防止重放攻击"><a href="#2-防止重放攻击" class="headerlink" title="2. 防止重放攻击"></a>2. <strong>防止重放攻击</strong></h4><p>为了进一步增强安全性，可以在服务端记录每个收到的时间戳和随机数组合，确保它们不会被重复使用。可以设置一个合理的过期时间窗口，超出这个时间段的请求将被视为无效。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">ConcurrentHashMap</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">TimeUnit</span></span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReplayAttackPrevention</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> <span class="token constant">EXPIRATION_TIME_MS</span> <span class="token operator">=</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span><span class="token constant">MINUTES</span><span class="token punctuation">.</span><span class="token function">toMillis</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> seenNonces <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">isNonceValid</span><span class="token punctuation">(</span><span class="token class-name">String</span> nonce<span class="token punctuation">,</span> <span class="token class-name">String</span> timestamp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 检查时间戳是否在有效期内</span>
-        <span class="token keyword">long</span> now <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">long</span> messageTime <span class="token operator">=</span> <span class="token class-name">Long</span><span class="token punctuation">.</span><span class="token function">parseLong</span><span class="token punctuation">(</span>timestamp<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>now <span class="token operator">-</span> messageTime <span class="token operator">&gt;</span> <span class="token constant">EXPIRATION_TIME_MS</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment">// 检查 nonce 是否已经被使用过</span>
-        <span class="token keyword">return</span> seenNonces<span class="token punctuation">.</span><span class="token function">putIfAbsent</span><span class="token punctuation">(</span>nonce<span class="token punctuation">,</span> now<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.ConcurrentHashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ReplayAttackPrevention</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">EXPIRATION_TIME_MS</span> <span class="operator">=</span> TimeUnit.MINUTES.toMillis(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ConcurrentHashMap&lt;String, Long&gt; seenNonces = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isNonceValid</span><span class="params">(String nonce, String timestamp)</span> {</span><br><span class="line">        <span class="comment">// 检查时间戳是否在有效期内</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">now</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="type">long</span> <span class="variable">messageTime</span> <span class="operator">=</span> Long.parseLong(timestamp);</span><br><span class="line">        <span class="keyword">if</span> (now - messageTime &gt; EXPIRATION_TIME_MS) {</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查 nonce 是否已经被使用过</span></span><br><span class="line">        <span class="keyword">return</span> seenNonces.putIfAbsent(nonce, now) == <span class="literal">null</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在示例代码中，<code>HMAC</code> 是“基于哈希的消息认证码”（Hash-based Message Authentication Code）的缩写。它是一种用于验证消息完整性和身份验证的机制，结合了哈希函数和密钥来生成一个固定长度的认证码。HMAC 不仅可以确保消息未被篡改，还可以验证发送者的真实性。</p>
 <h3 id="HMAC-的工作原理"><a href="#HMAC-的工作原理" class="headerlink" title="HMAC 的工作原理"></a>HMAC 的工作原理</h3><ol>
 <li><strong>输入</strong>：需要一个密钥（Key）和消息（Message）。</li>
@@ -560,16 +464,9 @@
 <li><strong>输出</strong>：生成一个固定长度的字符串，即 HMAC 值或标签（Tag），通常以十六进制或Base64编码形式表示。</li>
 </ol>
 <h3 id="示例中的-HMAC"><a href="#示例中的-HMAC" class="headerlink" title="示例中的 HMAC"></a>示例中的 <code>HMAC</code></h3><p>在之前的Java示例中，我们使用了 <code>HMAC</code> 来签名请求头中的时间戳和随机数（nonce），以便服务端能够验证这些信息的真实性和完整性。具体来说：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 对时间戳和随机数进行签名</span>
-<span class="token class-name">String</span> dataToSign <span class="token operator">=</span> timestamp <span class="token operator">+</span> nonce<span class="token punctuation">;</span>
-<span class="token class-name">String</span> signature <span class="token operator">=</span> <span class="token function">signData</span><span class="token punctuation">(</span>dataToSign<span class="token punctuation">,</span> sharedSecretBytes<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对时间戳和随机数进行签名</span></span><br><span class="line"><span class="type">String</span> <span class="variable">dataToSign</span> <span class="operator">=</span> timestamp + nonce;</span><br><span class="line"><span class="type">String</span> <span class="variable">signature</span> <span class="operator">=</span> signData(dataToSign, sharedSecretBytes);</span><br></pre></td></tr></tbody></table></figure>
 <p>这里的 <code>signData</code> 方法实现了 HMAC 签名过程：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">signData</span><span class="token punctuation">(</span><span class="token class-name">String</span> data<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> secretKey<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
-    <span class="token class-name">Mac</span> mac <span class="token operator">=</span> <span class="token class-name">Mac</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token string">"HmacSHA256"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    mac<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SecretKeySpec</span><span class="token punctuation">(</span>secretKey<span class="token punctuation">,</span> <span class="token string">"HmacSHA256"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> signedData <span class="token operator">=</span> mac<span class="token punctuation">.</span><span class="token function">doFinal</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Base64</span><span class="token punctuation">.</span><span class="token function">getEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encodeToString</span><span class="token punctuation">(</span>signedData<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">signData</span><span class="params">(String data, <span class="type">byte</span>[] secretKey)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">    <span class="type">Mac</span> <span class="variable">mac</span> <span class="operator">=</span> Mac.getInstance(<span class="string">"HmacSHA256"</span>);</span><br><span class="line">    mac.init(<span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(secretKey, <span class="string">"HmacSHA256"</span>));</span><br><span class="line">    <span class="type">byte</span>[] signedData = mac.doFinal(data.getBytes(<span class="string">"UTF-8"</span>));</span><br><span class="line">    <span class="keyword">return</span> Base64.getEncoder().encodeToString(signedData);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><ul>
 <li><strong><code>HmacSHA256</code></strong>：这是指定使用的哈希算法，表示我们将使用SHA-256作为基础哈希函数来计算 HMAC。</li>
 <li><strong><code>Mac.getInstance("HmacSHA256")</code></strong>：创建一个 HMAC 实例，指定使用 SHA-256 作为哈希算法。</li>
@@ -735,18 +632,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/fb55061.html">
+                <a href="/posts/3691c40f.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="服务端接口鉴权机制——HMAC">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Common Table Expressions (CTE)">
                         
-                        <span class="card-title">服务端接口鉴权机制——HMAC</span>
+                        <span class="card-title">Common Table Expressions (CTE)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -756,35 +652,30 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-17
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-12-18
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/HMAC/" class="post-category">
-                                    HMAC
+                            <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/HMAC/">
-                        <span class="chip bg-color">HMAC</span>
+                    <a href="/tags/CTE/">
+                        <span class="chip bg-color">CTE</span>
                     </a>
                     
-                    <a href="/tags/ASE/">
-                        <span class="chip bg-color">ASE</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
-                        <span class="chip bg-color">后端</span>
+                    <a href="/tags/Mysql/">
+                        <span class="chip bg-color">Mysql</span>
                     </a>
                     
                 </div>
@@ -798,13 +689,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/0.html">
+                <a href="/posts/6918a5b5.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="vue3中icon的使用">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">vue3中icon的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -815,15 +706,35 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-17
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            cmeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vue3/" class="post-category">
+                                    vue3
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/vue3/">
+                        <span class="chip bg-color">vue3</span>
+                    </a>
+                    
+                    <a href="/tags/icon/">
+                        <span class="chip bg-color">icon</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%89%8D%E7%AB%AF/">
+                        <span class="chip bg-color">前端</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -839,9 +750,6 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -1009,7 +917,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1017,7 +925,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

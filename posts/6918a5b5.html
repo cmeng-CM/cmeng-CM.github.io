@@ -424,7 +424,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    872
+                    880
                 </div>
                 
 
@@ -446,9 +446,6 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
@@ -456,185 +453,38 @@
             <div id="articleContent">
                 <h1 id="vue3中icon的使用"><a href="#vue3中icon的使用" class="headerlink" title="vue3中icon的使用"></a>vue3中icon的使用</h1><p>本文以【vite】+【vue3】+【TypeScript】方式进行演示，如使用JS可自行转化。</p>
 <h2 id="一、element-plus-icons-vue"><a href="#一、element-plus-icons-vue" class="headerlink" title="一、element-plus/icons-vue"></a>一、element-plus/icons-vue</h2><p>Element Plus 提供了一套常用的图标集合，可以直接进行使用</p>
-<h3 id="1-1、安装"><a href="#1-1、安装" class="headerlink" title="1.1、安装"></a>1.1、安装</h3><p>使用包管理器<br></p><pre class="line-numbers language-npmrc" data-language="npmrc"><code class="language-npmrc"># 选择一个你喜欢的包管理器
-
-# NPM
-$ npm install @element-plus/icons-vue
-# Yarn
-$ yarn add @element-plus/icons-vue
-# pnpm
-$ pnpm install @element-plus/icons-vue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h3 id="1-1、安装"><a href="#1-1、安装" class="headerlink" title="1.1、安装"></a>1.1、安装</h3><p>使用包管理器<br></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 选择一个你喜欢的包管理器</span><br><span class="line"></span><br><span class="line"># NPM</span><br><span class="line">$ npm install @element-plus/icons-vue</span><br><span class="line"># Yarn</span><br><span class="line">$ yarn add @element-plus/icons-vue</span><br><span class="line"># pnpm</span><br><span class="line">$ pnpm install @element-plus/icons-vue</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h3 id="1-2、注册所有图标"><a href="#1-2、注册所有图标" class="headerlink" title="1.2、注册所有图标"></a>1.2、注册所有图标</h3><p>从 @element-plus/icons-vue 中导入所有图标并进行全局注册。</p>
-<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">// main.ts</span>
-
-<span class="token comment">// 如果您正在使用CDN引入，请删除下面一行。</span>
-<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> ElementPlusIconsVue <span class="token keyword">from</span> <span class="token string">'@element-plus/icons-vue'</span>
-
-<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token punctuation">[</span>key<span class="token punctuation">,</span> component<span class="token punctuation">]</span> <span class="token keyword">of</span> Object<span class="token punctuation">.</span><span class="token function">entries</span><span class="token punctuation">(</span>ElementPlusIconsVue<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  app<span class="token punctuation">.</span><span class="token function">component</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> component<span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="1-3、使用"><a href="#1-3、使用" class="headerlink" title="1.3、使用"></a>1.3、使用</h3><h4 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h4><pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;!-- 使用 el-icon 为 SVG 图标提供属性 --&gt;
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;el-icon :size="size" :color="color"&gt;
-      &lt;Edit /&gt;
-    &lt;/el-icon&gt;
-
-    &lt;!-- 或者独立使用它，不从父级获取属性 --&gt;
-    &lt;Edit /&gt;
-    &lt;Edit style="width: 1em; height: 1em; margin-right: 8px" /&gt;
-    
-    &lt;!-- el-icon 为 raw SVG 图标提供额外的属性 --&gt;
-    &lt;el-icon color="#409EFC" class="no-inherit"&gt;
-        &lt;Share /&gt;
-    &lt;/el-icon&gt;
-    &lt;el-icon&gt;
-        &lt;Delete /&gt;
-    &lt;/el-icon&gt;
-    &lt;el-icon class="is-loading"&gt;
-        &lt;Loading /&gt;
-    &lt;/el-icon&gt;
-    &lt;el-button type="primary"&gt;
-        &lt;el-icon style="vertical-align: middle"&gt;
-            &lt;Search /&gt;
-        &lt;/el-icon&gt;
-        &lt;span style="vertical-align: middle"&gt; Search &lt;/span&gt;
-    &lt;/el-button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果您正在使用CDN引入，请删除下面一行。</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">ElementPlusIconsVue</span> <span class="keyword">from</span> <span class="string">'@element-plus/icons-vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">createApp</span>(<span class="title class_">App</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, component] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(<span class="title class_">ElementPlusIconsVue</span>)) {</span><br><span class="line">  app.<span class="title function_">component</span>(key, component)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="1-3、使用"><a href="#1-3、使用" class="headerlink" title="1.3、使用"></a>1.3、使用</h3><h4 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用 el-icon 为 SVG 图标提供属性 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;el-icon :size="size" :color="color"&gt;</span><br><span class="line">      &lt;Edit /&gt;</span><br><span class="line">    &lt;/el-icon&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 或者独立使用它，不从父级获取属性 --&gt;</span><br><span class="line">    &lt;Edit /&gt;</span><br><span class="line">    &lt;Edit style="width: 1em; height: 1em; margin-right: 8px" /&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- el-icon 为 raw SVG 图标提供额外的属性 --&gt;</span><br><span class="line">    &lt;el-icon color="#409EFC" class="no-inherit"&gt;</span><br><span class="line">        &lt;Share /&gt;</span><br><span class="line">    &lt;/el-icon&gt;</span><br><span class="line">    &lt;el-icon&gt;</span><br><span class="line">        &lt;Delete /&gt;</span><br><span class="line">    &lt;/el-icon&gt;</span><br><span class="line">    &lt;el-icon class="is-loading"&gt;</span><br><span class="line">        &lt;Loading /&gt;</span><br><span class="line">    &lt;/el-icon&gt;</span><br><span class="line">    &lt;el-button type="primary"&gt;</span><br><span class="line">        &lt;el-icon style="vertical-align: middle"&gt;</span><br><span class="line">            &lt;Search /&gt;</span><br><span class="line">        &lt;/el-icon&gt;</span><br><span class="line">        &lt;span style="vertical-align: middle"&gt; Search &lt;/span&gt;</span><br><span class="line">    &lt;/el-button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
 <h4 id="动态使用"><a href="#动态使用" class="headerlink" title="动态使用"></a>动态使用</h4><p>icons-vue图标也可动态使用并渲染，比如菜单导航栏、动态编辑等。</p>
-<pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;!-- 前提是route.meta.icon这个参数要配置好并且与官网提供的图标组件名称一致 --&gt;
-&lt;el-icon&gt;
-    &lt;component :is="route.meta.icon" &gt;
-&lt;/component&gt;&lt;/el-icon&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 前提是route.meta.icon这个参数要配置好并且与官网提供的图标组件名称一致 --&gt;</span><br><span class="line">&lt;el-icon&gt;</span><br><span class="line">    &lt;component :is="route.meta.icon" &gt;</span><br><span class="line">&lt;/component&gt;&lt;/el-icon&gt;</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="二、svg-icon图标直接使用"><a href="#二、svg-icon图标直接使用" class="headerlink" title="二、svg-icon图标直接使用"></a>二、svg-icon图标直接使用</h2><h3 id="2-1、安装插件"><a href="#2-1、安装插件" class="headerlink" title="2.1、安装插件"></a>2.1、安装插件</h3><p><a href="!https://github.com/vbenjs/vite-plugin-svg-icons">vite-plugin-svg-icons</a>  用于生成 svg 雪碧图.</p>
-<pre class="line-numbers language-npmrc" data-language="npmrc"><code class="language-npmrc">&lt;!-- 版本要求
-    node version: &gt;=12.0.0
-    vite version: &gt;=2.0.0
- --&gt;
-yarn add vite-plugin-svg-icons -D
-# or
-npm i vite-plugin-svg-icons -D
-# or
-pnpm install vite-plugin-svg-icons -D<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 版本要求</span><br><span class="line">    node version: &gt;=12.0.0</span><br><span class="line">    vite version: &gt;=2.0.0</span><br><span class="line"> --&gt;</span><br><span class="line">yarn add vite-plugin-svg-icons -D</span><br><span class="line"># or</span><br><span class="line">npm i vite-plugin-svg-icons -D</span><br><span class="line"># or</span><br><span class="line">pnpm install vite-plugin-svg-icons -D</span><br></pre></td></tr></tbody></table></figure>
 <p>一般会同时需要以下两个插件：</p>
 <ul>
 <li><p>fast-glob：依赖于 fast-glob 包来处理 SVG 图标文件</p>
 <ul>
-<li>```npmrc<br>  安装<br>  npm install fast-glob  <pre class="line-numbers language-none"><code class="language-none">* sass：依赖于 sass 包来处理 CSS 文件
-    * ```npmrc 
-        安装
-        npm install sass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<li>```npmrc<br>  安装<br>  npm install fast-glob  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* sass：依赖于 sass 包来处理 CSS 文件</span><br><span class="line">    * ```npmrc </span><br><span class="line">        安装</span><br><span class="line">        npm install sass</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 <h3 id="2-2、配置"><a href="#2-2、配置" class="headerlink" title="2.2、配置"></a>2.2、配置</h3><ul>
 <li><p>vite.config.ts 中的配置插件</p>
-  <pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">{</span> createSvgIconsPlugin <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vite-plugin-svg-icons'</span>
-<span class="token keyword">import</span> path <span class="token keyword">from</span> <span class="token string">'path'</span>
-
-<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-<span class="token keyword">return</span> <span class="token punctuation">{</span>
-    plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token function">createSvgIconsPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-            <span class="token comment">// 指定需要缓存的图标文件夹</span>
-            iconDirs<span class="token operator">:</span> <span class="token punctuation">[</span>path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span><span class="token function">cwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'src/icons'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token comment">// 指定symbolId格式</span>
-            symbolId<span class="token operator">:</span> <span class="token string">'icon-[dir]-[name]'</span><span class="token punctuation">,</span>
-
-            <span class="token comment">/**
-             * 自定义插入位置
-            * @default: body-last
-            */</span>
-            inject<span class="token operator">?</span><span class="token operator">:</span> <span class="token string">'body-last'</span> <span class="token operator">|</span> <span class="token string">'body-first'</span>
-
-            <span class="token comment">/**
-             * custom dom id
-            * @default: __svg__icons__dom__
-            */</span>
-            customDomId<span class="token operator">:</span> <span class="token string">'__svg__icons__dom__'</span><span class="token punctuation">,</span>
-            
-            <span class="token comment">/**
-             * 颜色修改生效需增加以下配置 【此配置需每次引用SvgIcon时都需要设置颜色，否则svg颜色将全部置灰】
-             */</span>
-            svgoOptions<span class="token operator">:</span> <span class="token punctuation">{</span>
-                full<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-                plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
-                <span class="token punctuation">{</span>
-                name<span class="token operator">:</span> <span class="token string">"removeAttrs"</span><span class="token punctuation">,</span>
-                params<span class="token operator">:</span> <span class="token punctuation">{</span>
-                    attrs<span class="token operator">:</span> <span class="token string">"fill"</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span>
-                <span class="token punctuation">]</span>
-            <span class="token punctuation">}</span><span class="token punctuation">,</span>
-
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token punctuation">]</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <figure class="highlight ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { createSvgIconsPlugin } <span class="keyword">from</span> <span class="string">'vite-plugin-svg-icons'</span></span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">'path'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; {</span><br><span class="line"><span class="keyword">return</span> {</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">        <span class="title function_">createSvgIconsPlugin</span>({</span><br><span class="line">            <span class="comment">// 指定需要缓存的图标文件夹</span></span><br><span class="line">            <span class="attr">iconDirs</span>: [path.<span class="title function_">resolve</span>(process.<span class="title function_">cwd</span>(), <span class="string">'src/icons'</span>)],</span><br><span class="line">            <span class="comment">// 指定symbolId格式</span></span><br><span class="line">            <span class="attr">symbolId</span>: <span class="string">'icon-[dir]-[name]'</span>,</span><br><span class="line"></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 自定义插入位置</span></span><br><span class="line"><span class="comment">            * <span class="doctag">@default</span>: body-last</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            inject?: <span class="string">'body-last'</span> | <span class="string">'body-first'</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * custom dom id</span></span><br><span class="line"><span class="comment">            * <span class="doctag">@default</span>: __svg__icons__dom__</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            <span class="attr">customDomId</span>: <span class="string">'__svg__icons__dom__'</span>,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 颜色修改生效需增加以下配置 【此配置需每次引用SvgIcon时都需要设置颜色，否则svg颜色将全部置灰】</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="attr">svgoOptions</span>: {</span><br><span class="line">                <span class="attr">full</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">plugins</span>: [</span><br><span class="line">                {</span><br><span class="line">                <span class="attr">name</span>: <span class="string">"removeAttrs"</span>,</span><br><span class="line">                <span class="attr">params</span>: {</span><br><span class="line">                    <span class="attr">attrs</span>: <span class="string">"fill"</span></span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">                ]</span><br><span class="line">            },</span><br><span class="line"></span><br><span class="line">        }),</span><br><span class="line">    ],</span><br><span class="line">}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>在 src/main.ts 内引入注册脚本</p>
-  <pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">// 这行代码的作用是在你的项目中注册一个自定义的 SVG 图标库。</span>
-<span class="token keyword">import</span> <span class="token string">'virtual:svg-icons-register'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+  <figure class="highlight ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这行代码的作用是在你的项目中注册一个自定义的 SVG 图标库。</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'virtual:svg-icons-register'</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h3 id="2-3、使用，vue中"><a href="#2-3、使用，vue中" class="headerlink" title="2.3、使用，vue中"></a>2.3、使用，vue中</h3><ul>
-<li>定义组件  <pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
-    &lt;svg aria-hidden="true"&gt;
-        &lt;use :xlink:href="symbolId" :fill="color" /&gt;
-    &lt;/svg&gt;
-&lt;/template&gt;
-
-&lt;script setup lang="ts" name="SvgIcon"&gt;
-import { defineComponent, computed } from 'vue'
-
-const props = defineProps({
-    prefix: {
-        type: String,
-        default: 'icon',
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    color: {
-        type: String,
-        default: '#333',
-    },
-});
-
-const symbolId = computed(() =&gt; `#${props.prefix}-${props.name}`);
-&lt;/script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>定义组件  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;svg aria-hidden="true"&gt;</span><br><span class="line">        &lt;use :xlink:href="symbolId" :fill="color" /&gt;</span><br><span class="line">    &lt;/svg&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup lang="ts" name="SvgIcon"&gt;</span><br><span class="line">import { defineComponent, computed } from 'vue'</span><br><span class="line"></span><br><span class="line">const props = defineProps({</span><br><span class="line">    prefix: {</span><br><span class="line">        type: String,</span><br><span class="line">        default: 'icon',</span><br><span class="line">    },</span><br><span class="line">    name: {</span><br><span class="line">        type: String,</span><br><span class="line">        required: true,</span><br><span class="line">    },</span><br><span class="line">    color: {</span><br><span class="line">        type: String,</span><br><span class="line">        default: '#333',</span><br><span class="line">    },</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">const symbolId = computed(() =&gt; `#${props.prefix}-${props.name}`);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure></li>
 <li><p>icons 目录结构</p>
-<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"># src<span class="token operator">/</span>icons
-
-<span class="token operator">-</span> icon1<span class="token punctuation">.</span>svg
-<span class="token operator">-</span> icon2<span class="token punctuation">.</span>svg
-<span class="token operator">-</span> icon3<span class="token punctuation">.</span>svg
-<span class="token operator">-</span> dir<span class="token operator">/</span>icon1<span class="token punctuation">.</span>svg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># src/icons</span><br><span class="line"></span><br><span class="line">- icon1.<span class="property">svg</span></span><br><span class="line">- icon2.<span class="property">svg</span></span><br><span class="line">- icon3.<span class="property">svg</span></span><br><span class="line">- dir/icon1.<span class="property">svg</span></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>/src/App.vue</p>
-<pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
-  &lt;div&gt;
-    &lt;SvgIcon name="icon1"&gt;&lt;/SvgIcon&gt;
-    &lt;SvgIcon name="icon2"&gt;&lt;/SvgIcon&gt;
-    &lt;SvgIcon name="icon3"&gt;&lt;/SvgIcon&gt;
-    &lt;SvgIcon name="dir-icon1"&gt;&lt;/SvgIcon&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import { defineComponent, computed } from 'vue'
-
-import SvgIcon from './components/SvgIcon.vue'
-export default defineComponent({
-  name: 'App',
-  components: { SvgIcon },
-})
-&lt;/script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;SvgIcon name="icon1"&gt;&lt;/SvgIcon&gt;</span><br><span class="line">    &lt;SvgIcon name="icon2"&gt;&lt;/SvgIcon&gt;</span><br><span class="line">    &lt;SvgIcon name="icon3"&gt;&lt;/SvgIcon&gt;</span><br><span class="line">    &lt;SvgIcon name="dir-icon1"&gt;&lt;/SvgIcon&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import { defineComponent, computed } from 'vue'</span><br><span class="line"></span><br><span class="line">import SvgIcon from './components/SvgIcon.vue'</span><br><span class="line">export default defineComponent({</span><br><span class="line">  name: 'App',</span><br><span class="line">  components: { SvgIcon },</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure></li>
 </ul>
 
                 
@@ -792,13 +642,13 @@ export default defineComponent({
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/0.html">
+                <a href="/posts/fb55061.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="服务端接口鉴权机制——HMAC">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">服务端接口鉴权机制——HMAC</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -809,15 +659,35 @@ export default defineComponent({
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-17
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            cmeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/HMAC/" class="post-category">
+                                    HMAC
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/HMAC/">
+                        <span class="chip bg-color">HMAC</span>
+                    </a>
+                    
+                    <a href="/tags/ASE/">
+                        <span class="chip bg-color">ASE</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                        <span class="chip bg-color">后端</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -870,9 +740,6 @@ export default defineComponent({
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -1040,7 +907,7 @@ export default defineComponent({
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1048,7 +915,7 @@ export default defineComponent({
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

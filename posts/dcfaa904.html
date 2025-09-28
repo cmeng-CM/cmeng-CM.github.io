@@ -437,9 +437,6 @@ Redis作为一个键值对内存数据库(Nosql)，它的强大性能很大程�
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
@@ -459,30 +456,17 @@ Redis作为一个键值对内存数据库(Nosql)，它的强大性能很大程�
 </ol>
 </li>
 <li>BGSAVE命令执行过程中，无法同时执行SAVE和BESAVE，避免产生竞争条件。</li>
-<li>服务器配置定时执行<pre class="line-numbers language-none"><code class="language-none">save 900 1      // 900内,有1条写入,则产生快照 
-save 300 1000   // 如果300秒内有1000次写入,则产生快照
-save 60 10000  // 如果60秒内有10000次写入,则产生快照
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-通过配置文件进行触发，如上所示，根据操作次数进行触发，redis服务器的周期性函数serverCorn会每一百毫秒进行一次，它的工作之前就是判断是否满足配置参数条件，如果满足就执行BGSAVE命令。<br>RDB其它相关配置<pre class="line-numbers language-none"><code class="language-none">stop-writes-on-bgsave-error yes  // 后台备份进程出错时,主进程停不停止写入?
-   rdbcompression yes    // 导出的rdb文件是否压缩
-   Rdbchecksum   yes //  导入rbd恢复时数据时,要不要检验rdb的完整性
-   dbfilename dump.rdb  //导出来的rdb文件名
-   dir ./  //rdb的放置路径<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<li>服务器配置定时执行<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">save 900 1      // 900内,有1条写入,则产生快照 </span><br><span class="line">save 300 1000   // 如果300秒内有1000次写入,则产生快照</span><br><span class="line">save 60 10000  // 如果60秒内有10000次写入,则产生快照</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+通过配置文件进行触发，如上所示，根据操作次数进行触发，redis服务器的周期性函数serverCorn会每一百毫秒进行一次，它的工作之前就是判断是否满足配置参数条件，如果满足就执行BGSAVE命令。<br>RDB其它相关配置<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">stop-writes-on-bgsave-error yes  // 后台备份进程出错时,主进程停不停止写入?</span><br><span class="line">   rdbcompression yes    // 导出的rdb文件是否压缩</span><br><span class="line">   Rdbchecksum   yes //  导入rbd恢复时数据时,要不要检验rdb的完整性</span><br><span class="line">   dbfilename dump.rdb  //导出来的rdb文件名</span><br><span class="line">   dir ./  //rdb的放置路径</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><h5 id="AOF-Append-Only-File-，与RDB某个时刻的快照不同，AOF持久化会记录每次操作，形成后缀为aof的文件，类似mysql的binlog。在重启后会通过运行aof文件，以达到回复文件的目的。相较而言会对redis性能有些影响，但大部分情况是可接受的"><a href="#AOF-Append-Only-File-，与RDB某个时刻的快照不同，AOF持久化会记录每次操作，形成后缀为aof的文件，类似mysql的binlog。在重启后会通过运行aof文件，以达到回复文件的目的。相较而言会对redis性能有些影响，但大部分情况是可接受的" class="headerlink" title="AOF(Append-Only File)，与RDB某个时刻的快照不同，AOF持久化会记录每次操作，形成后缀为aof的文件，类似mysql的binlog。在重启后会通过运行aof文件，以达到回复文件的目的。相较而言会对redis性能有些影响，但大部分情况是可接受的."></a>AOF(Append-Only File)，与RDB某个时刻的快照不同，AOF持久化会记录每次操作，形成后缀为aof的文件，类似mysql的binlog。在重启后会通过运行aof文件，以达到回复文件的目的。相较而言会对redis性能有些影响，但大部分情况是可接受的.</h5><ul>
-<li>Redis默认不开启AOF持久化方式，我们可以在配置文件中开启  <pre class="line-numbers language-none"><code class="language-none">appendonly no # 是否打开 aof日志功能
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>Redis默认不开启AOF持久化方式，我们可以在配置文件中开启  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">appendonly no # 是否打开 aof日志功能</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure></li>
 <li><p>AOF持久化的实现可分为三步，追加(append)、文件写入、文件同步(sync)</p>
 <ol>
-<li>命令追加，服务器每次操作都会以redis的协议方式形成二进制文件，追加到aof_buf缓冲区的末尾。<pre class="line-numbers language-none"><code class="language-none">struct redisServer{
-    sds aof_buf;/* AOF buffer, written before entering the event loop */
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li>命令追加，服务器每次操作都会以redis的协议方式形成二进制文件，追加到aof_buf缓冲区的末尾。<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct redisServer{</span><br><span class="line">    sds aof_buf;/* AOF buffer, written before entering the event loop */</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure></li>
 <li><p>文件写入与同步<br>redis服务器进程就是一个事件循环函数，每次循环结束前，都会调用<br>flushAppendOnlyFile()，考虑是否将aof缓冲区中的内容写入到aof文件当中，flushAppendOnlyFile()函数的行为由配置appendfsync参数控制，一共如下三种策略，缺省情况下默认为everysec策略。<br>缓冲区确实提高了效率，但也存在一定安全问题，如果发生停机，那么缓冲区的数据也会丢失，为此redis提供了两个同步函数，fsync和fdatasync，强制将缓冲区的数据写入到硬盘文件。</p>
-<pre class="line-numbers language-none"><code class="language-none">appendfsync always   # 每1个命令,都立即同步到aof. 安全,速度慢
-appendfsync everysec # 折衷方案,每秒写1次
-appendfsync no #写入工作交给操作系统,由操作系统判断缓冲区大小,统一写入到aof. 同步频率低,速度快<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">appendfsync always   # 每1个命令,都立即同步到aof. 安全,速度慢</span><br><span class="line">appendfsync everysec # 折衷方案,每秒写1次</span><br><span class="line">appendfsync no #写入工作交给操作系统,由操作系统判断缓冲区大小,统一写入到aof. 同步频率低,速度快</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>AOF文件载入与还原<br>aof文件已经包含所有操作命令，所以数据还原其实就是再次执行一次aof中的命令。步骤：<br>1) 创建一个不带网络伪客户端，因为redis命令只能在客户端执行，并且执行命令来源于aof文件。<br>2) 从aof文件中读取一条命令<br>3) 在伪客户端执行<br>4) 反复执行二三步，直至aof文件中的命令执行完毕</p>
 </li>
@@ -491,26 +475,17 @@ appendfsync no #写入工作交给操作系统,由操作系统判断缓冲区大
 <li><p>AOF重写</p>
 <ol>
 <li><p>因为aof会把每一步操作都记录到文件，aof文件会越来越大，数据还原时间会越来越长。<br>如下命令操作为了记录list键的状态，aof文件就保存了五条命令，为了解决aof文件膨胀的问题，redis提供了重写(rewrite)机制，通过重写aof，可以生成一个恢复当前redis中数据的最少命令集，比如上面五条就可以合为一条。虽然功能命名为”aof文件重写”，但实际不会对aof文件进行分析处理，而是根据数据库状态来实现的。</p>
-<pre class="line-numbers language-none"><code class="language-none">RPUSH enlist "A" "B"
-RPUSH enlist "C" "V"
-RPUSH enlist "D" "G"
-LPOP enlist "G"
-LPOP list "A"
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RPUSH enlist "A" "B"</span><br><span class="line">RPUSH enlist "C" "V"</span><br><span class="line">RPUSH enlist "D" "G"</span><br><span class="line">LPOP enlist "G"</span><br><span class="line">LPOP list "A"</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>重写策略<br>2.1配置文件方式：<br>默认情况下是不开启重写的,打开后每次fsync都会进行rewrite</p>
-<pre class="line-numbers language-none"><code class="language-none">no-appendfsync-on-rewrite no
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">no-appendfsync-on-rewrite no</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>当然单独配置会比较影响服务器性能，所以可以与另外两个参数一起配置，三个参数一起配置就可以控制rewrite的运行时机，此逻辑也是通过serverCron()函数进行判断控制的</p>
-<pre class="line-numbers language-none"><code class="language-none">auto-aof-rewrite-percentage 100 #aof文件大小比起上次重写时的大小
-                                增长率100%时,重写
-auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto-aof-rewrite-percentage 100 #aof文件大小比起上次重写时的大小</span><br><span class="line">                                增长率100%时,重写</span><br><span class="line">auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写</span><br></pre></td></tr></tbody></table></figure>
 <p>2.2 手动触发<br>客户端向服务器发送BGREWRITEAOF命令，也可以让服务器进行AOF重写。并且是异步进行<br>注：BGREWRITEAOF正在执行，客户端发送BGSAVE命令会被服务器拒绝，BGSAVE正在执行，客户端发送BGREWRITEAOF，两者在操作上没有冲突，只是都是由子进程进行工作，不能同时执行只是性能方面的考虑——并发两个线程，并且都是大量磁盘写入工作。</p>
 </li>
 </ol>
 </li>
-<li>AOF文件破损<br>因服务宕机会造成aof文件格式紊乱，这种情况下服务会拒绝加载aof文件，出现文件损坏的情况可以通过以下命令进行修复  <pre class="line-numbers language-none"><code class="language-none">$ redis-check-aof -fix file.aof
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<li>AOF文件破损<br>因服务宕机会造成aof文件格式紊乱，这种情况下服务会拒绝加载aof文件，出现文件损坏的情况可以通过以下命令进行修复  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ redis-check-aof -fix file.aof</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
   重启服务后可重新载入aof文件进行数据恢复。<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2></li>
 <li>RDB<ol>
 <li>RDB相较AOF而言，恢复数据快，数据紧凑</li>
@@ -781,9 +756,6 @@ auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写<span aria-hi
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
-
 
 <!-- 代码语言 -->
 
@@ -950,7 +922,7 @@ auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写<span aria-hi
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -958,7 +930,7 @@ auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写<span aria-hi
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             

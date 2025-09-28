@@ -440,9 +440,6 @@ watcher原理原理框架图：
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
 
         
 
@@ -459,18 +456,7 @@ watcher原理原理框架图：
 <li>existWatches：客户端独有的存储方式，因为节点是否存在需要客户端自己判断。</li>
 <li>childWatches：子节点监听。<br>源码：</li>
 </ul>
-<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">//客户端  其中Set&lt;Watcher&gt;实际复制对象类型为HashSet&lt;Watcher&gt;
-private static class ZKWatchManager implements ClientWatchManager {
-    private final Map&lt;String, Set&lt;Watcher&gt;&gt; dataWatches =
-        new HashMap&lt;String, Set&lt;Watcher&gt;&gt;();
-    private final Map&lt;String, Set&lt;Watcher&gt;&gt; existWatches =
-        new HashMap&lt;String, Set&lt;Watcher&gt;&gt;();
-    private final Map&lt;String, Set&lt;Watcher&gt;&gt; childWatches =
-        new HashMap&lt;String, Set&lt;Watcher&gt;&gt;();
-
-    //创建Zoookeeper链接时传入的watcher会赋值到：defaultWatcher
-    private volatile Watcher defaultWatcher;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//客户端  其中Set&lt;Watcher&gt;实际复制对象类型为HashSet&lt;Watcher&gt;</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">ZKWatchManager</span> <span class="keyword">implements</span> <span class="title class_">ClientWatchManager</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Set&lt;Watcher&gt;&gt; dataWatches =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Set&lt;Watcher&gt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Set&lt;Watcher&gt;&gt; existWatches =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Set&lt;Watcher&gt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Set&lt;Watcher&gt;&gt; childWatches =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Set&lt;Watcher&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建Zoookeeper链接时传入的watcher会赋值到：defaultWatcher</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> Watcher defaultWatcher;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>三种存储机制中，Set<watcher>的实现都是HashSet<watcher>，由此可得出：</watcher></watcher></p>
 <ul>
 <li>同一路径下的同一watcher实例，无论注册多少次都只会记录一次，即触发后只通知一次。</li>
@@ -487,41 +473,7 @@ private static class ZKWatchManager implements ClientWatchManager {
 <li>watch2Paths：从watcher的粒度来维护。  </li>
 </ul>
 <p>注意这里的watcher含义表示远程连接，所以watchTable表示一个目录下可能有多个消费者的监听连接，而watch2Paths表示一个消费者可能会对多个目录建立监听，显然多目录的监听会复用一个连接。</p>
-<p>源码：<br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">//服务端
-public class DataTree {
-    private static final Logger LOG = LoggerFactory.getLogger(DataTree.class);
-
-    /**
-     * This hashtable provides a fast lookup to the datanodes. The tree is the
-     * source of truth and is where all the locking occurs
-     */
-    private final ConcurrentHashMap&lt;String, DataNode&gt; nodes =
-        new ConcurrentHashMap&lt;String, DataNode&gt;();
-
-    private final WatchManager dataWatches = new WatchManager();
-
-    private final WatchManager childWatches = new WatchManager();
-    ....
-  }
-//dataWatches和childWatches是同一类的不同实例。即：
-public class WatchManager {
-    private static final Logger LOG = LoggerFactory.getLogger(WatchManager.class);
-
-    private final HashMap&lt;String, HashSet&lt;Watcher&gt;&gt; watchTable =
-        new HashMap&lt;String, HashSet&lt;Watcher&gt;&gt;();
-
-    private final HashMap&lt;Watcher, HashSet&lt;String&gt;&gt; watch2Paths =
-        new HashMap&lt;Watcher, HashSet&lt;String&gt;&gt;();
-
-    public synchronized int size(){
-        int result = 0;
-        for(Set&lt;Watcher&gt; watches : watchTable.values()) {
-            result += watches.size();
-        }
-        return result;
-    }
-    ......
-  }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>源码：<br></p><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//服务端</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataTree</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">LOG</span> <span class="operator">=</span> LoggerFactory.getLogger(DataTree.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * This hashtable provides a fast lookup to the datanodes. The tree is the</span></span><br><span class="line"><span class="comment">     * source of truth and is where all the locking occurs</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ConcurrentHashMap&lt;String, DataNode&gt; nodes =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>&lt;String, DataNode&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">WatchManager</span> <span class="variable">dataWatches</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WatchManager</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">WatchManager</span> <span class="variable">childWatches</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WatchManager</span>();</span><br><span class="line">    ....</span><br><span class="line">  }</span><br><span class="line"><span class="comment">//dataWatches和childWatches是同一类的不同实例。即：</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WatchManager</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">LOG</span> <span class="operator">=</span> LoggerFactory.getLogger(WatchManager.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, HashSet&lt;Watcher&gt;&gt; watchTable =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, HashSet&lt;Watcher&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Watcher, HashSet&lt;String&gt;&gt; watch2Paths =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Watcher, HashSet&lt;String&gt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">size</span><span class="params">()</span>{</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(Set&lt;Watcher&gt; watches : watchTable.values()) {</span><br><span class="line">            result += watches.size();</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    }</span><br><span class="line">    ......</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><h4 id="注册方式"><a href="#注册方式" class="headerlink" title="注册方式"></a>注册方式</h4><p>创建Zookeeper链接时会传入的watcher，这个watcher即为注册表中的defaultWatcher。<br>其它注册方式：</p>
 <ul>
 <li>getChildren(String path, Watcher watcher)</li>
@@ -534,107 +486,18 @@ public class WatchManager {
 <p>其中Boolean watch表示是否使用上下文中默认的watcher，即创建zk实例时设置的watcher. getData 和 exists 请求可以注册服务端注册表-dataWatches，getChilden 可以注册服务端注册表-childWatches。<br>每个客户端都会维护 2 个线程，SendThread 负责处理客户端与服务端的请求通信，比如发送 getDataRequest，而 EventThread 则负责处理服务端的事件通知，即 watcher 的事件。</p>
 <h4 id="注册流程"><a href="#注册流程" class="headerlink" title="注册流程"></a>注册流程</h4><h5 id="客户端注册流程"><a href="#客户端注册流程" class="headerlink" title="客户端注册流程"></a>客户端注册流程</h5><p>zookeeper客户端watcher注册流程:<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper客户端watcher注册流程.jpeg" alt="zookeeper客户端watcher注册流程"></p>
 <p>几种客户端注册的流程大致相同,我们以exists为例。源码：</p>
-<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public Stat exists(final String path, Watcher watcher)
-        throws KeeperException, InterruptedException
-    {
-        ......
-
-        RequestHeader h = new RequestHeader();
-        h.setType(ZooDefs.OpCode.exists);
-        ExistsRequest request = new ExistsRequest();
-        request.setPath(serverPath);
-        request.setWatch(watcher != null);
-        SetDataResponse response = new SetDataResponse();
-        ReplyHeader r = cnxn.submitRequest(h, request, response, wcb);
-
-        ......
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Stat <span class="title function_">exists</span><span class="params">(<span class="keyword">final</span> String path, Watcher watcher)</span></span><br><span class="line">        <span class="keyword">throws</span> KeeperException, InterruptedException</span><br><span class="line">    {</span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        <span class="type">RequestHeader</span> <span class="variable">h</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RequestHeader</span>();</span><br><span class="line">        h.setType(ZooDefs.OpCode.exists);</span><br><span class="line">        <span class="type">ExistsRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExistsRequest</span>();</span><br><span class="line">        request.setPath(serverPath);</span><br><span class="line">        request.setWatch(watcher != <span class="literal">null</span>);</span><br><span class="line">        <span class="type">SetDataResponse</span> <span class="variable">response</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SetDataResponse</span>();</span><br><span class="line">        <span class="type">ReplyHeader</span> <span class="variable">r</span> <span class="operator">=</span> cnxn.submitRequest(h, request, response, wcb);</span><br><span class="line"></span><br><span class="line">        ......</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 <p>总的来说就是针对不同API进行类似的请求标记，watcher封装，然后将请求放入队列等待(SendThread)调度后发送到服务端。</p>
 <h5 id="服务端注册流程"><a href="#服务端注册流程" class="headerlink" title="服务端注册流程"></a>服务端注册流程</h5><p>server端接收到请求后的处理流程：<br><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/zookeeper/zookeeper注册server端流程.jpeg" alt="zookeeper原理框架">   </p>
-<p><em>FinalRequestProcessor</em>：为服务端统一处理类，客户端所有操作及请求最终都会在此进行相应流程处理<br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">/**
- * This Request processor actually applies any transaction associated with a
- * request and services any queries. It is always at the end of a
- * RequestProcessor chain (hence the name), so it does not have a nextProcessor
- * member.
- *
- * This RequestProcessor counts on ZooKeeperServer to populate the
- * outstandingRequests member of ZooKeeperServer.
- */
-public class FinalRequestProcessor implements RequestProcessor{}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><em>FinalRequestProcessor</em>：为服务端统一处理类，客户端所有操作及请求最终都会在此进行相应流程处理<br></p><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * This Request processor actually applies any transaction associated with a</span></span><br><span class="line"><span class="comment"> * request and services any queries. It is always at the end of a</span></span><br><span class="line"><span class="comment"> * RequestProcessor chain (hence the name), so it does not have a nextProcessor</span></span><br><span class="line"><span class="comment"> * member.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This RequestProcessor counts on ZooKeeperServer to populate the</span></span><br><span class="line"><span class="comment"> * outstandingRequests member of ZooKeeperServer.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FinalRequestProcessor</span> <span class="keyword">implements</span> <span class="title class_">RequestProcessor</span>{}</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>以exists为例：</p>
-<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">case OpCode.exists: {
-    lastOp = "EXIS";
-    // TODO we need to figure out the security requirement for this!
-    ExistsRequest existsRequest = new ExistsRequest();
-    ByteBufferInputStream.byteBuffer2Record(request.request,
-            existsRequest);
-    String path = existsRequest.getPath();
-    if (path.indexOf('\0') != -1) {
-        throw new KeeperException.BadArgumentsException();
-    }
-    Stat stat = zks.getZKDatabase().statNode(path, existsRequest
-            .getWatch() ? cnxn : null);
-    rsp = new ExistsResponse(stat);
-    break;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> OpCode.exists: {</span><br><span class="line">    lastOp = <span class="string">"EXIS"</span>;</span><br><span class="line">    <span class="comment">// TODO we need to figure out the security requirement for this!</span></span><br><span class="line">    <span class="type">ExistsRequest</span> <span class="variable">existsRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExistsRequest</span>();</span><br><span class="line">    ByteBufferInputStream.byteBuffer2Record(request.request,</span><br><span class="line">            existsRequest);</span><br><span class="line">    <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> existsRequest.getPath();</span><br><span class="line">    <span class="keyword">if</span> (path.indexOf(<span class="string">'\0'</span>) != -<span class="number">1</span>) {</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">KeeperException</span>.BadArgumentsException();</span><br><span class="line">    }</span><br><span class="line">    <span class="type">Stat</span> <span class="variable">stat</span> <span class="operator">=</span> zks.getZKDatabase().statNode(path, existsRequest</span><br><span class="line">            .getWatch() ? cnxn : <span class="literal">null</span>);</span><br><span class="line">    rsp = <span class="keyword">new</span> <span class="title class_">ExistsResponse</span>(stat);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>由源码可知，这边会通过一些 case 来判断请求类型，watcher最后会经由ZKDatabase的statNode进行操作。根据源码追寻可知：</p>
-<p><em>ZKDatabase</em><br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">
-/**
- * This class maintains the in memory database of zookeeper
- * server states that includes the sessions, datatree and the
- * committed logs. It is booted up  after reading the logs
- * and snapshots from the disk.
- */
-public class ZKDatabase{
-  ....
-
-  public Stat statNode(String path, ServerCnxn serverCnxn) throws KeeperException.NoNodeException {
-      return dataTree.statNode(path, serverCnxn);
-  }
-
-  .....
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">
-public Stat statNode(String path, Watcher watcher)
-        throws KeeperException.NoNodeException {
-    Stat stat = new Stat();
-    DataNode n = nodes.get(path);
-    if (watcher != null) {
-        dataWatches.addWatch(path, watcher);
-    }
-    if (n == null) {
-        throw new KeeperException.NoNodeException();
-    }
-    synchronized (n) {
-        n.copyStat(stat);
-        return stat;
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><em>ZKDatabase</em><br></p><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * This class maintains the in memory database of zookeeper</span></span><br><span class="line"><span class="comment"> * server states that includes the sessions, datatree and the</span></span><br><span class="line"><span class="comment"> * committed logs. It is booted up  after reading the logs</span></span><br><span class="line"><span class="comment"> * and snapshots from the disk.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ZKDatabase</span>{</span><br><span class="line">  ....</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> Stat <span class="title function_">statNode</span><span class="params">(String path, ServerCnxn serverCnxn)</span> <span class="keyword">throws</span> KeeperException.NoNodeException {</span><br><span class="line">      <span class="keyword">return</span> dataTree.statNode(path, serverCnxn);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  .....</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> Stat <span class="title function_">statNode</span><span class="params">(String path, Watcher watcher)</span></span><br><span class="line">        <span class="keyword">throws</span> KeeperException.NoNodeException {</span><br><span class="line">    <span class="type">Stat</span> <span class="variable">stat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Stat</span>();</span><br><span class="line">    <span class="type">DataNode</span> <span class="variable">n</span> <span class="operator">=</span> nodes.get(path);</span><br><span class="line">    <span class="keyword">if</span> (watcher != <span class="literal">null</span>) {</span><br><span class="line">        dataWatches.addWatch(path, watcher);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="literal">null</span>) {</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">KeeperException</span>.NoNodeException();</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">synchronized</span> (n) {</span><br><span class="line">        n.copyStat(stat);</span><br><span class="line">        <span class="keyword">return</span> stat;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>ZKDatabase是在zookeeper运行时的数据库，server端注册表就存储在此，最后通过dataTree将watcher存储到dataWatches中。  </p>
 <p>server端正常存储后返回客户端，在 ClientCnxn$SendThread 类的 readResponse-&gt;finishPacket 方法中会对watcher进行存储。<br>可以看到这边调用了 watchRegistration 的 register 方法，而它就是根据请求类型来装入对应的 watchManager 中了(dataWatches、existWatches、childWatches)。</p>
-<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">private void finishPacket(Packet p) {
-        if (p.watchRegistration != null) {
-            p.watchRegistration.register(p.replyHeader.getErr());
-        }
-
-        if (p.cb == null) {
-            synchronized (p) {
-                p.finished = true;
-                p.notifyAll();
-            }
-        } else {
-            p.finished = true;
-            eventThread.queuePacket(p);
-        }
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="通知-watcher触发"><a href="#通知-watcher触发" class="headerlink" title="通知/watcher触发"></a>通知/watcher触发</h3><h4 id="通知状态和事件类型"><a href="#通知状态和事件类型" class="headerlink" title="通知状态和事件类型"></a>通知状态和事件类型</h4><p>server端通知时主要内容为通知状态(org.apache.zookeeper.Watcher.Event.KeeperState)和事件类型(org.apache.zookeeper.Watcher.Event.EventType)，二者均于WatchedEvent对象内进行传输。<br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">/**
- *  A WatchedEvent represents a change on the ZooKeeper that a Watcher
- *  is able to respond to.  The WatchedEvent includes exactly what happened,
- *  the current state of the ZooKeeper, and the path of the znode that
- *  was involved in the event.
- */
-public class WatchedEvent {
-  ......
-  }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">finishPacket</span><span class="params">(Packet p)</span> {</span><br><span class="line">        <span class="keyword">if</span> (p.watchRegistration != <span class="literal">null</span>) {</span><br><span class="line">            p.watchRegistration.register(p.replyHeader.getErr());</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (p.cb == <span class="literal">null</span>) {</span><br><span class="line">            <span class="keyword">synchronized</span> (p) {</span><br><span class="line">                p.finished = <span class="literal">true</span>;</span><br><span class="line">                p.notifyAll();</span><br><span class="line">            }</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            p.finished = <span class="literal">true</span>;</span><br><span class="line">            eventThread.queuePacket(p);</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="通知-watcher触发"><a href="#通知-watcher触发" class="headerlink" title="通知/watcher触发"></a>通知/watcher触发</h3><h4 id="通知状态和事件类型"><a href="#通知状态和事件类型" class="headerlink" title="通知状态和事件类型"></a>通知状态和事件类型</h4><p>server端通知时主要内容为通知状态(org.apache.zookeeper.Watcher.Event.KeeperState)和事件类型(org.apache.zookeeper.Watcher.Event.EventType)，二者均于WatchedEvent对象内进行传输。<br></p><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  A WatchedEvent represents a change on the ZooKeeper that a Watcher</span></span><br><span class="line"><span class="comment"> *  is able to respond to.  The WatchedEvent includes exactly what happened,</span></span><br><span class="line"><span class="comment"> *  the current state of the ZooKeeper, and the path of the znode that</span></span><br><span class="line"><span class="comment"> *  was involved in the event.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WatchedEvent</span> {</span><br><span class="line">  ......</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h5 id="通知状态"><a href="#通知状态" class="headerlink" title="通知状态"></a>通知状态</h5><div class="table-container">
 <table>
 <thead>
@@ -743,48 +606,7 @@ public class WatchedEvent {
 </div>
 <p>客户端只能收到服务器发过来的相关事件通知，并不能获取到对应数据节点变化前后的数据。</p>
 <h4 id="触发"><a href="#触发" class="headerlink" title="触发"></a>触发</h4><p>我们以setDate方法为例。server端所有的处理均在FinalRequestProcessor里，当请求处理完成后会进行watcher事件的触发。我们以setDate为例追踪下触发的流程。</p>
-<p>在FinalRequestProcessor中有这么一段代码：<br></p><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">if (request.hdr != null) {
-   TxnHeader hdr = request.hdr;
-   Record txn = request.txn;
-
-   rc = zks.processTxn(hdr, txn);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>追踪下去就会找到 DataTree 类处理 setData 请求的具体逻辑。<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">Stat</span> <span class="token function">setData</span><span class="token punctuation">(</span><span class="token class-name">String</span> path<span class="token punctuation">,</span> <span class="token keyword">byte</span> data<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> version<span class="token punctuation">,</span> <span class="token keyword">long</span> zxid<span class="token punctuation">,</span>
-            <span class="token keyword">long</span> time<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">KeeperException<span class="token punctuation">.</span>NoNodeException</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-    dataWatches<span class="token punctuation">.</span><span class="token function">triggerWatch</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> <span class="token class-name">EventType<span class="token punctuation">.</span>NodeDataChanged</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> s<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">public</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Watcher</span><span class="token punctuation">&gt;</span></span> <span class="token function">triggerWatch</span><span class="token punctuation">(</span><span class="token class-name">String</span> path<span class="token punctuation">,</span> <span class="token class-name">EventType</span> type<span class="token punctuation">,</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Watcher</span><span class="token punctuation">&gt;</span></span> supress<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token class-name">WatchedEvent</span> e <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WatchedEvent</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span>
-            <span class="token class-name">KeeperState<span class="token punctuation">.</span>SyncConnected</span><span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Watcher</span><span class="token punctuation">&gt;</span></span> watchers<span class="token punctuation">;</span>
-    <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        watchers <span class="token operator">=</span> watchTable<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>watchers <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> watchers<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token constant">LOG</span><span class="token punctuation">.</span><span class="token function">isTraceEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token class-name">ZooTrace</span><span class="token punctuation">.</span><span class="token function">logTraceMessage</span><span class="token punctuation">(</span><span class="token constant">LOG</span><span class="token punctuation">,</span>
-                        <span class="token class-name">ZooTrace</span><span class="token punctuation">.</span><span class="token constant">EVENT_DELIVERY_TRACE_MASK</span><span class="token punctuation">,</span>
-                        <span class="token string">"No watchers for "</span> <span class="token operator">+</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Watcher</span> w <span class="token operator">:</span> watchers<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> paths <span class="token operator">=</span> watch2Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>paths <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                paths<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Watcher</span> w <span class="token operator">:</span> watchers<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>supress <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> supress<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">continue</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        w<span class="token punctuation">.</span><span class="token function">process</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> watchers<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>在FinalRequestProcessor中有这么一段代码：<br></p><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (request.hdr != <span class="literal">null</span>) {</span><br><span class="line">   <span class="type">TxnHeader</span> <span class="variable">hdr</span> <span class="operator">=</span> request.hdr;</span><br><span class="line">   <span class="type">Record</span> <span class="variable">txn</span> <span class="operator">=</span> request.txn;</span><br><span class="line"></span><br><span class="line">   rc = zks.processTxn(hdr, txn);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>追踪下去就会找到 DataTree 类处理 setData 请求的具体逻辑。<br><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Stat <span class="title function_">setData</span><span class="params">(String path, <span class="type">byte</span> data[], <span class="type">int</span> version, <span class="type">long</span> zxid,</span></span><br><span class="line"><span class="params">            <span class="type">long</span> time)</span> <span class="keyword">throws</span> KeeperException.NoNodeException {</span><br><span class="line">    ......</span><br><span class="line">    dataWatches.triggerWatch(path, EventType.NodeDataChanged);</span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Set&lt;Watcher&gt; <span class="title function_">triggerWatch</span><span class="params">(String path, EventType type, Set&lt;Watcher&gt; supress)</span> {</span><br><span class="line">    <span class="type">WatchedEvent</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WatchedEvent</span>(type,</span><br><span class="line">            KeeperState.SyncConnected, path);</span><br><span class="line">    HashSet&lt;Watcher&gt; watchers;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) {</span><br><span class="line">        watchers = watchTable.remove(path);</span><br><span class="line">        <span class="keyword">if</span> (watchers == <span class="literal">null</span> || watchers.isEmpty()) {</span><br><span class="line">            <span class="keyword">if</span> (LOG.isTraceEnabled()) {</span><br><span class="line">                ZooTrace.logTraceMessage(LOG,</span><br><span class="line">                        ZooTrace.EVENT_DELIVERY_TRACE_MASK,</span><br><span class="line">                        <span class="string">"No watchers for "</span> + path);</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (Watcher w : watchers) {</span><br><span class="line">            HashSet&lt;String&gt; paths = watch2Paths.get(w);</span><br><span class="line">            <span class="keyword">if</span> (paths != <span class="literal">null</span>) {</span><br><span class="line">                paths.remove(path);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (Watcher w : watchers) {</span><br><span class="line">        <span class="keyword">if</span> (supress != <span class="literal">null</span> &amp;&amp; supress.contains(w)) {</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        }</span><br><span class="line">        w.process(e);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> watchers;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>可以看到逻辑处理完会调用triggerWatch方法，此方法的作用就是从server端的watchManager中获取watcher并在watchTable 和 watch2Paths 中移除自身，所以 watcher 是单次的。  </p>
 <p>最后将封装好的通知即源码中的 e 对象放入watcher的process方法中，process的作用其实就是去发送通知。以 Watcher的一个实现类NioServerCnxn 为例就是调用了其 sendResponse 方法将通知事件发送到客户端，发送前会将 watchedEvent 转换成 watcherEvent 进行发送。</p>
 <p>客户端最后会将通知交由EventThread进行对应watcher的process方法调用。</p>
@@ -937,13 +759,13 @@ public class WatchedEvent {
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/97c733b2.html">
+                <a href="/posts/fd45b18c.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="分布式CAP">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="rust基础信息">
                         
-                        <span class="card-title">分布式CAP</span>
+                        <span class="card-title">rust基础信息</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -960,8 +782,8 @@ public class WatchedEvent {
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CAP/" class="post-category">
-                                    CAP
+                            <a href="/categories/rust/" class="post-category">
+                                    rust
                                 </a>
                             
                             
@@ -971,8 +793,8 @@ public class WatchedEvent {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CAP/">
-                        <span class="chip bg-color">CAP</span>
+                    <a href="/tags/rust/">
+                        <span class="chip bg-color">rust</span>
                     </a>
                     
                 </div>
@@ -1039,9 +861,6 @@ public class WatchedEvent {
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -1209,7 +1028,7 @@ public class WatchedEvent {
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2024</span>
+                <span id="year">2018-2025</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1217,7 +1036,7 @@ public class WatchedEvent {
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">71.6k</span>
+                        class="white-color">81.6k</span>
             
             
             
