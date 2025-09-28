@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>时事通讯</title>
-      <link href="/posts/86088e50.html"/>
-      <url>/posts/86088e50.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="推荐合集"><a href="#推荐合集" class="headerlink" title="推荐合集"></a>推荐合集</h2><p><a href="https://github.com/chasays/newsletter-list">Newsletter-list</a>：不定期更新，碰到比较好的 Newsletter 就会加进来。</p><h2 id="互联网和科技"><a href="#互联网和科技" class="headerlink" title="互联网和科技"></a>互联网和科技</h2><p><a href="https://github.com/ruanyf/weekly">科技爱好者周刊</a>： 从 2018 年初开始发布，记录每周值得分享的科技内容，周五发布。个人觉得是中文科技 Newsletter 最好之一，最喜欢的板块是「本周话题」。<br><a href="https://github.com/sunface/beat-ai">Beat AI 简报</a>: 持续分享 AI 领域的关键进展，帮你征服 AI，Just beat it! 欢迎 star 订阅.</p><h2 id="学习成长"><a href="#学习成长" class="headerlink" title="学习成长"></a>学习成长</h2><p><a href="https://github.com/GrowingGit/GitHub-Chinese-Top-Charts">GitHub中文排行榜</a>:各语言分设「软件 | 资料」榜单，精准定位中文好项目。各取所需，高效学习。<br><a href="https://github.com/kamranahmedse/developer-roadmap">developer-roadmap</a>:互动路线图、指南和其他教育内容，帮助开发者在其职业生涯中成长。</p><h2 id="自由职业"><a href="#自由职业" class="headerlink" title="自由职业"></a>自由职业</h2><p><a href="https://github.com/1c7/chinese-independent-developer">中国独立开发者项目列表</a>:聚合所有中国独立开发者的项目</p><h2 id="杂谈"><a href="#杂谈" class="headerlink" title="杂谈"></a>杂谈</h2><p><a href="https://github.com/sindresorhus/awesome">awesome</a>:关于各种有趣话题的精彩列表.</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> newsletter </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> newsletter </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
       <link href="/posts/0.html"/>
       <url>/posts/0.html</url>
@@ -280,33 +255,6 @@
     
     
     <entry>
-      <title>IO模型</title>
-      <link href="/posts/aeafbee0.html"/>
-      <url>/posts/aeafbee0.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="一、I-O概述"><a href="#一、I-O概述" class="headerlink" title="一、I/O概述"></a>一、I/O概述</h2><p><a href="https://zh.wikipedia.org/zh-cn/I/O">I/O（英语：Input/Output）</a>，即输入／输出，通常指数据在存储器（内部和外部）或其他周边设备之间的输入和输出。IO有 <strong>内存IO、网络IO和磁盘IO</strong> 三种，通常我们说的IO指的是后两者。</p><p>从系统角度来看，编辑器编辑文档、通讯软件消息的发送接收就分别属于网络IO和磁盘IO。为了方便理解IO模型，我们以通讯软件也就是网络IO来分析，软件程序是运行在 <strong>用户空间</strong> 的，并不存在实质的IO过程，真正的IO操作属于特权指令是运行在 <strong>系统内核</strong> 的（<a href="https://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/virtual-memory/">用户空间和内核空间</a>）。所以软件程序的IO操作需要分为两步即：</p><ul><li><strong>IO调用</strong>：用户空间内软件程序像内核发起IO操作的调用</li><li><strong>IO执行</strong>：内核空间系统内核实际完成IO操作</li></ul><p>IO调用则由应用程序发起，发起后则等待系统内核完成实际IO操作。IO操作在内核中也分为两步，以网络IO来说，分别是：</p><ul><li>等待数据达到网卡后将数据拷贝至系统内核准备好。（即：<strong>等待数据准备好</strong>）</li><li>将内核读书的数据拷贝到用户空间，由程序进行相关操作。（即：<strong>从内核向进程拷贝数据</strong>）</li></ul><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/网络IO传输流程.jpg" alt="网络IO传输流程"></p><p>根据图解，可以清晰的感受到 <strong>IO调用</strong> 和 <strong>IO执行</strong> 的两阶段，以及 <strong>IO执行</strong> 也就是接收数据过程的 <strong>等待数据准备好</strong> 和 <strong>从内核向进程拷贝数据</strong> 两阶段。<br>至于我们说的 <strong>阻塞和非阻塞，异步和同步</strong> 都是指的 <strong>IO执行阶段</strong> 的状态和处理机制。</p><h2 id="二、阻塞、非阻塞"><a href="#二、阻塞、非阻塞" class="headerlink" title="二、阻塞、非阻塞"></a>二、阻塞、非阻塞</h2><p>我们以【数据接收】过程来进一步理解下阻塞和非阻塞的概念。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/网络IO数据接收.jpg" alt="网络IO数据接收"></p><h3 id="2-1、阻塞式I-O"><a href="#2-1、阻塞式I-O" class="headerlink" title="2.1、阻塞式I/O"></a>2.1、阻塞式I/O</h3><p>根据IO调用和IO执行过程来看，如果程序发起IO调用，但此时数据还未准备好（即数据未到达网卡并读取到内核缓冲区）。那么此时程序就一直处于等待数据准备好的状态，知道数据准备好后内核才能将数据拷贝至用户缓冲区。这个等待的过程就是阻塞。</p><p><strong>流程：</strong></p><ol><li>程序发起IO调用。</li><li>系统内核进行IO操作。<ul><li>数据未准备好则等待，直至数据准备好。（<font color="red" size="5">阻塞主要是这一步</font>）</li><li>系统内核拷贝数据至用户缓冲区。</li></ul></li></ol><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/阻塞式IO模型.jpg" alt="阻塞式IO模型"></p><h3 id="2-2、非阻塞式I-O"><a href="#2-2、非阻塞式I-O" class="headerlink" title="2.2、非阻塞式I/O"></a>2.2、非阻塞式I/O</h3><p>理解了阻塞式IO再进一步理解非阻塞就很容易了。既然没有数据那系统内核直接返回没有数据，即返回一个 <strong>EWOULDBLOCK</strong> 错误告知程序就可以了。这样就不用一直阻塞着等待数据到达准备好了。<br>不过这样确实不阻塞了，但程序还是需要获取到数据的，那么就只能轮询了。在未接收到数据时需要持续轮询系统内核是否准备好数据，直到准备好数据进行拷贝为止。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/非阻塞式IO模型.jpg" alt="非阻塞式IO模型"></p><p><strong>流程：</strong></p><ol><li>程序发起IO调用。</li><li>系统内核进行IO操作。<ul><li>i：判断数据是否准备好，准备好进行下一步，未准备好将错误 <strong>EWOULDBLOCK</strong> 响应给用户控件的程序。</li><li>ii：系统内核拷贝数据至用户缓冲区。</li></ul></li></ol><h2 id="三、I-O多路复用技术（multiplexing）"><a href="#三、I-O多路复用技术（multiplexing）" class="headerlink" title="三、I/O多路复用技术（multiplexing）"></a>三、I/O多路复用技术（multiplexing）</h2><p>针对阻塞模型进一步思考，每个系统的进程都是很多的，如果每个进程都持续轮询到数据准备，先不说服务器能不能扛得住这么多线程，就算扛得住那么很明显这种方式是不是太浪费资源了。</p><p>那么基于这种情况，是不是考虑可以有一个进程专门用来做轮询操作，等数据到达且准备好之后再通知各个进程读取数据呢？这种方式是有的，那就是 <strong>I/O 多路复用技术</strong></p><p><strong>I/O 多路复用技术</strong>：Linux下的 <strong>select、poll和epoll</strong> 就是干这个的。将用户socket对应的fd（<a href="https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">文件描述</a>）注册进epoll，然后epoll帮你监听哪些socket上有消息到达，这样就避免了大量的无用操作同时提升了CPU效率。此时的socket应该采用非阻塞模式。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/IO多路复用.jpg" alt="IO多路复用"></p><p><strong>select()：</strong> 用 <strong>long</strong> 组成的数据结构 <strong>fd_set</strong> 来存储文件句柄，每一个数组元素都能与一打开的文件句柄建立联系。当调用select()时，由内核根据IO状态修改 <strong>fd_set</strong> 的内容，由此来通知执行了 <strong>select()</strong> 的进程哪一Socket或文件可读。不过其监视的文件句柄通常最大为 <strong>1024</strong></p><p><strong>epoll</strong>：设计和实现与 <strong>select</strong> 完全不同。但是底层是链表，这就代表没有上限。</p><p><strong>epoll</strong>：底层采用红黑树，在内核空间创建需要关注的文件描述符的红黑树，内核监听时会将发生事件的描述符加入队列中，返回到用户空间的时候只需要返回队列中的数据即可。epoll通过这种方式使得减少了每次用户到内核的复制过程。</p><h2 id="四、信号驱动I-O"><a href="#四、信号驱动I-O" class="headerlink" title="四、信号驱动I/O"></a>四、信号驱动I/O</h2><p>在多路复用的基础上，能不能有更加有效率的方式来避免这种暴力的轮询机制呢？毕竟大部分轮询都是无效的，且 <strong>SELECT</strong> 轮询时程序进程依旧属于阻塞状态，效率并没有提高多少。</p><p>针对这种情况，就衍生出了 <strong>信号驱动I/O</strong> 模型</p><p><strong>信号驱动I/O</strong>：应用进程使用 <strong>sigaction</strong> 系统调用，内核立即返回，应用进程可以继续执行，也就是说等待数据阶段应用进程是非阻塞的。内核在数据到达时向应用进程发送 <strong>SIGIO</strong> 信号，应用进程收到之后在信号处理程序中调用 <strong>recvfrom</strong> 将数据从内核复制到应用进程中。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/信号驱动IO.jpg" alt="信号驱动IO"></p><p>相交 <strong>I/O多路复用</strong> 这种通过不断轮询来减少线程资源创建的方式，<strong>信号驱动I/O</strong> 模式通过建立信号关联的机制，实现了发送后只需等待通知即可，避免大量无效的数据状态轮询操作。</p><h2 id="五、异步I-O"><a href="#五、异步I-O" class="headerlink" title="五、异步I/O"></a>五、异步I/O</h2><p>那么在 <strong>信号驱动I/O</strong> 的基础上有没有更进一步效率更高更简洁的操作呢？当然有啦，那就是 <strong>异步I/O</strong> 这个相信大家都不陌生，进程发送 <strong>aio_read</strong> 系统调用会立即返回，内核会在所有操作完成之后向应用进程发送信号，这期间程序线程不阻塞继续执行。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/异步IO.jpg" alt="异步IO"></p><h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>以上就是 <strong>Unix</strong> 中的五种 I/O 模型，列举如下:</p><ul><li>阻塞式 I/O</li><li>非阻塞式 I/O</li><li>I/O 复用(select 和 poll)</li><li>信号驱动式 I/O(SIGIO)</li><li>异步 I/O(AIO)</li></ul><p>前四种模型主要区别有 <strong>IO操作</strong> 的第一阶段，就是等待数据阶段，至于第二阶段的数据复制都是一样的。其中 <strong>阻塞式 I/O、非阻塞式 I/O、I/O 复用(select 和 poll)、信号驱动式 I/O(SIGIO)</strong> 都是同步的I/O，虽然非阻塞式 I/O 和信号驱动 I/O 在等待数据阶段不会阻塞，但是在之后的将数据从内核复制到应用进程这个操作会阻塞。<br>只有 <strong>异步I/O</strong> 是完全不阻塞的 <strong>IO操作</strong></p><p>&lt;/br&gt;&lt;/br&gt;</p><h2>参考资料</h2><p></p><p><a href="https://learn.microsoft.com/zh-cn/windows/win32/fileio/synchronous-and-asynchronous-i-o?redirectedfrom=MSDN">Synchronous and asynchronous I/O</a><br><a href="https://www.masterraghu.com/subjects/np/introduction/unix_network_programming_v1.3/ch06lev1sec2.html#ch06fig01">6.2 I/O Models</a><br><a href="https://www.kancloud.cn/luoyoub/network-programming/2234074">select/poll/epoll</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 理论知识 </category>
-          
-          <category> IO </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> IO,IO模型 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>用户空间、内核空间</title>
       <link href="/posts/a46eba31.html"/>
       <url>/posts/a46eba31.html</url>
@@ -326,6 +274,33 @@
         <tags>
             
             <tag> 虚拟空间,用户态,内核态 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IO模型</title>
+      <link href="/posts/aeafbee0.html"/>
+      <url>/posts/aeafbee0.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、I-O概述"><a href="#一、I-O概述" class="headerlink" title="一、I/O概述"></a>一、I/O概述</h2><p><a href="https://zh.wikipedia.org/zh-cn/I/O">I/O（英语：Input/Output）</a>，即输入／输出，通常指数据在存储器（内部和外部）或其他周边设备之间的输入和输出。IO有 <strong>内存IO、网络IO和磁盘IO</strong> 三种，通常我们说的IO指的是后两者。</p><p>从系统角度来看，编辑器编辑文档、通讯软件消息的发送接收就分别属于网络IO和磁盘IO。为了方便理解IO模型，我们以通讯软件也就是网络IO来分析，软件程序是运行在 <strong>用户空间</strong> 的，并不存在实质的IO过程，真正的IO操作属于特权指令是运行在 <strong>系统内核</strong> 的（<a href="https://cmeng-cm.github.io/2023/02/17/theoretical-knowledge/virtual-memory/">用户空间和内核空间</a>）。所以软件程序的IO操作需要分为两步即：</p><ul><li><strong>IO调用</strong>：用户空间内软件程序像内核发起IO操作的调用</li><li><strong>IO执行</strong>：内核空间系统内核实际完成IO操作</li></ul><p>IO调用则由应用程序发起，发起后则等待系统内核完成实际IO操作。IO操作在内核中也分为两步，以网络IO来说，分别是：</p><ul><li>等待数据达到网卡后将数据拷贝至系统内核准备好。（即：<strong>等待数据准备好</strong>）</li><li>将内核读书的数据拷贝到用户空间，由程序进行相关操作。（即：<strong>从内核向进程拷贝数据</strong>）</li></ul><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/网络IO传输流程.jpg" alt="网络IO传输流程"></p><p>根据图解，可以清晰的感受到 <strong>IO调用</strong> 和 <strong>IO执行</strong> 的两阶段，以及 <strong>IO执行</strong> 也就是接收数据过程的 <strong>等待数据准备好</strong> 和 <strong>从内核向进程拷贝数据</strong> 两阶段。<br>至于我们说的 <strong>阻塞和非阻塞，异步和同步</strong> 都是指的 <strong>IO执行阶段</strong> 的状态和处理机制。</p><h2 id="二、阻塞、非阻塞"><a href="#二、阻塞、非阻塞" class="headerlink" title="二、阻塞、非阻塞"></a>二、阻塞、非阻塞</h2><p>我们以【数据接收】过程来进一步理解下阻塞和非阻塞的概念。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/网络IO数据接收.jpg" alt="网络IO数据接收"></p><h3 id="2-1、阻塞式I-O"><a href="#2-1、阻塞式I-O" class="headerlink" title="2.1、阻塞式I/O"></a>2.1、阻塞式I/O</h3><p>根据IO调用和IO执行过程来看，如果程序发起IO调用，但此时数据还未准备好（即数据未到达网卡并读取到内核缓冲区）。那么此时程序就一直处于等待数据准备好的状态，知道数据准备好后内核才能将数据拷贝至用户缓冲区。这个等待的过程就是阻塞。</p><p><strong>流程：</strong></p><ol><li>程序发起IO调用。</li><li>系统内核进行IO操作。<ul><li>数据未准备好则等待，直至数据准备好。（<font color="red" size="5">阻塞主要是这一步</font>）</li><li>系统内核拷贝数据至用户缓冲区。</li></ul></li></ol><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/阻塞式IO模型.jpg" alt="阻塞式IO模型"></p><h3 id="2-2、非阻塞式I-O"><a href="#2-2、非阻塞式I-O" class="headerlink" title="2.2、非阻塞式I/O"></a>2.2、非阻塞式I/O</h3><p>理解了阻塞式IO再进一步理解非阻塞就很容易了。既然没有数据那系统内核直接返回没有数据，即返回一个 <strong>EWOULDBLOCK</strong> 错误告知程序就可以了。这样就不用一直阻塞着等待数据到达准备好了。<br>不过这样确实不阻塞了，但程序还是需要获取到数据的，那么就只能轮询了。在未接收到数据时需要持续轮询系统内核是否准备好数据，直到准备好数据进行拷贝为止。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/非阻塞式IO模型.jpg" alt="非阻塞式IO模型"></p><p><strong>流程：</strong></p><ol><li>程序发起IO调用。</li><li>系统内核进行IO操作。<ul><li>i：判断数据是否准备好，准备好进行下一步，未准备好将错误 <strong>EWOULDBLOCK</strong> 响应给用户控件的程序。</li><li>ii：系统内核拷贝数据至用户缓冲区。</li></ul></li></ol><h2 id="三、I-O多路复用技术（multiplexing）"><a href="#三、I-O多路复用技术（multiplexing）" class="headerlink" title="三、I/O多路复用技术（multiplexing）"></a>三、I/O多路复用技术（multiplexing）</h2><p>针对阻塞模型进一步思考，每个系统的进程都是很多的，如果每个进程都持续轮询到数据准备，先不说服务器能不能扛得住这么多线程，就算扛得住那么很明显这种方式是不是太浪费资源了。</p><p>那么基于这种情况，是不是考虑可以有一个进程专门用来做轮询操作，等数据到达且准备好之后再通知各个进程读取数据呢？这种方式是有的，那就是 <strong>I/O 多路复用技术</strong></p><p><strong>I/O 多路复用技术</strong>：Linux下的 <strong>select、poll和epoll</strong> 就是干这个的。将用户socket对应的fd（<a href="https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">文件描述</a>）注册进epoll，然后epoll帮你监听哪些socket上有消息到达，这样就避免了大量的无用操作同时提升了CPU效率。此时的socket应该采用非阻塞模式。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/IO多路复用.jpg" alt="IO多路复用"></p><p><strong>select()：</strong> 用 <strong>long</strong> 组成的数据结构 <strong>fd_set</strong> 来存储文件句柄，每一个数组元素都能与一打开的文件句柄建立联系。当调用select()时，由内核根据IO状态修改 <strong>fd_set</strong> 的内容，由此来通知执行了 <strong>select()</strong> 的进程哪一Socket或文件可读。不过其监视的文件句柄通常最大为 <strong>1024</strong></p><p><strong>epoll</strong>：设计和实现与 <strong>select</strong> 完全不同。但是底层是链表，这就代表没有上限。</p><p><strong>epoll</strong>：底层采用红黑树，在内核空间创建需要关注的文件描述符的红黑树，内核监听时会将发生事件的描述符加入队列中，返回到用户空间的时候只需要返回队列中的数据即可。epoll通过这种方式使得减少了每次用户到内核的复制过程。</p><h2 id="四、信号驱动I-O"><a href="#四、信号驱动I-O" class="headerlink" title="四、信号驱动I/O"></a>四、信号驱动I/O</h2><p>在多路复用的基础上，能不能有更加有效率的方式来避免这种暴力的轮询机制呢？毕竟大部分轮询都是无效的，且 <strong>SELECT</strong> 轮询时程序进程依旧属于阻塞状态，效率并没有提高多少。</p><p>针对这种情况，就衍生出了 <strong>信号驱动I/O</strong> 模型</p><p><strong>信号驱动I/O</strong>：应用进程使用 <strong>sigaction</strong> 系统调用，内核立即返回，应用进程可以继续执行，也就是说等待数据阶段应用进程是非阻塞的。内核在数据到达时向应用进程发送 <strong>SIGIO</strong> 信号，应用进程收到之后在信号处理程序中调用 <strong>recvfrom</strong> 将数据从内核复制到应用进程中。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/信号驱动IO.jpg" alt="信号驱动IO"></p><p>相交 <strong>I/O多路复用</strong> 这种通过不断轮询来减少线程资源创建的方式，<strong>信号驱动I/O</strong> 模式通过建立信号关联的机制，实现了发送后只需等待通知即可，避免大量无效的数据状态轮询操作。</p><h2 id="五、异步I-O"><a href="#五、异步I-O" class="headerlink" title="五、异步I/O"></a>五、异步I/O</h2><p>那么在 <strong>信号驱动I/O</strong> 的基础上有没有更进一步效率更高更简洁的操作呢？当然有啦，那就是 <strong>异步I/O</strong> 这个相信大家都不陌生，进程发送 <strong>aio_read</strong> 系统调用会立即返回，内核会在所有操作完成之后向应用进程发送信号，这期间程序线程不阻塞继续执行。</p><p><img src="https://raw.githubusercontent.com/cmeng-CM/image-hosting/master/img/theoretical_knowledge/异步IO.jpg" alt="异步IO"></p><h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>以上就是 <strong>Unix</strong> 中的五种 I/O 模型，列举如下:</p><ul><li>阻塞式 I/O</li><li>非阻塞式 I/O</li><li>I/O 复用(select 和 poll)</li><li>信号驱动式 I/O(SIGIO)</li><li>异步 I/O(AIO)</li></ul><p>前四种模型主要区别有 <strong>IO操作</strong> 的第一阶段，就是等待数据阶段，至于第二阶段的数据复制都是一样的。其中 <strong>阻塞式 I/O、非阻塞式 I/O、I/O 复用(select 和 poll)、信号驱动式 I/O(SIGIO)</strong> 都是同步的I/O，虽然非阻塞式 I/O 和信号驱动 I/O 在等待数据阶段不会阻塞，但是在之后的将数据从内核复制到应用进程这个操作会阻塞。<br>只有 <strong>异步I/O</strong> 是完全不阻塞的 <strong>IO操作</strong></p><p>&lt;/br&gt;&lt;/br&gt;</p><h2>参考资料</h2><p></p><p><a href="https://learn.microsoft.com/zh-cn/windows/win32/fileio/synchronous-and-asynchronous-i-o?redirectedfrom=MSDN">Synchronous and asynchronous I/O</a><br><a href="https://www.masterraghu.com/subjects/np/introduction/unix_network_programming_v1.3/ch06lev1sec2.html#ch06fig01">6.2 I/O Models</a><br><a href="https://www.kancloud.cn/luoyoub/network-programming/2234074">select/poll/epoll</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 理论知识 </category>
+          
+          <category> IO </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> IO,IO模型 </tag>
             
         </tags>
       
@@ -648,31 +623,6 @@
     
     
     <entry>
-      <title>docker日常命令</title>
-      <link href="/posts/23c1b730.html"/>
-      <url>/posts/23c1b730.html</url>
-      
-        <content type="html"><![CDATA[<h3 id="容器挂载文件相关"><a href="#容器挂载文件相关" class="headerlink" title="容器挂载文件相关"></a>容器挂载文件相关</h3><ol><li>查看容器挂的文件信息：<ul><li>命令：docker inspect containerID | grep Source -A 1</li><li>结果：<blockquote><p>“Source”: “/Users/workerspace/mysql/mysql2/mysql”,<br>“Destination”: “/var/lib/mysql”,</p><p>“Source”: “/host_mnt/Users/workerspace/mysql/mysql2/mysqld.cnf”,<br>“Destination”: “/etc/mysql/mysql.conf.d/mysqld.cnf”,</p></blockquote></li></ul></li></ol>]]></content>
-      
-      
-      <categories>
-          
-          <category> Docker </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> command </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Docker之MySQL安装</title>
       <link href="/posts/bd5c77e2.html"/>
       <url>/posts/bd5c77e2.html</url>
@@ -692,6 +642,31 @@
             <tag> docker </tag>
             
             <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>docker日常命令</title>
+      <link href="/posts/23c1b730.html"/>
+      <url>/posts/23c1b730.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="容器挂载文件相关"><a href="#容器挂载文件相关" class="headerlink" title="容器挂载文件相关"></a>容器挂载文件相关</h3><ol><li>查看容器挂的文件信息：<ul><li>命令：docker inspect containerID | grep Source -A 1</li><li>结果：<blockquote><p>“Source”: “/Users/workerspace/mysql/mysql2/mysql”,<br>“Destination”: “/var/lib/mysql”,</p><p>“Source”: “/host_mnt/Users/workerspace/mysql/mysql2/mysqld.cnf”,<br>“Destination”: “/etc/mysql/mysql.conf.d/mysqld.cnf”,</p></blockquote></li></ul></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> command </tag>
             
         </tags>
       
@@ -746,31 +721,6 @@
             <tag> MySQL </tag>
             
             <tag> 同步 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分布式CAP</title>
-      <link href="/posts/97c733b2.html"/>
-      <url>/posts/97c733b2.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以下引用至维基百科：  </p><blockquote><p>在理论计算机科学中，CAP定理（CAP theorem），又被称作布鲁尔定理（Brewer’s theorem），它指出对于一个分布式计算系统来说，不可能同时满足以下三点：</p><ul><li>一致性（Consistency）：等同于所有节点访问同一份最新的数据副本</li><li>可用性（Availability）：每次请求都能获取到非错的响应——但是不保证获取的数据为最新数据</li><li>分区容错性（Partition tolerance）：以实际效果而言，分区相当于对通信的时限要求。系统如果不能在<br>限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li></ul><p>根据定理，分布式系统只能满足三项中的两项而不可能满足全部三项。理解CAP理论的最简单方式：<br><strong>想象两个节点分处分区两侧。允许至少一个节点更新状态会导致数据不一致，即丧失了C性质。如果为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了A性质。除非两个节点可以互相通信，才能既保证C又保证A，这又会导致丧失P性质。</strong></p></blockquote>]]></content>
-      
-      
-      <categories>
-          
-          <category> CAP </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> CAP </tag>
             
         </tags>
       
@@ -904,6 +854,31 @@
     
     
     <entry>
+      <title>分布式CAP</title>
+      <link href="/posts/97c733b2.html"/>
+      <url>/posts/97c733b2.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以下引用至维基百科：  </p><blockquote><p>在理论计算机科学中，CAP定理（CAP theorem），又被称作布鲁尔定理（Brewer’s theorem），它指出对于一个分布式计算系统来说，不可能同时满足以下三点：</p><ul><li>一致性（Consistency）：等同于所有节点访问同一份最新的数据副本</li><li>可用性（Availability）：每次请求都能获取到非错的响应——但是不保证获取的数据为最新数据</li><li>分区容错性（Partition tolerance）：以实际效果而言，分区相当于对通信的时限要求。系统如果不能在<br>限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。</li></ul><p>根据定理，分布式系统只能满足三项中的两项而不可能满足全部三项。理解CAP理论的最简单方式：<br><strong>想象两个节点分处分区两侧。允许至少一个节点更新状态会导致数据不一致，即丧失了C性质。如果为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了A性质。除非两个节点可以互相通信，才能既保证C又保证A，这又会导致丧失P性质。</strong></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> CAP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CAP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>rust基础信息</title>
       <link href="/posts/fd45b18c.html"/>
       <url>/posts/fd45b18c.html</url>
@@ -929,31 +904,6 @@
     
     
     <entry>
-      <title>vscode快捷键</title>
-      <link href="/posts/ea22a33a.html"/>
-      <url>/posts/ea22a33a.html</url>
-      
-        <content type="html"><![CDATA[<h3 id="全局"><a href="#全局" class="headerlink" title="全局"></a>全局</h3><p>Command + Shift + P / F1 显示命令面板<br>Command + P 快速打开<br>Command + Shift + N 打开新窗口<br>Command + W 关闭窗口</p><h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p>Command + X 剪切（未选中文本的情况下，剪切光标所在行）<br>Command + C 复制（未选中文本的情况下，复制光标所在行）<br>Option + Up 向上移动行<br>Option + Down 向下移动行<br>Option + Shift + Up 向上复制行<br>Option + Shift + Down 向下复制行<br>Command + Shift + K 删除行<br>Command + Enter 下一行插入<br>Command + Shift + Enter 上一行插入<br>Command + Shift + \ 跳转到匹配的括号<br>Command + [ 减少缩进<br>Command + ] 增加缩进<br>Home 跳转至行首<br>End 跳转到行尾<br>Command + Up 跳转至文件开头<br>Command + Down 跳转至文件结尾<br>Ctrl + PgUp 按行向上滚动<br>Ctrl + PgDown 按行向下滚动<br>Command + PgUp 按屏向上滚动<br>Command + PgDown 按屏向下滚动<br>Command + Shift + [ 折叠代码块<br>Command + Shift + ] 展开代码块<br>Command + K Command + [ 折叠全部子代码块<br>Command + K Command + ] 展开全部子代码块<br>Command + K Command + 0 折叠全部代码块<br>Command + K Command + J 展开全部代码块<br>Command + K Command + C 添加行注释<br>Command + K Command + U 移除行注释<br>Command + / 添加、移除行注释<br>Option + Shift + A 添加、移除块注释<br>Option + Z 自动换行、取消自动换行</p><h3 id="多光标与选择"><a href="#多光标与选择" class="headerlink" title="多光标与选择"></a>多光标与选择</h3><p>Option + 点击 插入多个光标<br>Command + Option + Up 向上插入光标<br>Command + Option + Down 向下插入光标<br>Command + U 撤销上一个光标操作<br>Option + Shift + I 在所选行的行尾插入光标<br>Command + I 选中当前行<br>Command + Shift + L 选中所有与当前选中内容相同部分<br>Command + F2 选中所有与当前选中单词相同的单词<br>Command + Ctrl + Shift + Left 折叠选中<br>Command + Ctrl + Shift + Right 展开选中<br>Alt + Shift + 拖动鼠标 选中代码块<br>Command + Shift + Option + Up 列选择 向上<br>Command + Shift + Option + Down 列选择 向下<br>Command + Shift + Option + Left 列选择 向左<br>Command + Shift + Option + Right 列选择 向右<br>Command + Shift + Option + PgUp 列选择 向上翻页<br>Command + Shift + Option + PgDown 列选择 向下翻页</p><h3 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h3><p>Command + F 查找<br>Command + Option + F 替换<br>Command + G 查找下一个<br>Command + Shift + G 查找上一个<br>Option + Enter 选中所有匹配项<br>Command + D 向下选中相同内容<br>Command + K Command + D 移除前一个向下选中相同内容</p><h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><p>Ctrl + Space 打开建议<br>Command + Shift + Space 参数提示<br>Tab Emmet插件缩写补全<br>Option + Shift + F 格式化<br>Command + K Command + F 格式化选中内容<br>F12 跳转到声明位置<br>Option + F12 查看具体声明内容<br>Command + K F12 分屏查看具体声明内容<br>Command + . 快速修复<br>Shift + F12 显示引用<br>F2 重命名符号<br>Command + Shift + . 替换为上一个值<br>Command + Shift + , 替换为下一个值<br>Command + K Command + X 删除行尾多余空格<br>Command + K M 更改文件语言</p><h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p>Command + T 显示所有符号<br>Ctrl + G 跳转至某行<br>Command + P 跳转到某个文件<br>Command + Shift + O 跳转到某个符号<br>Command + Shift + M 打开问题面板<br>F8 下一个错误或警告位置<br>Shift + F8 上一个错误或警告位置<br>Ctrl + Shift + Tab 编辑器历史记录<br>Ctrl + - 后退<br>Ctrl + Shift + - 前进<br>Ctrl + Shift + M Tab 切换焦点</p><h3 id="编辑器管理"><a href="#编辑器管理" class="headerlink" title="编辑器管理"></a>编辑器管理</h3><p>Command + W 关闭编辑器<br>Command + K F 关闭文件夹<br>Command + \ 编辑器分屏<br>Command + 1 切换到第一分组<br>Command + 2 切换到第二分组<br>Command + 3 切换到第三分组<br>Command + K Command + Left 切换到上一分组<br>Command + K Command + Right 切换到下一分组<br>Command + K Command + Shift + Left 左移编辑器<br>Command + K Command + Shift + Right 右移编辑器<br>Command + K Left 激活左侧编辑组<br>Command + K Right 激活右侧编辑组</p><h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><p>Command + N 新建文件<br>Command + O 打开文件<br>Command + S 保存文件<br>Command + Shift + S 另存为<br>Command + Option + S 全部保存<br>Command + W 关闭<br>Command + K Command + W 全部关闭<br>Command + Shift + T 重新打开被关闭的编辑器<br>Command + K Enter 保持打开<br>Ctrl + Tab 打开下一个<br>Ctrl + Shift + Tab 打开上一个<br>Command + K P 复制当前文件路径<br>Command + K R 在资源管理器中查看当前文件<br>Command + K O 新窗口打开当前文件</p><h3 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h3><p>Command + Ctrl + F 全屏、退出全屏<br>Command + Option + 1 切换编辑器分屏方式（横、竖）<br>Command + + 放大<br>Command + - 缩小<br>Command + B 显示、隐藏侧边栏<br>Command + Shift + E 显示资源管理器 或 切换焦点<br>Command + Shift + F 显示搜索框<br>Ctrl + Shift + G 显示Git面板<br>Command + Shift + D 显示调试面板<br>Command + Shift + X 显示插件面板<br>Command + Shift + H 全局搜索替换<br>Command + Shift + J 显示、隐藏高级搜索<br>Command + Shift + C 打开新终端<br>Command + Shift + U 显示输出面板<br>Command + Shift + V Markdown预览窗口<br>Command + K V 分屏显示 Markdown预览窗口</p><h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><p>F9 设置 或 取消断点<br>F5 开始 或 继续<br>F11 进入<br>Shift + F11 跳出<br>F10 跳过<br>Command + K Command + I 显示悬停信息</p><h3 id="集成终端"><a href="#集成终端" class="headerlink" title="集成终端"></a>集成终端</h3><p>Ctrl + 显示终端 Ctrl + Shift + 新建终端<br>Command + Up 向上滚动<br>Command + Down 向下滚动<br>PgUp 向上翻页<br>PgDown 向下翻页<br>Command + Home 滚动到顶部<br>Command + End 滚动到底部</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> vscode </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> vscode </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Zookeeper之Watcher机制</title>
       <link href="/posts/f91292b9.html"/>
       <url>/posts/f91292b9.html</url>
@@ -971,6 +921,31 @@
         <tags>
             
             <tag> zookeeper </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>vscode快捷键</title>
+      <link href="/posts/ea22a33a.html"/>
+      <url>/posts/ea22a33a.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="全局"><a href="#全局" class="headerlink" title="全局"></a>全局</h3><p>Command + Shift + P / F1 显示命令面板<br>Command + P 快速打开<br>Command + Shift + N 打开新窗口<br>Command + W 关闭窗口</p><h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p>Command + X 剪切（未选中文本的情况下，剪切光标所在行）<br>Command + C 复制（未选中文本的情况下，复制光标所在行）<br>Option + Up 向上移动行<br>Option + Down 向下移动行<br>Option + Shift + Up 向上复制行<br>Option + Shift + Down 向下复制行<br>Command + Shift + K 删除行<br>Command + Enter 下一行插入<br>Command + Shift + Enter 上一行插入<br>Command + Shift + \ 跳转到匹配的括号<br>Command + [ 减少缩进<br>Command + ] 增加缩进<br>Home 跳转至行首<br>End 跳转到行尾<br>Command + Up 跳转至文件开头<br>Command + Down 跳转至文件结尾<br>Ctrl + PgUp 按行向上滚动<br>Ctrl + PgDown 按行向下滚动<br>Command + PgUp 按屏向上滚动<br>Command + PgDown 按屏向下滚动<br>Command + Shift + [ 折叠代码块<br>Command + Shift + ] 展开代码块<br>Command + K Command + [ 折叠全部子代码块<br>Command + K Command + ] 展开全部子代码块<br>Command + K Command + 0 折叠全部代码块<br>Command + K Command + J 展开全部代码块<br>Command + K Command + C 添加行注释<br>Command + K Command + U 移除行注释<br>Command + / 添加、移除行注释<br>Option + Shift + A 添加、移除块注释<br>Option + Z 自动换行、取消自动换行</p><h3 id="多光标与选择"><a href="#多光标与选择" class="headerlink" title="多光标与选择"></a>多光标与选择</h3><p>Option + 点击 插入多个光标<br>Command + Option + Up 向上插入光标<br>Command + Option + Down 向下插入光标<br>Command + U 撤销上一个光标操作<br>Option + Shift + I 在所选行的行尾插入光标<br>Command + I 选中当前行<br>Command + Shift + L 选中所有与当前选中内容相同部分<br>Command + F2 选中所有与当前选中单词相同的单词<br>Command + Ctrl + Shift + Left 折叠选中<br>Command + Ctrl + Shift + Right 展开选中<br>Alt + Shift + 拖动鼠标 选中代码块<br>Command + Shift + Option + Up 列选择 向上<br>Command + Shift + Option + Down 列选择 向下<br>Command + Shift + Option + Left 列选择 向左<br>Command + Shift + Option + Right 列选择 向右<br>Command + Shift + Option + PgUp 列选择 向上翻页<br>Command + Shift + Option + PgDown 列选择 向下翻页</p><h3 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h3><p>Command + F 查找<br>Command + Option + F 替换<br>Command + G 查找下一个<br>Command + Shift + G 查找上一个<br>Option + Enter 选中所有匹配项<br>Command + D 向下选中相同内容<br>Command + K Command + D 移除前一个向下选中相同内容</p><h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><p>Ctrl + Space 打开建议<br>Command + Shift + Space 参数提示<br>Tab Emmet插件缩写补全<br>Option + Shift + F 格式化<br>Command + K Command + F 格式化选中内容<br>F12 跳转到声明位置<br>Option + F12 查看具体声明内容<br>Command + K F12 分屏查看具体声明内容<br>Command + . 快速修复<br>Shift + F12 显示引用<br>F2 重命名符号<br>Command + Shift + . 替换为上一个值<br>Command + Shift + , 替换为下一个值<br>Command + K Command + X 删除行尾多余空格<br>Command + K M 更改文件语言</p><h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p>Command + T 显示所有符号<br>Ctrl + G 跳转至某行<br>Command + P 跳转到某个文件<br>Command + Shift + O 跳转到某个符号<br>Command + Shift + M 打开问题面板<br>F8 下一个错误或警告位置<br>Shift + F8 上一个错误或警告位置<br>Ctrl + Shift + Tab 编辑器历史记录<br>Ctrl + - 后退<br>Ctrl + Shift + - 前进<br>Ctrl + Shift + M Tab 切换焦点</p><h3 id="编辑器管理"><a href="#编辑器管理" class="headerlink" title="编辑器管理"></a>编辑器管理</h3><p>Command + W 关闭编辑器<br>Command + K F 关闭文件夹<br>Command + \ 编辑器分屏<br>Command + 1 切换到第一分组<br>Command + 2 切换到第二分组<br>Command + 3 切换到第三分组<br>Command + K Command + Left 切换到上一分组<br>Command + K Command + Right 切换到下一分组<br>Command + K Command + Shift + Left 左移编辑器<br>Command + K Command + Shift + Right 右移编辑器<br>Command + K Left 激活左侧编辑组<br>Command + K Right 激活右侧编辑组</p><h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><p>Command + N 新建文件<br>Command + O 打开文件<br>Command + S 保存文件<br>Command + Shift + S 另存为<br>Command + Option + S 全部保存<br>Command + W 关闭<br>Command + K Command + W 全部关闭<br>Command + Shift + T 重新打开被关闭的编辑器<br>Command + K Enter 保持打开<br>Ctrl + Tab 打开下一个<br>Ctrl + Shift + Tab 打开上一个<br>Command + K P 复制当前文件路径<br>Command + K R 在资源管理器中查看当前文件<br>Command + K O 新窗口打开当前文件</p><h3 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h3><p>Command + Ctrl + F 全屏、退出全屏<br>Command + Option + 1 切换编辑器分屏方式（横、竖）<br>Command + + 放大<br>Command + - 缩小<br>Command + B 显示、隐藏侧边栏<br>Command + Shift + E 显示资源管理器 或 切换焦点<br>Command + Shift + F 显示搜索框<br>Ctrl + Shift + G 显示Git面板<br>Command + Shift + D 显示调试面板<br>Command + Shift + X 显示插件面板<br>Command + Shift + H 全局搜索替换<br>Command + Shift + J 显示、隐藏高级搜索<br>Command + Shift + C 打开新终端<br>Command + Shift + U 显示输出面板<br>Command + Shift + V Markdown预览窗口<br>Command + K V 分屏显示 Markdown预览窗口</p><h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><p>F9 设置 或 取消断点<br>F5 开始 或 继续<br>F11 进入<br>Shift + F11 跳出<br>F10 跳过<br>Command + K Command + I 显示悬停信息</p><h3 id="集成终端"><a href="#集成终端" class="headerlink" title="集成终端"></a>集成终端</h3><p>Ctrl + 显示终端 Ctrl + Shift + 新建终端<br>Command + Up 向上滚动<br>Command + Down 向下滚动<br>PgUp 向上翻页<br>PgDown 向下翻页<br>Command + Home 滚动到顶部<br>Command + End 滚动到底部</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vscode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vscode </tag>
             
         </tags>
       

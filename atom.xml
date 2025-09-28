@@ -6,7 +6,7 @@
   <link href="https://cmeng-cm.github.io/atom.xml" rel="self"/>
   
   <link href="https://cmeng-cm.github.io/"/>
-  <updated>2025-09-28T02:25:34.277Z</updated>
+  <updated>2025-09-26T08:34:24.851Z</updated>
   <id>https://cmeng-cm.github.io/</id>
   
   <author>
@@ -15,31 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>时事通讯</title>
-    <link href="https://cmeng-cm.github.io/posts/86088e50.html"/>
-    <id>https://cmeng-cm.github.io/posts/86088e50.html</id>
-    <published>2025-09-28T02:00:00.000Z</published>
-    <updated>2025-09-28T02:25:34.277Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;推荐合集&quot;&gt;&lt;a href=&quot;#推荐合集&quot; class=&quot;headerlink&quot; title=&quot;推荐合集&quot;&gt;&lt;/a&gt;推荐合集&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="newsletter" scheme="https://cmeng-cm.github.io/categories/newsletter/"/>
-    
-    
-    <category term="newsletter" scheme="https://cmeng-cm.github.io/tags/newsletter/"/>
-    
-  </entry>
   
   <entry>
     <title></title>
@@ -325,33 +300,6 @@
   </entry>
   
   <entry>
-    <title>IO模型</title>
-    <link href="https://cmeng-cm.github.io/posts/aeafbee0.html"/>
-    <id>https://cmeng-cm.github.io/posts/aeafbee0.html</id>
-    <published>2023-02-17T08:13:12.000Z</published>
-    <updated>2023-03-20T09:09:35.905Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、I-O概述&quot;&gt;&lt;a href=&quot;#一、I-O概述&quot; class=&quot;headerlink&quot; title=&quot;一、I/O概述&quot;&gt;&lt;/a&gt;一、I/O概述&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
-    
-    <category term="IO" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/IO/"/>
-    
-    
-    <category term="IO,IO模型" scheme="https://cmeng-cm.github.io/tags/IO-IO%E6%A8%A1%E5%9E%8B/"/>
-    
-  </entry>
-  
-  <entry>
     <title>用户空间、内核空间</title>
     <link href="https://cmeng-cm.github.io/posts/a46eba31.html"/>
     <id>https://cmeng-cm.github.io/posts/a46eba31.html</id>
@@ -375,6 +323,33 @@
     
     
     <category term="虚拟空间,用户态,内核态" scheme="https://cmeng-cm.github.io/tags/%E8%99%9A%E6%8B%9F%E7%A9%BA%E9%97%B4-%E7%94%A8%E6%88%B7%E6%80%81-%E5%86%85%E6%A0%B8%E6%80%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IO模型</title>
+    <link href="https://cmeng-cm.github.io/posts/aeafbee0.html"/>
+    <id>https://cmeng-cm.github.io/posts/aeafbee0.html</id>
+    <published>2023-02-17T08:13:12.000Z</published>
+    <updated>2023-03-20T09:09:35.905Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、I-O概述&quot;&gt;&lt;a href=&quot;#一、I-O概述&quot; class=&quot;headerlink&quot; title=&quot;一、I/O概述&quot;&gt;&lt;/a&gt;一、I/O概述&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    <category term="IO" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/IO/"/>
+    
+    
+    <category term="IO,IO模型" scheme="https://cmeng-cm.github.io/tags/IO-IO%E6%A8%A1%E5%9E%8B/"/>
     
   </entry>
   
@@ -525,6 +500,19 @@
 &lt;th</summary>
         
       
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>markdown思维导图demo</title>
+    <link href="https://cmeng-cm.github.io/posts/7065c334.html"/>
+    <id>https://cmeng-cm.github.io/posts/7065c334.html</id>
+    <published>2022-09-08T13:23:52.783Z</published>
+    <updated>2023-02-21T03:23:38.263Z</updated>
+    
     
     
     
