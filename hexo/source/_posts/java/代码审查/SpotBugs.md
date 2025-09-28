@@ -1,3 +1,6 @@
+---
+abbrlink: '0'
+---
 ### SpotBugs 文档
 
 #### 1. SpotBugs 介绍

@@ -3,7 +3,6 @@ title: MQ原理和技术选型
 tags: MQ
 categories:
   - MQ
-top: true
 keywords: MQ、选型
 abbrlink: 8911925b
 date: 2022-11-13 16:13:12
