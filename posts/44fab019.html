@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: Docker, c萌怪谈">
-    <meta name="description" content="c萌怪谈">
+    <meta name="keywords" content="Ollama命令介绍, c萌怪谈">
+    <meta name="description" content="Ollama CLIOllama 命令行工具 (ollama) 的主要实现代码，使用 Go 语言编写。它定义了 ollama 命令及其所有子命令（如 run, pull, create 等）的行为。
+根据代码分析，以下是所有命令行操作及其具">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +31,7 @@
 </script>
 
 
-    <title>分类: Docker | c萌怪谈</title>
+    <title>Ollama命令介绍 | c萌怪谈</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -347,369 +348,581 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                奇葩事迹、奇趣怪谈、记录一切新奇怪异。
-                
-            </div>
+    
+    
+    
 
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="/libs/typed/typed.js"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "从来没有真正的绝境, 只有心灵的迷途",
-                            
-                                "Never really desperate, only the lost of the soul",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Ollama命令介绍</h1>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-
-
-    </div>
-</div>
-
-<main class="content">
-
     
-
-<div id="category-cloud" class="container chip-container">
+    
+    
+    <main class="post-container content">
+    
+        
+        <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
     <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                <a href="/categories/%E7%AE%97%E6%B3%95/" title="算法: 5">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">算法
-                        <span class="tag-length">5</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/CAP/" title="CAP: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">CAP
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/springboot/" title="springboot: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">springboot
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/MQ/" title="MQ: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #E8F8F5;">MQ
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Poetry/" title="Poetry: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">Poetry
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Markdowm/" title="Markdowm: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F8F9F9;">Markdowm
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/rust/" title="rust: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #82E0AA;">rust
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Mysql/" title="Mysql: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D7BDE2;">Mysql
-                        <span class="tag-length">4</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Rust/" title="Rust: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #A3E4D7;">Rust
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/MQ/RocketMQ/" title="RocketMQ: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #85C1E9;">RocketMQ
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Docker/" title="Docker: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F8C471;">Docker
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/HMAC/" title="HMAC: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9E79F;">HMAC
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/" title="理论知识: 3">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">理论知识
-                        <span class="tag-length">3</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E5%8C%96%E9%AA%8C/" title="化验: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">化验
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Redis/" title="Redis: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">Redis
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/java/" title="java: 6">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #A3E4D7;">java
-                        <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/vue3/" title="vue3: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F8F9F9;">vue3
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/zookeeper/" title="zookeeper: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D7BDE2;">zookeeper
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%B9%B6%E5%8F%91%E7%9B%B8%E5%85%B3/" title="并发相关: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #82E0AA;">并发相关
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/node/" title="node: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F8F9F9;">node
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%86%85%E5%AD%98/" title="内存: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">内存
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/IO/" title="IO: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">IO
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/java/JVM/" title="JVM: 3">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">JVM
-                        <span class="tag-length">3</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="多线程: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">多线程
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/java/netty/" title="netty: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #A3E4D7;">netty
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/vscode/" title="vscode: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9E79F;">vscode
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    
-
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/posts/23c1b730.html">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="docker日常命令">
-                            
-                            <span class="card-title">docker日常命令</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                容器挂载文件相关
-查看容器挂的文件信息：
-命令：docker inspect containerID | grep Source -A 1
-结果：
-“Source”: “/Users/workerspace/mysql/mysql2/mys
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Docker/" class="post-category">
-                                    Docker
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
                     
-                    <div class="card-action article-tags">
+                    <div class="article-tag">
                         
-                        <a href="/tags/command/">
-                            <span class="chip bg-color">command</span>
-                        </a>
+                            <a href="/tags/AI/">
+                                <span class="chip bg-color">AI</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/" class="post-category">
+                                理论知识
+                            </a>
                         
                     </div>
                     
                 </div>
             </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-02-17
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    985
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    3 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Ollama-CLI"><a href="#Ollama-CLI" class="headerlink" title="Ollama CLI"></a>Ollama CLI</h1><p>Ollama 命令行工具 (<code>ollama</code>) 的主要实现代码，使用 Go 语言编写。它定义了 <code>ollama</code> 命令及其所有子命令（如 <code>run</code>, <code>pull</code>, <code>create</code> 等）的行为。</p>
+<p>根据代码分析，以下是所有命令行操作及其具体含义：</p>
+<ol>
+<li><p><strong><code>ollama</code> (根命令)</strong></p>
+<ul>
+<li><strong>用途</strong>: 显示 Ollama CLI 的基本使用信息和可用命令列表。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>-v, --version</code>: 显示 Ollama 客户端和服务端（如果正在运行）的版本信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama serve</code> (或 <code>ollama start</code>)</strong></p>
+<ul>
+<li><strong>用途</strong>: 在前台启动 Ollama 服务。这通常在后台运行，以提供 API 服务供 <code>ollama run</code> 等命令使用。如果需要，它还会生成用于安全通信的 SSH 密钥对。</li>
+<li><strong>参数</strong>: 无</li>
+<li><strong>相关环境变量</strong>: 控制服务行为，如 <code>OLLAMA_HOST</code> (监听地址), <code>OLLAMA_DEBUG</code> (调试模式), <code>OLLAMA_MODELS</code> (模型存储路径) 等。</li>
+</ul>
+</li>
+<li><p><strong><code>ollama create MODEL</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 从指定的 <code>Modelfile</code> 创建一个新的本地模型。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要创建的模型的名称。</li>
+<li><code>-f, --file string</code>: 指定 <code>Modelfile</code> 的路径（默认为当前目录下的 <code>Modelfile</code>）。</li>
+<li><code>-q, --quantize string</code>: （代码中定义但帮助文本未明确显示）指定量化模型的级别（例如 <code>q4_K_M</code>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama run MODEL [PROMPT]</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 运行指定的模型。如果提供了 <code>PROMPT</code>，则执行一次生成；如果没有提供或在交互模式下，则启动一个交互式会话。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要运行的模型名称。</li>
+<li><code>PROMPT</code>: （可选）传递给模型的初始提示文本。</li>
+<li><code>--format string</code>: 指定响应的格式（例如 <code>json</code>）。</li>
+<li><code>--keepalive string</code>: 指定模型在空闲状态下保持加载的持续时间（例如 <code>5m</code>）。</li>
+<li><code>--nowordwrap</code>: 禁用自动换行显示响应。</li>
+<li><code>--verbose</code>: 显示响应的计时信息。</li>
+<li><code>--think [string]</code>: 启用模型的“思考”模式。可以是 <code>true</code>, <code>false</code>, <code>high</code>, <code>medium</code>, <code>low</code>。不带值时默认为 <code>true</code>。</li>
+<li><code>--hidethinking</code>: 隐藏模型的“思考”输出（如果模型产生）。</li>
+</ul>
+</li>
+<li><strong>交互模式特殊命令</strong>:<ul>
+<li>在 <code>ollama run</code> 启动的交互会话中，可以输入 <code>/help</code> 查看帮助，包括 <code>/set</code>, <code>/show</code>, <code>/load</code>, <code>/bye</code> 等命令（虽然 <code>/load</code>, <code>/set</code>, <code>/show</code> 在代码中定义，但 <code>/help</code> 和 <code>/bye</code> 未在提供的代码片段中明确显示，但属于标准交互功能）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama stop MODEL</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 停止指定模型的运行实例（将其从内存中卸载）。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要停止的模型名称。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama pull MODEL</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 从模型库（默认是 ollama.com/library）下载指定的模型到本地。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要下载的模型名称。</li>
+<li><code>--insecure</code>: 使用不安全的 HTTP 连接（而非 HTTPS）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama push MODEL</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 将本地自定义模型推送到模型库（需要先登录）。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要推送的模型名称（格式通常为 <code>username/model_name:tag</code>）。</li>
+<li><code>--insecure</code>: 使用不安全的 HTTP 连接。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama list</code> (或 <code>ollama ls</code>)</strong></p>
+<ul>
+<li><strong>用途</strong>: 列出所有已下载到本地的模型及其基本信息（名称、ID、大小、修改时间）。</li>
+<li><strong>参数</strong>: 无</li>
+</ul>
+</li>
+<li><p><strong><code>ollama ps</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 列出当前正在运行（已加载到内存中）的模型及其状态信息（名称、ID、大小、处理器使用情况、上下文长度、过期时间）。</li>
+<li><strong>参数</strong>: 无</li>
+</ul>
+</li>
+<li><p><strong><code>ollama show MODEL</code></strong></p>
+<ul>
+<li><strong>用途</strong>: 显示指定模型的详细信息。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要显示信息的模型名称。</li>
+<li><code>--license</code>: 仅显示模型的许可证信息。</li>
+<li><code>--modelfile</code>: 仅显示模型的 <code>Modelfile</code> 内容。</li>
+<li><code>--parameters</code>: 仅显示模型的参数设置。</li>
+<li><code>--system</code>: 仅显示模型的系统消息。</li>
+<li><code>--template</code>: 仅显示模型的提示模板。</li>
+<li><code>-v, --verbose</code>: 显示更详细的模型元数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama cp SOURCE DESTINATION</code> (或 <code>ollama copy SOURCE DESTINATION</code>)</strong></p>
+<ul>
+<li><strong>用途</strong>: 在本地复制或重命名一个已存在的模型。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>SOURCE</code>: 源模型名称。</li>
+<li><code>DESTINATION</code>: 目标模型名称。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>ollama rm MODEL [MODEL...]</code> (或 <code>ollama delete MODEL [MODEL...]</code>)</strong></p>
+<ul>
+<li><strong>用途</strong>: 从本地删除一个或多个已下载的模型。</li>
+<li><strong>参数</strong>:<ul>
+<li><code>MODEL</code>: 要删除的一个或多个模型名称。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>这些命令共同构成了 Ollama CLI 的核心功能，允许用户管理、运行和与本地大型语言模型进行交互。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">cmeng</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://cmeng-CM.github.io/posts/44fab019.html">https://cmeng-CM.github.io/posts/44fab019.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">cmeng</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/AI/">
+                                    <span class="chip bg-color">AI</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
             
         </div>
-    </article>
-</main>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/45b42798.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="LLM程序员的学习路线">
+                        
+                        <span class="card-title">LLM程序员的学习路线</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-05-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/" class="post-category">
+                                    理论知识
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/AI/">
+                        <span class="chip bg-color">AI</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/d3edb278.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="SpotBugs使用指南">
+                        
+                        <span class="card-title">SpotBugs使用指南</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/" class="post-category">
+                                    理论知识
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
 
 
 
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+        
+    
+    </main>
+    
+    
 
     <footer class="page-footer bg-color">
     
@@ -773,7 +986,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2018-2025</span>
+                <span id="year">2018-2026</span>
             
             <a href="/about" target="_blank">cmeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -781,7 +994,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">81.6k</span>
+                        class="white-color">86.3k</span>
             
             
             

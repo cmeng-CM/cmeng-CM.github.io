@@ -6,7 +6,7 @@
   <link href="https://cmeng-cm.github.io/atom.xml" rel="self"/>
   
   <link href="https://cmeng-cm.github.io/"/>
-  <updated>2025-09-26T08:34:24.851Z</updated>
+  <updated>2026-02-13T08:03:12.403Z</updated>
   <id>https://cmeng-cm.github.io/</id>
   
   <author>
@@ -17,23 +17,52 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://cmeng-cm.github.io/posts/0.html"/>
-    <id>https://cmeng-cm.github.io/posts/0.html</id>
-    <published>2025-09-11T01:36:54.841Z</published>
-    <updated>2025-09-26T08:34:24.851Z</updated>
+    <title>AI学习</title>
+    <link href="https://cmeng-cm.github.io/posts/ba82741a.html"/>
+    <id>https://cmeng-cm.github.io/posts/ba82741a.html</id>
+    <published>2025-12-17T08:13:12.000Z</published>
+    <updated>2026-02-13T08:03:12.403Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;Ollama 命令行工具 (&lt;code&gt;ollama&lt;/code&gt;) 的主要实现代码，使用 Go 语言编写。它定义了 &lt;code&gt;ollama&lt;/code&gt; 命令及其所有子命令（如 &lt;code&gt;run&lt;/code&gt;, &lt;code&gt;pull&lt;/code&gt;,</summary>
+    <summary type="html">&lt;p&gt;下面为你制定一个&lt;strong&gt;针对程序员、已有基础、目标是进一步深入 AI 的系统学习计划&lt;/strong&gt;。计划分为三个阶段：&lt;strong&gt;基础强化 → 技术进阶 →</summary>
         
       
     
     
     
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="英语" scheme="https://cmeng-cm.github.io/tags/%E8%8B%B1%E8%AF%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux三权分立权限管理详细指南</title>
+    <link href="https://cmeng-cm.github.io/posts/55ea510b.html"/>
+    <id>https://cmeng-cm.github.io/posts/55ea510b.html</id>
+    <published>2025-10-11T08:13:12.000Z</published>
+    <updated>2026-02-13T07:52:14.604Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Linux三权分立权限管理详细指南&quot;&gt;&lt;a href=&quot;#Linux三权分立权限管理详细指南&quot; class=&quot;headerlink&quot; title=&quot;Linux三权分立权限管理详细指南&quot;&gt;&lt;/a&gt;Linux三权分立权限管理详细指南&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="Linux" scheme="https://cmeng-cm.github.io/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://cmeng-cm.github.io/tags/Linux/"/>
     
   </entry>
   
@@ -42,7 +71,7 @@
     <link href="https://cmeng-cm.github.io/posts/6821884a.html"/>
     <id>https://cmeng-cm.github.io/posts/6821884a.html</id>
     <published>2025-09-03T02:00:00.000Z</published>
-    <updated>2025-09-28T01:49:28.796Z</updated>
+    <updated>2026-02-13T08:07:06.410Z</updated>
     
     
       
@@ -88,23 +117,102 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://cmeng-cm.github.io/posts/0.html"/>
-    <id>https://cmeng-cm.github.io/posts/0.html</id>
-    <published>2025-01-02T05:19:07.357Z</published>
-    <updated>2025-09-26T08:34:24.854Z</updated>
+    <title>LLM程序员的学习路线</title>
+    <link href="https://cmeng-cm.github.io/posts/45b42798.html"/>
+    <id>https://cmeng-cm.github.io/posts/45b42798.html</id>
+    <published>2025-05-17T08:13:12.000Z</published>
+    <updated>2026-02-13T08:06:12.486Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h3 id=&quot;SpotBugs-文档&quot;&gt;&lt;a href=&quot;#SpotBugs-文档&quot; class=&quot;headerlink&quot; title=&quot;SpotBugs 文档&quot;&gt;&lt;/a&gt;SpotBugs 文档&lt;/h3&gt;&lt;h4 id=&quot;1-SpotBugs-介绍&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h3 id=&quot;LLM程序员的学习路线&quot;&gt;&lt;a href=&quot;#LLM程序员的学习路线&quot; class=&quot;headerlink&quot; title=&quot;LLM程序员的学习路线&quot;&gt;&lt;/a&gt;LLM程序员的学习路线&lt;/h3&gt;&lt;p&gt;LLM（Legal Language</summary>
         
       
     
     
     
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="AI" scheme="https://cmeng-cm.github.io/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ollama命令介绍</title>
+    <link href="https://cmeng-cm.github.io/posts/44fab019.html"/>
+    <id>https://cmeng-cm.github.io/posts/44fab019.html</id>
+    <published>2025-02-17T08:13:12.000Z</published>
+    <updated>2026-02-13T08:04:02.873Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Ollama-CLI&quot;&gt;&lt;a href=&quot;#Ollama-CLI&quot; class=&quot;headerlink&quot; title=&quot;Ollama CLI&quot;&gt;&lt;/a&gt;Ollama CLI&lt;/h1&gt;&lt;p&gt;Ollama 命令行工具 (&lt;code&gt;ollama&lt;/code&gt;)</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="AI" scheme="https://cmeng-cm.github.io/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpotBugs使用指南</title>
+    <link href="https://cmeng-cm.github.io/posts/d3edb278.html"/>
+    <id>https://cmeng-cm.github.io/posts/d3edb278.html</id>
+    <published>2025-02-17T08:13:12.000Z</published>
+    <updated>2026-02-13T08:05:05.356Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;SpotBugs使用指南&quot;&gt;&lt;a href=&quot;#SpotBugs使用指南&quot; class=&quot;headerlink&quot; title=&quot;SpotBugs使用指南&quot;&gt;&lt;/a&gt;SpotBugs使用指南&lt;/h3&gt;&lt;h4 id=&quot;1-SpotBugs-介绍&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="java" scheme="https://cmeng-cm.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高频英语词根-词缀速查表</title>
+    <link href="https://cmeng-cm.github.io/posts/5bbd10f1.html"/>
+    <id>https://cmeng-cm.github.io/posts/5bbd10f1.html</id>
+    <published>2025-02-17T08:13:12.000Z</published>
+    <updated>2026-02-13T08:03:06.581Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;高频英语词根-amp-词缀速查表（按使用频率排序）&quot;&gt;&lt;a href=&quot;#高频英语词根-amp-词缀速查表（按使用频率排序）&quot; class=&quot;headerlink&quot; title=&quot;高频英语词根 &amp;amp; 词缀速查表（按使用频率排序）&quot;&gt;&lt;/a&gt;高频英语词根</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="英语" scheme="https://cmeng-cm.github.io/tags/%E8%8B%B1%E8%AF%AD/"/>
     
   </entry>
   
@@ -194,83 +302,6 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://cmeng-cm.github.io/posts/0.html"/>
-    <id>https://cmeng-cm.github.io/posts/0.html</id>
-    <published>2024-03-01T01:24:52.507Z</published>
-    <updated>2024-12-13T09:52:48.154Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;LLM程序员的学习路线&quot;&gt;&lt;a href=&quot;#LLM程序员的学习路线&quot; class=&quot;headerlink&quot; title=&quot;LLM程序员的学习路线&quot;&gt;&lt;/a&gt;LLM程序员的学习路线&lt;/h3&gt;&lt;p&gt;LLM（Legal Language</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>node相关命令</title>
-    <link href="https://cmeng-cm.github.io/posts/7908e8cd.html"/>
-    <id>https://cmeng-cm.github.io/posts/7908e8cd.html</id>
-    <published>2023-04-17T08:13:12.000Z</published>
-    <updated>2024-12-13T09:52:48.157Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;npm命令&quot;&gt;&lt;a href=&quot;#npm命令&quot; class=&quot;headerlink&quot; title=&quot;npm命令&quot;&gt;&lt;/a&gt;npm命令&lt;/h3&gt;&lt;div class=&quot;table-container&quot;&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th</summary>
-        
-      
-    
-    
-    
-    <category term="node" scheme="https://cmeng-cm.github.io/categories/node/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>netty第二弹——Reactor模式</title>
-    <link href="https://cmeng-cm.github.io/posts/ad72082d.html"/>
-    <id>https://cmeng-cm.github.io/posts/ad72082d.html</id>
-    <published>2023-03-20T08:13:12.000Z</published>
-    <updated>2025-09-28T01:53:10.138Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、Netty和Reactor&quot;&gt;&lt;a href=&quot;#一、Netty和Reactor&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="java" scheme="https://cmeng-cm.github.io/categories/java/"/>
-    
-    <category term="netty" scheme="https://cmeng-cm.github.io/categories/java/netty/"/>
-    
-    
-    <category term="java" scheme="https://cmeng-cm.github.io/tags/java/"/>
-    
-    <category term="netty" scheme="https://cmeng-cm.github.io/tags/netty/"/>
-    
-  </entry>
-  
-  <entry>
     <title>netty第一弹——JAVA的IO</title>
     <link href="https://cmeng-cm.github.io/posts/ad72082d.html"/>
     <id>https://cmeng-cm.github.io/posts/ad72082d.html</id>
@@ -300,33 +331,6 @@
   </entry>
   
   <entry>
-    <title>用户空间、内核空间</title>
-    <link href="https://cmeng-cm.github.io/posts/a46eba31.html"/>
-    <id>https://cmeng-cm.github.io/posts/a46eba31.html</id>
-    <published>2023-02-17T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.270Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一、虚拟内存定义&quot;&gt;&lt;a href=&quot;#一、虚拟内存定义&quot; class=&quot;headerlink&quot; title=&quot;一、虚拟内存定义&quot;&gt;&lt;/a&gt;一、虚拟内存定义&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;虚拟内存&lt;/strong&gt;：在多任务系统系统中，多任务并行，大大提升了</summary>
-        
-      
-    
-    
-    
-    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
-    
-    <category term="内存" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%86%85%E5%AD%98/"/>
-    
-    
-    <category term="虚拟空间,用户态,内核态" scheme="https://cmeng-cm.github.io/tags/%E8%99%9A%E6%8B%9F%E7%A9%BA%E9%97%B4-%E7%94%A8%E6%88%B7%E6%80%81-%E5%86%85%E6%A0%B8%E6%80%81/"/>
-    
-  </entry>
-  
-  <entry>
     <title>IO模型</title>
     <link href="https://cmeng-cm.github.io/posts/aeafbee0.html"/>
     <id>https://cmeng-cm.github.io/posts/aeafbee0.html</id>
@@ -350,6 +354,33 @@
     
     
     <category term="IO,IO模型" scheme="https://cmeng-cm.github.io/tags/IO-IO%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用户空间、内核空间</title>
+    <link href="https://cmeng-cm.github.io/posts/a46eba31.html"/>
+    <id>https://cmeng-cm.github.io/posts/a46eba31.html</id>
+    <published>2023-02-17T08:13:12.000Z</published>
+    <updated>2023-02-21T03:23:38.270Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、虚拟内存定义&quot;&gt;&lt;a href=&quot;#一、虚拟内存定义&quot; class=&quot;headerlink&quot; title=&quot;一、虚拟内存定义&quot;&gt;&lt;/a&gt;一、虚拟内存定义&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;虚拟内存&lt;/strong&gt;：在多任务系统系统中，多任务并行，大大提升了</summary>
+        
+      
+    
+    
+    
+    <category term="理论知识" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/"/>
+    
+    <category term="内存" scheme="https://cmeng-cm.github.io/categories/%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/%E5%86%85%E5%AD%98/"/>
+    
+    
+    <category term="虚拟空间,用户态,内核态" scheme="https://cmeng-cm.github.io/tags/%E8%99%9A%E6%8B%9F%E7%A9%BA%E9%97%B4-%E7%94%A8%E6%88%B7%E6%80%81-%E5%86%85%E6%A0%B8%E6%80%81/"/>
     
   </entry>
   
@@ -455,31 +486,6 @@
   </entry>
   
   <entry>
-    <title>Markdowm语法</title>
-    <link href="https://cmeng-cm.github.io/posts/db8caa0.html"/>
-    <id>https://cmeng-cm.github.io/posts/db8caa0.html</id>
-    <published>2022-11-13T08:13:12.000Z</published>
-    <updated>2023-02-21T03:23:38.261Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;超链接&quot;&gt;&lt;a href=&quot;#超链接&quot; class=&quot;headerlink&quot; title=&quot;超链接&quot;&gt;&lt;/a&gt;超链接&lt;/h2&gt;&lt;p&gt;markdown内超链接分为两种形式，分别是 &lt;strong&gt;行内式&lt;/strong&gt; 和</summary>
-        
-      
-    
-    
-    
-    <category term="Markdowm" scheme="https://cmeng-cm.github.io/categories/Markdowm/"/>
-    
-    
-    <category term="Markdowm" scheme="https://cmeng-cm.github.io/tags/Markdowm/"/>
-    
-  </entry>
-  
-  <entry>
     <title>主题标题相关设置</title>
     <link href="https://cmeng-cm.github.io/posts/a5202087.html"/>
     <id>https://cmeng-cm.github.io/posts/a5202087.html</id>
@@ -507,15 +513,29 @@
   </entry>
   
   <entry>
-    <title>markdown思维导图demo</title>
-    <link href="https://cmeng-cm.github.io/posts/7065c334.html"/>
-    <id>https://cmeng-cm.github.io/posts/7065c334.html</id>
-    <published>2022-09-08T13:23:52.783Z</published>
-    <updated>2023-02-21T03:23:38.263Z</updated>
+    <title>SpringBoot 启动 —— 源码解析</title>
+    <link href="https://cmeng-cm.github.io/posts/609270ec.html"/>
+    <id>https://cmeng-cm.github.io/posts/609270ec.html</id>
+    <published>2022-08-17T08:13:12.000Z</published>
+    <updated>2024-12-10T08:09:05.292Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;font size=&quot;7&quot;&gt;SpringBoot 启动 —— 源码解析&lt;/font&gt;
+
+&lt;h2 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
+    <category term="springboot" scheme="https://cmeng-cm.github.io/categories/springboot/"/>
     
+    
+    <category term="springboot" scheme="https://cmeng-cm.github.io/tags/springboot/"/>
     
   </entry>
   
