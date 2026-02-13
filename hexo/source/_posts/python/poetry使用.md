@@ -3,7 +3,7 @@ title: Poetry在Mac上构建项目的全流程指南
 tags: Poetry
 categories:
   - Poetry
-top: true
+top: false
 keywords: Poetry
 abbrlink: 6821884a
 date: 2025-09-03 10:00:00

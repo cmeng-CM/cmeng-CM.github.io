@@ -1,5 +1,11 @@
 ---
-abbrlink: '0'
+title: LLM程序员的学习路线
+tags: AI
+categories:
+  - 理论知识
+top: false
+abbrlink: 45b42798
+date: 2025-05-17 16:13:12
 ---
 ### LLM程序员的学习路线
 

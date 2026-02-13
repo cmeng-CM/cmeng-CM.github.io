@@ -1,6 +1,14 @@
 ---
-abbrlink: '0'
+title: Ollama命令介绍
+tags: AI
+categories:
+  - 理论知识
+top: false
+abbrlink: 44fab019
+date: 2025-02-17 16:13:12
 ---
+
+# Ollama CLI
 Ollama 命令行工具 (`ollama`) 的主要实现代码，使用 Go 语言编写。它定义了 `ollama` 命令及其所有子命令（如 `run`, `pull`, `create` 等）的行为。
 
 根据代码分析，以下是所有命令行操作及其具体含义：
